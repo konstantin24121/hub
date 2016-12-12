@@ -1,0 +1,26 @@
+:local(.style) {
+	background-color: #fff;
+	color: white;
+	border-radius: 0;
+
+	@media (min-height: 30px) {
+		color: green;
+	}
+
+	&::before {
+		display: grid;
+	}
+
+	.zad {
+		display: 'zad';
+	}
+
+	&__component {
+		opacity: 0;
+		transform: translateX(10deg);
+
+		&--active {
+			opacity: 1;
+		}
+	}
+}
