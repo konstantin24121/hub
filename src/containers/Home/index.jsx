@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as testActions from 'actions/testAction';
 
 import TestComponent from 'components/TestComponent';
@@ -13,6 +13,7 @@ class Home extends Component {
 
 		// Dispatchers
 		decrementCounter: PropTypes.func,
+		incrementCounter: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -28,7 +29,7 @@ class Home extends Component {
 		return (
 			<div>
 				Home. Counter from store zad - {counter}
-				<TestComponent name="inc" onClick={this.handleClick} />
+				<TestComponent name="inc" onClick={this.props.incrementCounter} />
 				<TestComponent name="dec" onClick={this.props.decrementCounter} />
 			</div>
 		);

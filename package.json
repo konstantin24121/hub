@@ -26,7 +26,7 @@
       }
     },
     "build": {
-      "command": "webpack --verbose --colors --inline --progress --display-error-details --config implements/webpack.common.js",
+      "command": "webpack --verbose --colors --inline --progress --display-error-details --config implements/webpack.config.js",
       "env": {
         "NODE_ENV": "production"
       }

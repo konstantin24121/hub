@@ -30,7 +30,7 @@ class Page extends Component {
 
 function mapStateToProps(state){
 	return {
-		counter: state.sample.counter
+		counter: state.sample.counter,
 	};
 }
 

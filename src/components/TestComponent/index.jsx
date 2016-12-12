@@ -15,7 +15,7 @@ export default class TestComponent extends PureComponent {
 	render() {
 		const { name, onClick } = this.props;
 		return (
-			<button className={style} onClick={onClick}>{name} zad</button>
+			<button className={style} onClick={onClick}>{name}</button>
 		);
 	}
 }
