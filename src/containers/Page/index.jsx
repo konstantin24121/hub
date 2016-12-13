@@ -1,8 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+
+// Subcomponents
+import RaisedButton from 'material-ui/RaisedButton';
+import TestComponent from 'components/TestComponent';
+
 import * as testActions from 'actions/testAction';
 
-import TestComponent from 'components/TestComponent';
 
 class Page extends Component {
 	static propTypes = {
@@ -23,12 +27,13 @@ class Page extends Component {
 			<div>
 				Page zad - {counter}
 				<TestComponent name="inc" onClick={this.handleClick} />
+				<RaisedButton label="Default" />
 			</div>
 		);
 	}
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
 	return {
 		counter: state.sample.counter,
 	};

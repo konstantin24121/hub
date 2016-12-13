@@ -1,19 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-export default class App extends Component {
-	static propTypes = {
-		name: PropTypes.string,
-	};
+const App = ({ children }) => (
+	<div>
+		<MuiThemeProvider>
+			{children}
+		</MuiThemeProvider>
+	</div>
+);
 
-	constructor(props) {
-		super(props);
-	}
+App.propTypes = {
+	children: PropTypes.node.isRequired,
+};
 
-	render() {
-		return (
-			<div>
-				{this.props.children}
-			</div>
-		);
-	}
-}
+export default App;

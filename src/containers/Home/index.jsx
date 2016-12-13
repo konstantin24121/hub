@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as testActions from 'actions/testAction';
 
+// Subcomponents
+import RaisedButton from 'material-ui/RaisedButton';
 import TestComponent from 'components/TestComponent';
+
+import * as testActions from 'actions/testAction';
 
 class Home extends Component {
 	static propTypes = {
@@ -31,6 +34,7 @@ class Home extends Component {
 				Home. Counter from store zad - {counter}
 				<TestComponent name="inc" onClick={this.props.incrementCounter} />
 				<TestComponent name="dec" onClick={this.props.decrementCounter} />
+				<RaisedButton label="Default" />
 			</div>
 		);
 	}
