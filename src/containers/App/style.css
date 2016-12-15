@@ -1,3 +1,5 @@
+@import 'tools/styles/base.css';
+
 :local(.style) {
 	display: block;
 }
