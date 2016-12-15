@@ -15,7 +15,8 @@
     "build": "better-npm-run build",
     "lint": "npm run eslint && npm run stylelint",
     "stylelint": "stylelint src/**/*.css",
-    "eslint": "eslint src"
+    "eslint": "eslint src",
+    "styleguide-server": "better-npm-run start-styleguide"
   },
   "betterScripts": {
     "start-dev": {
@@ -36,6 +37,12 @@
       "env": {
         "NODE_ENV": "production",
         "PORT": 3000
+      }
+    },
+    "start-styleguide": {
+      "command": "styleguidist server --config implements/styleguide.config.js",
+      "env": {
+        "NODE_ENV": "development"
       }
     }
   },
@@ -92,6 +99,7 @@
     "postcss-mixins": "^5.4.0",
     "postcss-nested": "^1.0.0",
     "postcss-simple-vars": "^3.0.0",
+    "react-styleguidist": "^4.4.1",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "stylelint": "^7.6.0",
