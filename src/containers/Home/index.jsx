@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 
+import { Example } from 'components';
+
 export default class Home extends PureComponent {
 
 	constructor(props) {
@@ -9,6 +11,7 @@ export default class Home extends PureComponent {
 	render() {
 		return (
 			<div>
+				<Example />
 				Home Container
 			</div>
 		);

@@ -6,11 +6,19 @@ const common = require('./webpack.config.js');
 const port = process.env.STYLEGUIDE_PORT || (+process.env.PORT || 3000) + 1;
 const host = (process.env.HOST || 'localhost');
 
+const customComponents = [
+  'ReactComponent/ReactComponentRenderer',
+  'StyleGuide/StyleGuideRenderer',
+  'TableOfContents/TableOfContentsRenderer',
+  'ComponentsList'
+];
+
 module.exports = {
   title: 'StyleGuide',
   serverPort: port,
   serverHost: host,
   highlightTheme: 'material',
+  template: path.resolve(__dirname, '../src/tools/styleguide/template.html'),
   contextDependencies: [
     path.resolve(__dirname, '../src/components'),
   ],
@@ -36,14 +44,10 @@ module.exports = {
       webpackConfig.module.loaders.push(loader);
     }
 
-    webpackConfig.resolve.alias['rsg-components/ReactComponent/ReactComponentRenderer'] =
-      path.join(__dirname, '../src/tools/styleguide/ReactComponent/ReactComponentRenderer');
-
-    webpackConfig.resolve.alias['rsg-components/StyleGuide/StyleGuideRenderer'] =
-      path.join(__dirname, '../src/tools/styleguide/StyleGuide/StyleGuideRenderer');
-
-    webpackConfig.resolve.alias['rsg-components/TableOfContents/TableOfContentsRenderer'] =
-      path.join(__dirname, '../src/tools/styleguide/TableOfContents/TableOfContentsRenderer');
+    for (const component of customComponents) {
+      webpackConfig.resolve.alias[`rsg-components/${component}`] =
+        path.join(__dirname, `../src/tools/styleguide/${component}`);
+    }
 
     webpackConfig.resolve.alias['tools/styles'] =
       path.join(__dirname, '../src/tools/styles');

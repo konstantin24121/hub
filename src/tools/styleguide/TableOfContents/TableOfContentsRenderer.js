@@ -1,4 +1,8 @@
+/* eslint-disable */
+
 import React, { PropTypes } from 'react';
+
+import TextField from 'material-ui/TextField';
 
 import s from './TableOfContents.css';
 
@@ -6,11 +10,11 @@ const TableOfContentsRenderer = ({ items, searchTerm, onSearchTermChange }) => {
 	return (
 		<div>
 			<div className={s.root}>
-				<input
+				<TextField
 					value={searchTerm}
-					className={s.search}
-					placeholder="Filter by name"
+					hintText="Filter by name"
 					onChange={event => onSearchTermChange(event.target.value)}
+					style={{width: '100%'}}
 				/>
 				{items}
 			</div>

@@ -1,19 +1,4 @@
 .root {
-}
-
-.search {
-	border: none;
-	border-bottom: 1px solid rgb(224, 224, 224);
-	display: block;
-	box-sizing: border-box;
-	width: calc(100% - 30px);
-	margin: 15px;
-	padding: 6px 0;
-	font-size: 15px;
-	border-radius: 2px;
-	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-}
-.search:focus {
-	border-color: rgb(0, 188, 212);
-	outline: 0;
+	padding: 15px;
+	width: 100%;
 }
