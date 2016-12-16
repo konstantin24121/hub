@@ -35,6 +35,19 @@ module.exports = {
       loader.include = dir;
       webpackConfig.module.loaders.push(loader);
     }
+
+    webpackConfig.resolve.alias['rsg-components/ReactComponent/ReactComponentRenderer'] =
+      path.join(__dirname, '../src/tools/styleguide/ReactComponent/ReactComponentRenderer');
+
+    webpackConfig.resolve.alias['rsg-components/StyleGuide/StyleGuideRenderer'] =
+      path.join(__dirname, '../src/tools/styleguide/StyleGuide/StyleGuideRenderer');
+
+    webpackConfig.resolve.alias['rsg-components/TableOfContents/TableOfContentsRenderer'] =
+      path.join(__dirname, '../src/tools/styleguide/TableOfContents/TableOfContentsRenderer');
+
+    webpackConfig.resolve.alias['tools/styles'] =
+      path.join(__dirname, '../src/tools/styles');
+
     webpackConfig.postcss = common.postcss;
     return webpackConfig;
   }

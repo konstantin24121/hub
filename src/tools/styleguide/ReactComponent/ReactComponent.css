@@ -1,0 +1,49 @@
+.root {
+	margin-bottom: 50px;
+	font-size: 16px;
+}
+
+.header {
+	position: relative;
+	margin-bottom: 20px;
+	font-weight: normal;
+}
+
+.isolatedLink {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 14px;
+	opacity: 0;
+	transition: opacity ease-in-out 0.15s 0.2s;
+}
+
+.root:hover .isolatedLink {
+	opacity: 1;
+}
+
+.primaryHeading {
+	position: relative;
+	margin-bottom: 6px;
+	font-size: 36px;
+	font-weight: normal;
+}
+
+.heading {
+	margin-bottom: 8px;
+	font-size: 20px;
+	font-weight: normal;
+}
+
+.pathLine {
+	font-size: 14px;
+}
+
+.description {
+	margin-bottom: 15px;
+}
+
+.props {
+	margin-bottom: 30px;
+	font-size: 13px;
+}
