@@ -1,9 +1,18 @@
 import React, { PureComponent, PropTypes } from 'react';
-import { style } from './style.css';
 
+import { style } from './style.css';
+/**
+ * Example component
+ */
 export default class Example extends PureComponent {
 	static propTypes = {
+		/**
+		 * Заголовок отображаемый компонентом
+		 */
 		name: PropTypes.string,
+		/**
+		 * Срабатывает при клике на компонент
+		 */
 		onClick: PropTypes.func,
 	};
 

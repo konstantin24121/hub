@@ -13,37 +13,38 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	font-size: 14px;
-	opacity: 0;
-	transition: opacity ease-in-out 0.15s 0.2s;
-}
-
-.root:hover .isolatedLink {
-	opacity: 1;
+	font-size: 1em;
 }
 
 .primaryHeading {
 	position: relative;
-	margin-bottom: 6px;
-	font-size: 36px;
+	margin-bottom: 0.5em;
+	font-size: 1.5em;
 	font-weight: normal;
 }
 
 .heading {
 	margin-bottom: 8px;
-	font-size: 20px;
+	font-size: 1.2em;
 	font-weight: normal;
 }
 
 .pathLine {
-	font-size: 14px;
+	font-size: 0.9em;
+	color: rgb(158, 158, 158);
+}
+
+.importLine {
+	font-size: 0.9em;
+	color: rgb(0, 188, 212);
+	cursor: pointer;
 }
 
 .description {
-	margin-bottom: 15px;
+	margin-bottom: 1em;
 }
 
 .props {
-	margin-bottom: 30px;
-	font-size: 13px;
+	margin-bottom: 2em;
+	font-size: 0.8em;
 }

@@ -2,15 +2,17 @@
 
 const path = require('path');
 const common = require('./webpack.config.js');
+const docgen = require('react-docgen');
+const fs = require('fs');
 
 const port = process.env.STYLEGUIDE_PORT || (+process.env.PORT || 3000) + 1;
 const host = (process.env.HOST || 'localhost');
-
 const customComponents = [
-  'ReactComponent/ReactComponentRenderer',
+  'ReactComponent',
   'StyleGuide/StyleGuideRenderer',
   'TableOfContents/TableOfContentsRenderer',
-  'ComponentsList'
+  'ComponentsList',
+  'Section/SectionRenderer',
 ];
 
 module.exports = {
@@ -23,11 +25,11 @@ module.exports = {
     path.resolve(__dirname, '../src/components'),
   ],
   getExampleFilename: componentpath => path.join(path.dirname(componentpath), 'demo.md'),
-  getComponentPathLine: (componentpath) => {
-    const dir = path.parse(componentpath).dir;
-    const name = /(\w)*$/.exec(dir);
-    return `import {${name[0]}} from 'components';`;
-  },
+  // getComponentPathLine: (componentpath) => {
+  //   const dir = path.parse(componentpath).dir;
+  //   const name = /(\w)*$/.exec(dir);
+  //   return `import {${name[0]}} from 'components';`;
+  // },
   sections: [
     {
       name: 'Introduction',
@@ -54,5 +56,15 @@ module.exports = {
 
     webpackConfig.postcss = common.postcss;
     return webpackConfig;
-  }
+  },
+  handlers: require('react-docgen').defaultHandlers.concat(
+    (documentation, path) => {
+      documentation.set('pure', path.value.superClass.name === 'PureComponent');
+    },
+    (documentation, path) => {
+      documentation.set('importString', `import {${path.value.id.name}} from 'components';`);
+    },
+    // To better support higher order components
+    require('react-docgen-displayname-handler').default
+  ),
 };

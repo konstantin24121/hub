@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { Component, PropTypes } from 'react';
 import Markdown from 'rsg-components/Markdown';
 import cx from 'classnames';
@@ -8,7 +6,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
-import ActionHome from 'material-ui/svg-icons/action/home';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
@@ -52,15 +49,27 @@ class StyleGuideRenderer extends Component {
 		const { drawerOpen } = this.state;
 		return(
 			<MuiThemeProvider>
-				<div className={cx(s.root, drawerOpen && s.root_HasSidebar)}>
+				<div className={cx(s.root, drawerOpen && sidebar && s.root_HasSidebar)}>
 					<div className={s.header}>
-						<IconButton
-							tooltip="Open filter"
-							tooltipPosition="bottom-left"
-							onClick={ drawerOpen ? this.handleCloseDrawer : this.handleOpenDrawer }
-						>
-					    <FontIcon className="material-icons" color="white">bookmark</FontIcon>
-				    </IconButton>
+						{sidebar &&
+							<IconButton
+								tooltip="Open filter"
+								tooltipPosition="bottom-left"
+								onClick={ drawerOpen ? this.handleCloseDrawer : this.handleOpenDrawer }
+							>
+						    <FontIcon className="material-icons" color="white">bookmark</FontIcon>
+					    </IconButton>
+					  }
+					  {!sidebar &&
+					  	<a href="/">
+								<IconButton
+									tooltip="Back to styleguide"
+									tooltipPosition="bottom-left"
+								>
+							    <FontIcon className="material-icons" color="white">widgets</FontIcon>
+						    </IconButton>
+					  	</a>
+					  }
 					</div>
 					<main className={s.content}>
 						<div className={s.components}>
