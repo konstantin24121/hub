@@ -3,7 +3,9 @@ import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import Snackbar from 'material-ui/Snackbar';
-import { lime500, blue200 } from 'material-ui/styles/colors';
+import Avatar from 'material-ui/Avatar';
+import Chip from 'material-ui/Chip';
+import { lime500 } from 'material-ui/styles/colors';
 
 const s = require('./ReactComponent.css');
 
@@ -30,12 +32,13 @@ class ReactComponentRenderer extends PureComponent {
 
 	render() {
 		const { name, pathLine, description,
-			props, examples, sidebar, pure, importString } = this.props;
+			props, examples, sidebar, pure, importString, version } = this.props;
 		return (
 			<div className={s.root} id={`${name}-container`}>
 				<header className={s.header}>
 					<h2 className={s.primaryHeading} id={name}>
 						{name}
+						{version && <span className={s.version}>v{version}</span>}
 						{pure &&
 							<a
 								href="https://facebook.github.io/react/docs/react-api.html#react.purecomponent"
@@ -47,6 +50,7 @@ class ReactComponentRenderer extends PureComponent {
 									tooltip="This component is PureComponent"
 									tooltipPosition="top-right"
 									style={{ padding: 0, width: 'auto', height: 'auto' }}
+									iconStyle={{ fontSize: '0.9rem' }}
 								>
 									<FontIcon
 										className="material-icons"
@@ -59,6 +63,7 @@ class ReactComponentRenderer extends PureComponent {
 						}
 					</h2>
 					<div className={s.pathLine}>{pathLine}</div>
+
 					{sidebar ? (
 						<a className={s.isolatedLink} href={`#!/${name}`}>
 							<IconButton
@@ -76,7 +81,7 @@ class ReactComponentRenderer extends PureComponent {
 					) : (
 						<a
 							className={s.isolatedLink}
-							href="#"
+							href="/#"
 						>
 							<IconButton
 								tooltip="Close isolated mode"
@@ -125,6 +130,7 @@ ReactComponentRenderer.propTypes = {
 	name: PropTypes.string.isRequired,
 	pathLine: PropTypes.string.isRequired,
 	importString: PropTypes.string.isRequired,
+	version: PropTypes.string.isRequired,
 	description: PropTypes.node,
 	props: PropTypes.node,
 	examples: PropTypes.node,

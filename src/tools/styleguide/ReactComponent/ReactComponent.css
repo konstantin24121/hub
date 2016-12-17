@@ -29,9 +29,18 @@
 	font-weight: normal;
 }
 
+.version {
+	font-size: 0.9rem;
+	margin-left: 0.5rem;
+	color: rgb(158, 158, 158);
+}
+
 .pathLine {
 	font-size: 0.9em;
 	color: rgb(158, 158, 158);
+	white-space: nowrap;
+  overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .importLine {

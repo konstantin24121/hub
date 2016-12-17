@@ -18,8 +18,12 @@ $sidebarWidth: 256px;
 
 .content {
 	max-width: 950px;
-	padding: 15px 30px;
+	padding: 15px 0;
 	margin: 0 auto;
+
+	@media (min-width: 800px) {
+		padding: 15px 30px;
+	}
 }
 
 .header {

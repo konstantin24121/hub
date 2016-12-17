@@ -23,9 +23,9 @@ class StyleGuideRenderer extends Component {
 		sidebar: PropTypes.bool,
 	}
 
- 	constructor(props) {
-	  super(props);
-	  this.state = {drawerOpen: localStorage.getItem(`${this.constructor.displayName}DrawerOpen`) === 'true'};
+	constructor(props) {
+		super(props);
+		this.state = {drawerOpen: localStorage.getItem(`${this.constructor.displayName}DrawerOpen`) === 'true'};
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -53,23 +53,23 @@ class StyleGuideRenderer extends Component {
 					<div className={s.header}>
 						{sidebar &&
 							<IconButton
-								tooltip="Open filter"
+								tooltip={drawerOpen ? "Close filter" : "Open filter"}
 								tooltipPosition="bottom-left"
 								onClick={ drawerOpen ? this.handleCloseDrawer : this.handleOpenDrawer }
 							>
-						    <FontIcon className="material-icons" color="white">bookmark</FontIcon>
-					    </IconButton>
-					  }
-					  {!sidebar &&
-					  	<a href="/">
+								<FontIcon className="material-icons" color="white">bookmark</FontIcon>
+							</IconButton>
+						}
+						{!sidebar &&
+							<a href="/#">
 								<IconButton
 									tooltip="Back to styleguide"
 									tooltipPosition="bottom-left"
 								>
-							    <FontIcon className="material-icons" color="white">widgets</FontIcon>
-						    </IconButton>
-					  	</a>
-					  }
+									<FontIcon className="material-icons" color="white">widgets</FontIcon>
+								</IconButton>
+							</a>
+						}
 					</div>
 					<main className={s.content}>
 						<div className={s.components}>

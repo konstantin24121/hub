@@ -2,14 +2,15 @@ import React, { PureComponent, PropTypes } from 'react';
 
 import { style } from './style.css';
 /**
- * Example component
+ * It's just components example.
+ * He show how components must be designed.
  */
-export default class Example extends PureComponent {
+class Example extends PureComponent {
 	static propTypes = {
 		/**
 		 * Заголовок отображаемый компонентом
 		 */
-		name: PropTypes.string,
+		name: PropTypes.string.isRequired,
 		/**
 		 * Срабатывает при клике на компонент
 		 */
@@ -28,3 +29,8 @@ export default class Example extends PureComponent {
 		);
 	}
 }
+
+export default Example;
+/**
+ * version: 0.0.1
+ */

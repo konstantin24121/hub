@@ -10,7 +10,7 @@ export default function ReactComponent({
 	sidebar,
 }) {
 	const { name, pathLine, examples } = component;
-	const { description, props, pure, importString } = component.props;
+	const { description, props, pure, importString, version } = component.props;
 	return (
 		<Paper
 			zDepth={1}
@@ -23,6 +23,7 @@ export default function ReactComponent({
 				props={props && <Props props={props} />}
 				pure={pure}
 				importString={importString}
+				version={version}
 				examples={examples && <Examples examples={examples} name={name} />}
 				sidebar={sidebar}
 			/>

@@ -4,6 +4,7 @@ const path = require('path');
 const common = require('./webpack.config.js');
 const docgen = require('react-docgen');
 const fs = require('fs');
+const recast = require('recast');
 
 const port = process.env.STYLEGUIDE_PORT || (+process.env.PORT || 3000) + 1;
 const host = (process.env.HOST || 'localhost');
@@ -25,11 +26,6 @@ module.exports = {
     path.resolve(__dirname, '../src/components'),
   ],
   getExampleFilename: componentpath => path.join(path.dirname(componentpath), 'demo.md'),
-  // getComponentPathLine: (componentpath) => {
-  //   const dir = path.parse(componentpath).dir;
-  //   const name = /(\w)*$/.exec(dir);
-  //   return `import {${name[0]}} from 'components';`;
-  // },
   sections: [
     {
       name: 'Introduction',
@@ -63,6 +59,20 @@ module.exports = {
     },
     (documentation, path) => {
       documentation.set('importString', `import {${path.value.id.name}} from 'components';`);
+    },
+    (documentation, path) => {
+      const root = path.scope.getGlobalScope().node;
+      recast.visit(root, {
+        visitExportDefaultDeclaration: (path) => {
+          const regex = /version: (\d(\.\d+){1,2}((-(?=\w+)[\w\.]*)|$|\r|\n))/;
+          try {
+            const version = regex.exec(path.value.trailingComments[0].value);
+            documentation.set('version', version[1]);
+          } catch (e) {};
+          return false;
+        }
+      })
+
     },
     // To better support higher order components
     require('react-docgen-displayname-handler').default
