@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Markdown from 'rsg-components/Markdown';
 import cx from 'classnames';
-
+import throttle from 'lodash/throttle';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
@@ -25,37 +25,56 @@ class StyleGuideRenderer extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {drawerOpen: localStorage.getItem(`${this.constructor.displayName}DrawerOpen`) === 'true'};
+		this.state = {
+			drawerOpen: localStorage.getItem(`${this.constructor.displayName}DrawerOpen`) === 'true',
+		};
+		this.handleResize = throttle(this.handleResize, 300);
+	}
+
+	componentWillMount() {
+		window.addEventListener('resize', this.handleResize);
+		this.handleResize();
 	}
 
 	componentWillUpdate(nextProps, nextState) {
 		localStorage.setItem(`${this.constructor.displayName}DrawerOpen`, nextState.drawerOpen);
 	}
 
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleResize);
+		this.handleResize.cancel();
+	}
+
+	handleResize = () => {
+		this.setState({
+			isMobile: Math.max(document.documentElement.clientWidth, window.innerWidth || 0) > 800,
+		});
+	};
+
 	handleOpenDrawer = () => {
 		this.setState({
 			drawerOpen: true,
-		})
+		});
 	};
 
 	handleCloseDrawer = () => {
 		this.setState({
 			drawerOpen: false,
-		})
+		});
 	};
 
-	render(){
+	render() {
 		const { title, homepageUrl, components, toc, sidebar } = this.props;
 		const { drawerOpen } = this.state;
-		return(
+		return (
 			<MuiThemeProvider>
 				<div className={cx(s.root, drawerOpen && sidebar && s.root_HasSidebar)}>
 					<div className={s.header}>
 						{sidebar &&
 							<IconButton
-								tooltip={drawerOpen ? "Close filter" : "Open filter"}
+								tooltip={drawerOpen ? 'Close filter' : 'Open filter'}
 								tooltipPosition="bottom-left"
-								onClick={ drawerOpen ? this.handleCloseDrawer : this.handleOpenDrawer }
+								onClick={drawerOpen ? this.handleCloseDrawer : this.handleOpenDrawer}
 							>
 								<FontIcon className="material-icons" color="white">bookmark</FontIcon>
 							</IconButton>
@@ -77,8 +96,16 @@ class StyleGuideRenderer extends Component {
 						</div>
 					</main>
 					{sidebar &&
-						<Drawer open={drawerOpen}>
+						<Drawer open={drawerOpen} docked={this.state.isMobile}>
 							<h1 className={s.heading}>{title}</h1>
+							<IconButton
+								tooltip={drawerOpen ? "Close filter" : "Open filter"}
+								tooltipPosition="bottom-left"
+								onClick={drawerOpen ? this.handleCloseDrawer : this.handleOpenDrawer}
+								style={{ position: 'absolute', top: '0.5rem', right: 0, zIndex: 2 }}
+							>
+								<FontIcon className="material-icons" color="white">close</FontIcon>
+							</IconButton>
 							<div className={s.doc}>
 								<div className={s.scrollbar}>
 									{toc}

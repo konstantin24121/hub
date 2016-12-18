@@ -6,9 +6,16 @@
 	margin: 0;
 }
 
+.tableWrapper {
+	width: 100%;
+	overflow-x: auto;
+	padding-bottom: 1rem;
+}
+
 .table {
 	width: 100%;
 	border-collapse: collapse;
+	min-width: 400px;
 }
 
 .tableHead {
@@ -39,6 +46,7 @@
 
 .required {
 	color: #EF5350;
+
 	&::after {
 		content: '*';
 		display: inline;

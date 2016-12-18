@@ -134,19 +134,21 @@ function renderShape(props) {
 
 export default function PropsRenderer({ props }) {
 	return (
-		<table className={s.table}>
-			<thead className={s.tableHead}>
-				<tr>
-					<th className={s.cellHeading}>Name</th>
-					<th className={s.cellHeading}>Type</th>
-					<th className={s.cellHeading}>Default</th>
-					<th className={s.cellHeading + ' ' + s.cellDesc}>Description</th>
-				</tr>
-			</thead>
-			<tbody className={s.tableBody}>
-				{renderRows(props)}
-			</tbody>
-		</table>
+		<div className={s.tableWrapper}>
+			<table className={s.table}>
+				<thead className={s.tableHead}>
+					<tr>
+						<th className={s.cellHeading}>Name</th>
+						<th className={s.cellHeading}>Type</th>
+						<th className={s.cellHeading}>Default</th>
+						<th className={s.cellHeading + ' ' + s.cellDesc}>Description</th>
+					</tr>
+				</thead>
+				<tbody className={s.tableBody}>
+					{renderRows(props)}
+				</tbody>
+			</table>
+		</div>
 	);
 }
 
