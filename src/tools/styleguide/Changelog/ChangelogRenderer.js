@@ -21,16 +21,17 @@ class ChangelogRenderer extends PureComponent {
 
 	render() {
 		const { text, lastUpdate } = this.props;
+		const { open } = this.state;
 		return (
 			<div className={s.root}>
-				<RaisedButton label="Open changelog" primary onClick={this.handleToggle} />
+				<RaisedButton label={open ? "Close changelog" : "Open changelog"} primary onClick={this.handleToggle} />
 				{lastUpdate &&
 					<div className={s.lastUpdate}>
 						Last update: {lastUpdate}
 					</div>
 				}
 				<div className={s.changelogWrapper}>
-					{this.state.open && <Markdown text={text} />}
+					{open && <Markdown text={text} />}
 				</div>
 			</div>
 		);

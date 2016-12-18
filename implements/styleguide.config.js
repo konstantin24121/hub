@@ -17,6 +17,7 @@ const customComponents = [
   'Props',
   'Playground/PlaygroundRenderer',
   'Editor/EditorRenderer',
+  'Markdown',
 ];
 
 module.exports = {

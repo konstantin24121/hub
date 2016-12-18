@@ -1,3 +1,5 @@
 Example component:
 
-	<Example />
+	<Example name="Best component ever"/>
+
+Использовать только в экстренных случаях.
