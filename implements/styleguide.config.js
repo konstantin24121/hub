@@ -15,6 +15,8 @@ const customComponents = [
   'ComponentsList',
   'Section/SectionRenderer',
   'Props',
+  'Playground/PlaygroundRenderer',
+  'Editor/EditorRenderer',
 ];
 
 module.exports = {
