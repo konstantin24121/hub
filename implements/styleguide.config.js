@@ -14,6 +14,7 @@ const customComponents = [
   'TableOfContents/TableOfContentsRenderer',
   'ComponentsList',
   'Section/SectionRenderer',
+  'Props',
 ];
 
 module.exports = {
@@ -54,12 +55,15 @@ module.exports = {
     return webpackConfig;
   },
   handlers: require('react-docgen').defaultHandlers.concat(
+    // Add pure parametr
     (documentation, path) => {
       documentation.set('pure', path.value.superClass.name === 'PureComponent');
     },
+    // Add import string parament
     (documentation, path) => {
       documentation.set('importString', `import {${path.value.id.name}} from 'components';`);
     },
+    // Parse component to find version
     (documentation, path) => {
       const root = path.scope.getGlobalScope().node;
       recast.visit(root, {
@@ -72,7 +76,6 @@ module.exports = {
           return false;
         }
       })
-
     },
     // To better support higher order components
     require('react-docgen-displayname-handler').default

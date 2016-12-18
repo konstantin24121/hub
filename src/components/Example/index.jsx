@@ -18,7 +18,6 @@ class Example extends PureComponent {
 	};
 
 	static defaultProps = {
-		name: 'example',
 		onClick: () => {},
 	}
 
