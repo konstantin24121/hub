@@ -29,6 +29,7 @@ module.exports = {
     path.resolve(__dirname, '../src/components'),
   ],
   getExampleFilename: componentpath => path.join(path.dirname(componentpath), 'demo.md'),
+  getChangelogFilename: componentpath => path.join(path.dirname(componentpath), 'changelog.md'),
   sections: [
     {
       name: 'Introduction',

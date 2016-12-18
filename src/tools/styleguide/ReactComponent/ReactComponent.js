@@ -4,17 +4,18 @@ import Props from 'rsg-components/Props';
 import Examples from 'rsg-components/Examples';
 import ReactComponentRenderer from './ReactComponentRenderer';
 import Paper from 'material-ui/Paper';
+import Changelog from '../Changelog';
 
 export default function ReactComponent({
 	component,
 	sidebar,
 }) {
-	const { name, pathLine, examples } = component;
+	const { name, pathLine, examples, changelog } = component;
 	const { description, props, pure, importString, version } = component.props;
 	return (
 		<Paper
 			zDepth={1}
-			style={{padding: '0.2rem 1rem'}}
+			style={{ padding: '0.2rem 1rem' }}
 		>
 			<ReactComponentRenderer
 				name={name}
@@ -26,6 +27,7 @@ export default function ReactComponent({
 				version={version}
 				examples={examples && <Examples examples={examples} name={name} />}
 				sidebar={sidebar}
+				changelog={changelog && <Changelog text={changelog[0].content} />}
 			/>
 		</Paper>
 	);

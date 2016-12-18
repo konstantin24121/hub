@@ -3,8 +3,7 @@ import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import Snackbar from 'material-ui/Snackbar';
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
+
 import { lime500 } from 'material-ui/styles/colors';
 
 const s = require('./ReactComponent.css');
@@ -32,7 +31,8 @@ class ReactComponentRenderer extends PureComponent {
 
 	render() {
 		const { name, pathLine, description,
-			props, examples, sidebar, pure, importString, version } = this.props;
+			props, examples, sidebar, pure,
+			changelog, importString, version } = this.props;
 		return (
 			<div className={s.root} id={`${name}-container`}>
 				<header className={s.header}>
@@ -121,6 +121,7 @@ class ReactComponentRenderer extends PureComponent {
 					onRequestClose={this.handleCloseSnackbar}
 				/>
 				{examples}
+				{changelog}
 			</div>
 		);
 	}
@@ -134,6 +135,7 @@ ReactComponentRenderer.propTypes = {
 	description: PropTypes.node,
 	props: PropTypes.node,
 	examples: PropTypes.node,
+	changelog: PropTypes.node,
 	sidebar: PropTypes.bool,
 	pure: PropTypes.bool,
 };

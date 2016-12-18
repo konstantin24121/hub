@@ -100,7 +100,7 @@
     "postcss-mixins": "^5.4.0",
     "postcss-nested": "^1.0.0",
     "postcss-simple-vars": "^3.0.0",
-    "react-styleguidist": "^4.4.1",
+    "react-styleguidist": "konstantin24121/react-styleguidist",
     "recast": "^0.11.18",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
