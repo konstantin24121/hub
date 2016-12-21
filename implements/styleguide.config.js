@@ -18,6 +18,7 @@ const customComponents = [
   'Playground',
   'Editor',
   'Markdown',
+  'Examples',
 ];
 
 module.exports = {
@@ -37,7 +38,7 @@ module.exports = {
     },
     {
       name: 'UI Components',
-      components: '../src/components/[A-Z]*/index.jsx',
+      components: '../src/components/[A-Z]*/[A-Z]*.jsx',
     },
   ],
   updateWebpackConfig: (webpackConfig) => {

@@ -1,6 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react';
 
-import { style } from './style.css';
+import s from './Example.css';
 /**
  * It's just components example.
  * He show how components must be designed.
@@ -11,6 +11,10 @@ class Example extends PureComponent {
 		 * Заголовок отображаемый компонентом
 		 */
 		name: PropTypes.string.isRequired,
+		/**
+		 * Размер компонента
+		 */
+		size: PropTypes.oneOf(['big', 'medium', 'small']),
 		/**
 		 * Срабатывает при клике на компонент
 		 */
@@ -24,7 +28,7 @@ class Example extends PureComponent {
 	render() {
 		const { name, onClick } = this.props;
 		return (
-			<div className={style} onClick={onClick}>{name}</div>
+			<div className={s.root} onClick={onClick}>{name}</div>
 		);
 	}
 }

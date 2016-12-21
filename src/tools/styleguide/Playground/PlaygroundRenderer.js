@@ -8,6 +8,7 @@ import IconMenu from 'material-ui/IconMenu';
 import Palette from 'material-ui/svg-icons/image/palette';
 import cn from 'classnames';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import PropsEditor from '../PropsEditor';
 
 const s = require('./Playground.css');
 
@@ -17,6 +18,7 @@ export default class PlaygroundRenderer extends PureComponent {
 		showCode: PropTypes.bool.isRequired,
 		name: PropTypes.string.isRequired,
 		index: PropTypes.number.isRequired,
+		props: PropTypes.object.isRequired,
 		evalInContext: PropTypes.func.isRequired,
 		onChange: PropTypes.func.isRequired,
 		onCodeToggle: PropTypes.func.isRequired,
@@ -41,13 +43,14 @@ export default class PlaygroundRenderer extends PureComponent {
 
 	render() {
 		const { code, showCode, name, index,
-			singleExample, evalInContext, onChange, onCodeToggle } = this.props;
+			singleExample, evalInContext, onChange, onCodeToggle, props } = this.props;
 		const { containerSize, containerBg } = this.state;
 
 		const previewClass = cn(s.preview, 'rsg--example-preview',
 			s[`preview_Size${containerSize}`],
 			s[`preview_Bg${containerBg}`],
 		);
+
 		return (
 			<div className={s.root}>
 				<div className={s.previewBox}>
@@ -55,6 +58,7 @@ export default class PlaygroundRenderer extends PureComponent {
 						<Preview code={code} evalInContext={evalInContext} />
 					</div>
 				</div>
+				{props && <PropsEditor props={props} />}
 				{showCode && (
 					<div>
 						<Editor code={code} onChange={onChange} />

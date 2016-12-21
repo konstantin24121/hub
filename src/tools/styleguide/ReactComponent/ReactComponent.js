@@ -25,7 +25,7 @@ export default function ReactComponent({
 				pure={pure}
 				importString={importString}
 				version={version}
-				examples={examples && <Examples examples={examples} name={name} />}
+				examples={examples && <Examples examples={examples} name={name} props={props} />}
 				sidebar={sidebar}
 				changelog={changelog && <Changelog text={changelog[0].content} />}
 			/>

@@ -77,7 +77,7 @@ export default class Playground extends Component {
 
 	render() {
 		const { code, showCode } = this.state;
-		const { evalInContext, index, name } = this.props;
+		const { evalInContext, index, name, props } = this.props;
 		const { singleExample } = this.context;
 		return (
 			<PlaygroundRenderer
@@ -85,6 +85,7 @@ export default class Playground extends Component {
 				showCode={showCode}
 				index={index}
 				name={name}
+				props={props}
 				singleExample={singleExample}
 				evalInContext={evalInContext}
 				onChange={code => this.handleChange(code)}
