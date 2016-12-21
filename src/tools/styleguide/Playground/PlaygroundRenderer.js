@@ -48,7 +48,6 @@ export default class PlaygroundRenderer extends PureComponent {
 			s[`preview_Size${containerSize}`],
 			s[`preview_Bg${containerBg}`],
 		);
-
 		return (
 			<div className={s.root}>
 				<div className={s.previewBox}>

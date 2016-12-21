@@ -1,6 +1,5 @@
 .root {
-	composes: font from "../../styles/common.css";
-	composes: light code-bg from "../../styles/colors.css";
+	background-color: rgb(224, 224, 224);
 	padding: 7px 16px 10px;
 	font-size: 12px;
 }
