@@ -31,6 +31,9 @@ export default class Editor extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			code: props.code,
+		};
 		this.handleChange = debounce(this.handleChange.bind(this), UPDATE_DELAY);
 	}
 

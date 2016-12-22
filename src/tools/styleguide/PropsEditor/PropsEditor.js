@@ -5,6 +5,9 @@ import Subheader from 'material-ui/Subheader';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import map from 'lodash/map';
+import forEach from 'lodash/forEach';
+import set from 'lodash/set';
+import assign from 'lodash/assign';
 
 import { unquote, getType, showSpaces } from '../Props/util';
 import s from './PropsEditor.css';
@@ -12,10 +15,40 @@ import s from './PropsEditor.css';
 export default class PropsEditor extends PureComponent {
 	static propTypes = {
 		props: PropTypes.object.isRequired,
+		// componentName: PropTypes.string.isRequired,
+	};
+
+	constructor(props) {
+		super(props);
+		const fields = {};
+		forEach(props.props, (item, key) => {
+			fields[key] = item.defaultValue ? item.defaultValue.value : '';
+		});
+		this.state = {
+			fields,
+		};
+	}
+
+	handleChangeValueTextfield = ({ name }) => (event) => {
+		const fields = assign({}, this.state.fields);
+		const newFields = set(fields, `${name}`, event.target.value);
+		this.setState({ fields: newFields });
+	};
+
+	handleChangeValueSelectfield = ({ name }) => (event, index, value) => {
+		const fields = assign({}, this.state.fields);
+		const newFields = set(fields, `${name}`, value);
+		this.setState({ fields: newFields });
+	};
+
+	handleSubmit = () => {
+		let propsString = '';
 	};
 
 	renderField = ({ type, value, description, required, name }) => {
 		if (!type) return null;
+
+		const { fields } = this.state;
 
 		switch (type.name) {
 			case 'enum': {
@@ -25,10 +58,12 @@ export default class PropsEditor extends PureComponent {
 				});
 				return (
 					<SelectField
+						value={fields[name]}
 						floatingLabelText={`${name}${required ? '*' : ''}`}
 						hintText={description}
 						hintStyle={{fontSize: 12}}
 						fullWidth
+						onChange={this.handleChangeValueSelectfield({ name })}
 					>
 						{items}
 					</SelectField>
@@ -38,19 +73,20 @@ export default class PropsEditor extends PureComponent {
 				return (
 					<TextField
 						key={name}
+						value={fields[name]}
 						floatingLabelText={`${name}${required ? '*' : ''}`}
 						hintText={description}
 						hintStyle={{fontSize: 12}}
 						multiLine
 						fullWidth
+						onChange={this.handleChangeValueTextfield({ name })}
 					/>
-				)
+				);
 		}
 	};
 
 	render() {
 		const { props } = this.props;
-		console.log(props);
 		const fields = map(props, (item, key) =>
 			<div className={s.item} key={key}>
 				{this.renderField({
@@ -69,7 +105,7 @@ export default class PropsEditor extends PureComponent {
 					{fields}
 				</div>
 				<div className={s.item}>
-					<RaisedButton label="Submit new props" primary={true}/>
+					<RaisedButton label="Submit new props" primary onClick={this.handleSubmit}/>
 				</div>
 			</div>
 		);
