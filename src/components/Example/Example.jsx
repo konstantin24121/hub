@@ -1,4 +1,5 @@
 import React, { PureComponent, PropTypes } from 'react';
+import cn from 'classnames';
 
 import s from './Example.css';
 /**
@@ -16,19 +17,32 @@ class Example extends PureComponent {
 		 */
 		size: PropTypes.oneOf(['big', 'medium', 'small']),
 		/**
+		 * Бэбс. Просто баба
+		 */
+		count: PropTypes.number,
+		/**
 		 * Срабатывает при клике на компонент
 		 */
 		onClick: PropTypes.func,
 	};
 
 	static defaultProps = {
-		onClick: () => {},
+		count: 5,
+		onClick: (string, anotherString) => {},
 	}
 
+	handleClick = () => {
+		this.props.onClick('zad', 'пухлый');
+	};
+
 	render() {
-		const { name, onClick } = this.props;
+		const { name, count, size } = this.props;
+		const rootClass = cn(s.root, s[`root_${size}`]);
 		return (
-			<div className={s.root} onClick={onClick}>{name}</div>
+			<div className={rootClass} onClick={this.handleClick}>
+				{name}
+				{count && `, ${count}`}
+			</div>
 		);
 	}
 }

@@ -42,6 +42,7 @@ export default class Editor extends Component {
 	}
 
 	handleChange(newCode) {
+		this.setState({ code: newCode });
 		this.props.onChange(newCode);
 	}
 

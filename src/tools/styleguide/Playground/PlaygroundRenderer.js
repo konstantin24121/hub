@@ -45,7 +45,6 @@ export default class PlaygroundRenderer extends PureComponent {
 		const { code, showCode, name, index,
 			singleExample, evalInContext, onChange, onCodeToggle, props } = this.props;
 		const { containerSize, containerBg } = this.state;
-
 		const previewClass = cn(s.preview, 'rsg--example-preview',
 			s[`preview_Size${containerSize}`],
 			s[`preview_Bg${containerBg}`],
@@ -57,7 +56,7 @@ export default class PlaygroundRenderer extends PureComponent {
 						<Preview code={code} evalInContext={evalInContext} />
 					</div>
 				</div>
-				{props && <PropsEditor props={props} />}
+				{props && <PropsEditor props={props} componentName={name} code={code} />}
 				{showCode && (
 					<div>
 						<Editor code={code} onChange={onChange} />

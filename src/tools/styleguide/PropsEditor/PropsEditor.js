@@ -8,6 +8,7 @@ import map from 'lodash/map';
 import forEach from 'lodash/forEach';
 import set from 'lodash/set';
 import assign from 'lodash/assign';
+import parseCode from '../utils/parseCode';
 
 import { unquote, getType, showSpaces } from '../Props/util';
 import s from './PropsEditor.css';
@@ -15,14 +16,20 @@ import s from './PropsEditor.css';
 export default class PropsEditor extends PureComponent {
 	static propTypes = {
 		props: PropTypes.object.isRequired,
-		// componentName: PropTypes.string.isRequired,
+		componentName: PropTypes.string.isRequired,
+		code: PropTypes.string.isRequired,
 	};
 
 	constructor(props) {
 		super(props);
+		const codeParams = parseCode(props.code, props.componentName);
 		const fields = {};
 		forEach(props.props, (item, key) => {
-			fields[key] = item.defaultValue ? item.defaultValue.value : '';
+			fields[key] = {
+				name: key,
+				value: item.defaultValue ? item.defaultValue.value : '',
+				disable: true,
+			};
 		});
 		this.state = {
 			fields,
@@ -49,7 +56,6 @@ export default class PropsEditor extends PureComponent {
 		if (!type) return null;
 
 		const { fields } = this.state;
-
 		switch (type.name) {
 			case 'enum': {
 				const items = value.map(({ value }, key) => {
@@ -58,7 +64,7 @@ export default class PropsEditor extends PureComponent {
 				});
 				return (
 					<SelectField
-						value={fields[name]}
+						value={fields[name].value}
 						floatingLabelText={`${name}${required ? '*' : ''}`}
 						hintText={description}
 						hintStyle={{fontSize: 12}}
@@ -69,11 +75,12 @@ export default class PropsEditor extends PureComponent {
 					</SelectField>
 				);
 			}
+			case 'func': return null;
 			default:
 				return (
 					<TextField
 						key={name}
-						value={fields[name]}
+						value={fields[name].value}
 						floatingLabelText={`${name}${required ? '*' : ''}`}
 						hintText={description}
 						hintStyle={{fontSize: 12}}
