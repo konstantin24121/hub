@@ -1,7 +1,7 @@
 .root {
 	padding-bottom: 1rem;
 	border-top: 1px solid rgb(224, 224, 224);
-  box-shadow: rgba(0, 0, 0, .117647) 0 3px 3px -2px inset;
+	box-shadow: rgba(0, 0, 0, .117647) 0 3px 3px -2px inset;
 
 	&::after {
 		content: '';
@@ -24,9 +24,33 @@
 .item {
 	width: 100%;
 	padding: 0 1rem;
-	margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 
 	&:empty {
 		margin-bottom: 0;
 	}
+
+	&_last {
+		margin-top: 1rem;
+	}
+}
+
+.field {
+	flex: 1 1 100%;
+}
+
+.fieldToggle {
+	margin-top: 1.4rem;
+	padding: 0 1rem;
+}
+
+.customCheck {
+	height: 72px;
+	padding-bottom: 14px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-end;
+	max-width: 300px;
 }

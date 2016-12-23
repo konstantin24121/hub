@@ -22,7 +22,7 @@ export default class Playground extends Component {
 		this.state = {
 			code,
 			showCode,
-			showPropsEditor: false,
+			showPropsEditor: true,
 		};
 	}
 
