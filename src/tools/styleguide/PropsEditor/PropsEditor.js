@@ -204,6 +204,7 @@ export default class PropsEditor extends PureComponent {
 				<div className={s.fieldToggle}>
 					<Toggle
 						defaultToggled={!disabled}
+						disabled={required}
 						onToggle={this.handleToggleProp({ name })}
 					/>
 				</div>

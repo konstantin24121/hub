@@ -8,6 +8,7 @@ import IconMenu from 'material-ui/IconMenu';
 import Palette from 'material-ui/svg-icons/image/palette';
 import cn from 'classnames';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import { cyan500 } from 'material-ui/styles/colors';
 import PropsEditor from '../PropsEditor';
 
 const s = require('./Playground.css');
@@ -73,7 +74,7 @@ export default class PlaygroundRenderer extends PureComponent {
 							tooltip="Large container"
 							iconClassName="material-icons"
 							onClick={this.handleChangeContainerSize('Lg')}
-							iconStyle={{ color: containerSize === 'Lg' ? 'rgb(0, 188, 212)' : 'currentColor' }}
+							iconStyle={{ color: containerSize === 'Lg' ? cyan500 : 'currentColor' }}
 						>
 							tv
 						</IconButton>
@@ -81,7 +82,7 @@ export default class PlaygroundRenderer extends PureComponent {
 							tooltip="Middle container"
 							iconClassName="material-icons"
 							onClick={this.handleChangeContainerSize('Md')}
-							iconStyle={{ color: containerSize === 'Md' ? 'rgb(0, 188, 212)' : 'currentColor' }}
+							iconStyle={{ color: containerSize === 'Md' ? cyan500 : 'currentColor' }}
 						>
 							laptop
 						</IconButton>
@@ -89,7 +90,7 @@ export default class PlaygroundRenderer extends PureComponent {
 							tooltip="Small container"
 							iconClassName="material-icons"
 							onClick={this.handleChangeContainerSize('Sm')}
-							iconStyle={{ color: containerSize === 'Sm' ? 'rgb(0, 188, 212)' : 'currentColor' }}
+							iconStyle={{ color: containerSize === 'Sm' ? cyan500 : 'currentColor' }}
 						>
 							tablet_android
 						</IconButton>
@@ -97,7 +98,7 @@ export default class PlaygroundRenderer extends PureComponent {
 							tooltip="Extra small container"
 							iconClassName="material-icons"
 							onClick={this.handleChangeContainerSize('Xs')}
-							iconStyle={{ color: containerSize === 'Xs' ? 'rgb(0, 188, 212)' : 'currentColor' }}
+							iconStyle={{ color: containerSize === 'Xs' ? cyan500 : 'currentColor' }}
 						>
 							phone_android
 						</IconButton>
@@ -117,8 +118,23 @@ export default class PlaygroundRenderer extends PureComponent {
 						</IconMenu>
 					</ToolbarGroup>
 					<ToolbarGroup>
-						<RaisedButton primary label={showPropsEditor ? 'Hide props editor' : 'Show props editor'} onClick={onPropsEditorToggle} />
-						<RaisedButton primary label={showCode ? 'Hide code' : 'Show code'} onClick={onCodeToggle} />
+						<IconButton
+							tooltip={showPropsEditor ? 'Hide props editor' : 'Show props editor'}
+							iconClassName="material-icons"
+							onClick={onPropsEditorToggle}
+							iconStyle={{ color: showPropsEditor ? cyan500 : 'currentColor' }}
+						>
+							tune
+						</IconButton>
+						<ToolbarSeparator />
+						<IconButton
+							tooltip={showCode ? 'Hide code' : 'Show code'}
+							iconClassName="material-icons"
+							onClick={onCodeToggle}
+							iconStyle={{ color: showCode ? cyan500 : 'currentColor' }}
+						>
+							code
+						</IconButton>
 					</ToolbarGroup>
 				</Toolbar>
 			</div>
