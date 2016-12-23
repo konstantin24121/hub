@@ -14,6 +14,7 @@ Example component:
 		booliat={true}
 		array={['zad', 'zad', 'zad']}
 		required="Best component ever"
+		integer={5}
 		node={<div>шляпа</div>}
 		onCallback={(...atr) => {console.log(atr)}}
 	/>

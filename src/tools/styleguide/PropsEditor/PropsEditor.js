@@ -160,7 +160,7 @@ export default class PropsEditor extends PureComponent {
 				break;
 			}
 			case 'string':
-			case 'integer': {
+			case 'number': {
 				component = this.renderTextField({
 					name,
 					value: variable,
@@ -173,10 +173,12 @@ export default class PropsEditor extends PureComponent {
 			}
 			case 'arrayOf': {
 				switch (type.value.name) {
-					case 'string':{
+					case 'string':
+					case 'number': {
+						const concatValue = variable ? variable.join(', ') : variable;
 						component = this.renderTextField({
 							name,
-							value: variable,
+							value: concatValue,
 							disabled,
 							label,
 							description,
@@ -201,6 +203,7 @@ export default class PropsEditor extends PureComponent {
 				</div>
 				<div className={s.fieldToggle}>
 					<Toggle
+						defaultToggled={!disabled}
 						onToggle={this.handleToggleProp({ name })}
 					/>
 				</div>

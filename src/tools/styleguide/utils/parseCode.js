@@ -15,16 +15,38 @@ function findComponent(node, componentName, code) {
 	throw Error(`Parser can't find component in code ${code}`);
 }
 
-function parseProps(conponentNode){
+function parseProps(conponentNode) {
 	const props = {};
 	for (const prop of conponentNode.attributes) {
-		if (prop.value.type !== 'Literal') continue;
-		props[prop.name.name] = prop.value.value;
+		switch (prop.value.type) {
+			case 'Literal': {
+				props[prop.name.name] = prop.value.value;
+				break;
+			}
+			case 'JSXExpressionContainer': {
+				const { expression } = prop.value;
+				if (expression.type === 'Literal') {
+					props[prop.name.name] = expression.value;
+					break;
+				}
+				if (expression.type === 'ArrayExpression') {
+					const propArray = [];
+					for (const node of expression.elements) {
+						if (node.type !== 'Literal') continue;
+						propArray.push(node.value);
+					}
+					props[prop.name.name] = propArray;
+					break;
+				}
+				break;
+			}
+			default: break;
+		}
 	}
 	return props;
 }
 
-export default function(code, componentName) {
+export default function (code, componentName) {
 	const parseCode = acorn.parse(code, {
 		plugins: { jsx: true },
 	});
