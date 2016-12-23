@@ -22,6 +22,7 @@ export default class Playground extends Component {
 		this.state = {
 			code,
 			showCode,
+			showPropsEditor: false,
 		};
 	}
 
@@ -35,7 +36,8 @@ export default class Playground extends Component {
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			nextState.code !== this.state.code ||
-			nextState.showCode !== this.state.showCode
+			nextState.showCode !== this.state.showCode ||
+			nextState.showPropsEditor !== this.state.showPropsEditor
 		);
 	}
 
@@ -75,14 +77,21 @@ export default class Playground extends Component {
 		});
 	}
 
+	handlePropsEditorToggle() {
+		this.setState({
+			showPropsEditor: !this.state.showPropsEditor,
+		});
+	}
+
 	render() {
-		const { code, showCode } = this.state;
+		const { code, showCode, showPropsEditor } = this.state;
 		const { evalInContext, index, name, props } = this.props;
 		const { singleExample } = this.context;
 		return (
 			<PlaygroundRenderer
 				code={code}
 				showCode={showCode}
+				showPropsEditor={showPropsEditor}
 				index={index}
 				name={name}
 				props={props}
@@ -90,6 +99,7 @@ export default class Playground extends Component {
 				evalInContext={evalInContext}
 				onChange={code => this.handleChange(code)}
 				onCodeToggle={() => this.handleCodeToggle()}
+				onPropsEditorToggle={() => this.handlePropsEditorToggle()}
 			/>
 		);
 	}

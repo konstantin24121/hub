@@ -1,5 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react';
 import cn from 'classnames';
+import map from 'lodash/map';
 
 import s from './Example.css';
 /**
@@ -9,39 +10,131 @@ import s from './Example.css';
 class Example extends PureComponent {
 	static propTypes = {
 		/**
-		 * Заголовок отображаемый компонентом
+		 * Демонстрационный массив
 		 */
-		name: PropTypes.string.isRequired,
+		array: PropTypes.arrayOf(PropTypes.string),
 		/**
-		 * Размер компонента
+		 * Фальщь или правда
 		 */
-		size: PropTypes.oneOf(['big', 'medium', 'small']),
+		booliat: PropTypes.bool,
 		/**
-		 * Бэбс. Просто баба
+		 * Просто строка
 		 */
-		count: PropTypes.number,
+		string: PropTypes.string,
+		/**
+		 * Узел
+		 */
+		node: PropTypes.node,
+		/**
+		 * Обекты определенного типа
+		 */
+		stringObjects: PropTypes.objectOf(PropTypes.string),
+		/**
+		 * Шаблон для объекта
+		 */
+		objectWithShape: PropTypes.shape({
+			string: PropTypes.string,
+			number: PropTypes.number,
+		}),
+		/**
+		 * Обязательный атрибут
+		 */
+		required: PropTypes.string.isRequired,
+		/**
+		 * Перечисляемое свойство
+		 */
+		list: PropTypes.oneOf(['big', 'medium', 'small']),
+		/**
+		 * Число. Просто Число
+		 */
+		integer: PropTypes.number,
+		/**
+		 * Массив объектов
+		 */
+		arrayOfShapes: PropTypes.arrayOf(
+			PropTypes.shape({
+				id: PropTypes.number,
+				name: PropTypes.string,
+			})
+		),
 		/**
 		 * Срабатывает при клике на компонент
 		 */
-		onClick: PropTypes.func,
+		onCallback: PropTypes.func,
 	};
 
 	static defaultProps = {
-		count: 5,
-		onClick: (string, anotherString) => {},
+		array: ['nothing'],
+		booliat: false,
+		string: 'zad',
+		list: 'medium',
+		integer: 5,
+		stringObjects: {
+			12411: 'zad',
+			111212: 'not zad',
+		},
+		objectWithShape: {
+			string: 'zad',
+			number: 1,
+		},
+		arrayOfShapes: [
+			{ id: 2, name: 'Leila' },
+			{ id: 4, name: 'Janna' },
+		],
+		// eslint-disable-next-line no-unused-vars
+		onCallback: (string, anotherString) => {},
 	}
 
 	handleClick = () => {
-		this.props.onClick('zad', 'пухлый');
+		this.props.onCallback('zad', 'пухлый');
 	};
 
+	renderStrings() {
+		const { stringObjects } = this.props;
+		return map(stringObjects, (val, key) => <div key={key}>{val}</div>);
+	}
+
+	renderShape() {
+		const { objectWithShape: { number, string } } = this.props;
+		return (
+			<div>
+				<div>number: {number}</div>
+				<div>string: {string}</div>
+			</div>
+		);
+	}
+
+	renderArrayShape() {
+		const { arrayOfShapes } = this.props;
+		return arrayOfShapes.map(
+			({ id, name }, key) => <li key={key}>{id}: {name}</li>
+		);
+	}
+
 	render() {
-		const { name, count, size } = this.props;
-		const rootClass = cn(s.root, s[`root_${size}`]);
+		const { array, string, required, booliat,
+			integer, list, node, arrayOfShapes } = this.props;
+		const rootClass = cn(s.root, s[`root_${list}`]);
 		return (
 			<div className={rootClass} onClick={this.handleClick}>
-				{name}
-				{count && `, ${count}`}
+				{required}
+				<br />
+				{string}
+				{integer && `, ${integer}`}
+				{array &&
+					<ul>
+						{array.map((value, key) => <li key={key}>{value}</li>)}
+					</ul>
+				}
+				{booliat ? 'правда' : 'фальш'}
+				{node && node}
+				{this.renderStrings()}
+				{this.renderShape()}
+				{arrayOfShapes &&
+					<ul>
+						{this.renderArrayShape()}
+					</ul>
+				}
 			</div>
 		);
 	}

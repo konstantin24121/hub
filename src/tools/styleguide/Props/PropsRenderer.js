@@ -140,7 +140,7 @@ export default function PropsRenderer({ props }) {
 					<tr>
 						<th className={s.cellHeading}>Name</th>
 						<th className={s.cellHeading}>Type</th>
-						<th className={s.cellHeading}>Default</th>
+						<th className={`${s.cellHeading} ${s.cellHeading_wide}`}>Default</th>
 						<th className={s.cellHeading + ' ' + s.cellDesc}>Description</th>
 					</tr>
 				</thead>

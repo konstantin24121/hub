@@ -30,6 +30,5 @@ export default function(code, componentName) {
 	});
 	const componentNode = findComponent(parseCode.body[0].expression, componentName, code);
 	const props = parseProps(componentNode);
-	console.log(props);
-	// return props;
+	return props;
 }

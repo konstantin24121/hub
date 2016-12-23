@@ -4,13 +4,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import Toggle from 'material-ui/Toggle';
+import Checkbox from 'material-ui/Checkbox';
+
 import map from 'lodash/map';
-import forEach from 'lodash/forEach';
-import set from 'lodash/set';
-import assign from 'lodash/assign';
-import parseCode from '../utils/parseCode';
+import Immutable from 'immutable';
 
 import { unquote, getType, showSpaces } from '../Props/util';
+import generateFields from './utils';
 import s from './PropsEditor.css';
 
 export default class PropsEditor extends PureComponent {
@@ -22,30 +23,51 @@ export default class PropsEditor extends PureComponent {
 
 	constructor(props) {
 		super(props);
-		const codeParams = parseCode(props.code, props.componentName);
-		const fields = {};
-		forEach(props.props, (item, key) => {
-			fields[key] = {
-				name: key,
-				value: item.defaultValue ? item.defaultValue.value : '',
-				disable: true,
-			};
-		});
 		this.state = {
-			fields,
+			fields: new Immutable.Map({}),
 		};
 	}
 
+	componentWillMount() {
+		const fields = generateFields(this.props);
+		this.setState({
+			fields: new Immutable.Map(fields),
+		});
+	}
+
+	componentWillReceiveProps(nextProps) {
+		const fields = generateFields(nextProps);
+		this.setState({
+			fields: new Immutable.Map(fields),
+		});
+	}
+
+	setFieldValue = (field, value) => {
+		const { fields } = this.state;
+		this.setState({
+			fields: fields.setIn([field, 'value'], value),
+		});
+	};
+
 	handleChangeValueTextfield = ({ name }) => (event) => {
-		const fields = assign({}, this.state.fields);
-		const newFields = set(fields, `${name}`, event.target.value);
-		this.setState({ fields: newFields });
+		const { value } = event.target;
+		this.setFieldValue(name, value);
 	};
 
 	handleChangeValueSelectfield = ({ name }) => (event, index, value) => {
-		const fields = assign({}, this.state.fields);
-		const newFields = set(fields, `${name}`, value);
-		this.setState({ fields: newFields });
+		this.setFieldValue(name, value);
+	};
+
+	handleChangeValueCheckBox = ({ name }) => (event, value) => {
+		this.setFieldValue(name, value);
+	};
+
+	handleToggleProp = ({ name }) => () => {
+		const { fields } = this.state;
+		const value = fields.getIn([name, 'disabled']);
+		this.setState({
+			fields: fields.setIn([name, 'disabled'], !value),
+		});
 	};
 
 	handleSubmit = () => {
@@ -56,18 +78,35 @@ export default class PropsEditor extends PureComponent {
 		if (!type) return null;
 
 		const { fields } = this.state;
+		const disabled = fields.getIn([name, 'disabled']);
+		const variable = fields.getIn([name, 'value']);
+		const label = `${name}${required ? '*' : ''}`;
+		const hintStyle = { fontSize: 12 };
+
 		switch (type.name) {
+			case 'bool': {
+				return (
+					<Checkbox
+						defaultChecked={variable}
+						label={label}
+						labelPosition="left"
+						onCheck={this.handleChangeValueCheckBox({ name })}
+						disabled={disabled}
+					/>
+				);
+			}
 			case 'enum': {
-				const items = value.map(({ value }, key) => {
-					const val = showSpaces(unquote(value));
+				const items = value.map((item, key) => {
+					const val = showSpaces(unquote(item.value));
 					return <MenuItem key={key} value={val} primaryText={val} />;
 				});
 				return (
 					<SelectField
-						value={fields[name].value}
-						floatingLabelText={`${name}${required ? '*' : ''}`}
+						value={variable}
+						disabled={disabled}
+						floatingLabelText={label}
 						hintText={description}
-						hintStyle={{fontSize: 12}}
+						hintStyle={hintStyle}
 						fullWidth
 						onChange={this.handleChangeValueSelectfield({ name })}
 					>
@@ -75,15 +114,39 @@ export default class PropsEditor extends PureComponent {
 					</SelectField>
 				);
 			}
+			case 'node':
+			case 'objectOf':
+			case 'shape':
 			case 'func': return null;
+			case 'arrayOf': {
+				switch (type.value.name) {
+					case 'string': {
+						return (
+							<TextField
+								key={name}
+								value={variable}
+								disabled={disabled}
+								floatingLabelText={label}
+								hintText={description}
+								hintStyle={hintStyle}
+								multiLine
+								fullWidth
+								onChange={this.handleChangeValueTextfield({ name })}
+							/>
+						)
+					}
+					default: return null;
+				}
+			}
 			default:
 				return (
 					<TextField
 						key={name}
-						value={fields[name].value}
-						floatingLabelText={`${name}${required ? '*' : ''}`}
+						value={variable}
+						disabled={disabled}
+						floatingLabelText={label}
 						hintText={description}
-						hintStyle={{fontSize: 12}}
+						hintStyle={hintStyle}
 						multiLine
 						fullWidth
 						onChange={this.handleChangeValueTextfield({ name })}
@@ -103,6 +166,9 @@ export default class PropsEditor extends PureComponent {
 					required: item.required,
 					name: key,
 				})}
+				<Toggle
+					onToggle={this.handleToggleProp({ name: key })}
+				/>
 			</div>
 		);
 		return (

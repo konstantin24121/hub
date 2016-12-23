@@ -2,18 +2,18 @@ Example component:
 
 	<span>
 		<Example
-			name="Best component ever"
-			onClick={(...atr) => {console.log(atr)}}
+			required="Best component ever"
 		/>
 	</span>
 
 Использовать только в экстренных случаях.
 
 	<Example
-		name="Best component zad"
-		size="big"
+		string="Best component zad"
+		list="big"
+		booliat={true}
+		array={['zad', 'zad', 'zad']}
+		required="Best component ever"
+		node={<div>шляпа</div>}
+		onCallback={(...atr) => {console.log(atr)}}
 	/>
-
-Еще пример
-
-	<Example />

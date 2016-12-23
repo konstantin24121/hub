@@ -50,6 +50,7 @@
     "acorn-jsx": "^3.0.1",
     "babel-polyfill": "^6.16.0",
     "express": "^4.14.0",
+    "immutable": "^3.8.1",
     "material-ui": "^0.16.5",
     "react": "^15.3.2",
     "react-copy-to-clipboard": "^4.2.3",

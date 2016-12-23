@@ -16,12 +16,14 @@ export default class PlaygroundRenderer extends PureComponent {
 	static propTypes = {
 		code: PropTypes.string.isRequired,
 		showCode: PropTypes.bool.isRequired,
+		showPropsEditor: PropTypes.bool.isRequired,
 		name: PropTypes.string.isRequired,
 		index: PropTypes.number.isRequired,
 		props: PropTypes.object.isRequired,
 		evalInContext: PropTypes.func.isRequired,
 		onChange: PropTypes.func.isRequired,
 		onCodeToggle: PropTypes.func.isRequired,
+		onPropsEditorToggle: PropTypes.func.isRequired,
 		singleExample: PropTypes.bool,
 	};
 
@@ -42,8 +44,9 @@ export default class PlaygroundRenderer extends PureComponent {
 	}
 
 	render() {
-		const { code, showCode, name, index,
-			singleExample, evalInContext, onChange, onCodeToggle, props } = this.props;
+		const { code, showCode, showPropsEditor, name, index,
+			singleExample, evalInContext, onChange,
+			onCodeToggle, onPropsEditorToggle, props } = this.props;
 		const { containerSize, containerBg } = this.state;
 		const previewClass = cn(s.preview, 'rsg--example-preview',
 			s[`preview_Size${containerSize}`],
@@ -56,7 +59,9 @@ export default class PlaygroundRenderer extends PureComponent {
 						<Preview code={code} evalInContext={evalInContext} />
 					</div>
 				</div>
-				{props && <PropsEditor props={props} componentName={name} code={code} />}
+				{(showPropsEditor && props) && (
+					<PropsEditor props={props} componentName={name} code={code} />
+				)}
 				{showCode && (
 					<div>
 						<Editor code={code} onChange={onChange} />
@@ -112,6 +117,7 @@ export default class PlaygroundRenderer extends PureComponent {
 						</IconMenu>
 					</ToolbarGroup>
 					<ToolbarGroup>
+						<RaisedButton primary label={showPropsEditor ? 'Hide props editor' : 'Show props editor'} onClick={onPropsEditorToggle} />
 						<RaisedButton primary label={showCode ? 'Hide code' : 'Show code'} onClick={onCodeToggle} />
 					</ToolbarGroup>
 				</Toolbar>
