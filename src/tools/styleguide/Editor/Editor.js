@@ -37,8 +37,15 @@ export default class Editor extends Component {
 		this.handleChange = debounce(this.handleChange.bind(this), UPDATE_DELAY);
 	}
 
-	shouldComponentUpdate(nextProps) {
-		return nextProps.code !== this.state.code;
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			code: nextProps.code,
+		});
+	}
+
+	shouldComponentUpdate(nextProps, netxState) {
+		console.log(netxState.code, this.state.code);
+		return netxState.code !== this.state.code;
 	}
 
 	handleChange(newCode) {

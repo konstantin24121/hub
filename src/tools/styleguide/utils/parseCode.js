@@ -35,7 +35,7 @@ function parseProps(conponentNode) {
 						if (node.type !== 'Literal') continue;
 						propArray.push(node.value);
 					}
-					props[prop.name.name] = propArray;
+					props[prop.name.name] = propArray.join(', ');
 					break;
 				}
 				break;

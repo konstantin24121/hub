@@ -8,13 +8,15 @@ Example component:
 
 Использовать только в экстренных случаях.
 
-	<Example
-		string="Best component zad"
-		list="big"
-		booliat={true}
-		array={['zad', 'zad', 'zad', 'zad', 'zad', 'zad', 'zad', 'zad', 'zad']}
-		required="Best component ever"
-		integer={5}
-		node={<div>шляпа</div>}
-		onCallback={(...atr) => {console.log(atr)}}
-	/>
+	<span>
+		<Example
+			string="Best component zad"
+			list="big"
+			booliat={true}
+			array={['zad', 'zad', 'zad', 'zad', 'zad', 'zad', 'zad', 'zad', 'zad']}
+			required="Best component ever"
+			integer={5}
+			node={<div>шляпа</div>}
+			onCallback={(...atr) => {console.log(atr)}}
+		/>
+	</span>

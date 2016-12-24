@@ -12,7 +12,8 @@ import map from 'lodash/map';
 import Immutable from 'immutable';
 
 import { unquote, getType, showSpaces } from '../Props/util';
-import { parseProps, parseDefault, getTypeForLabel } from './utils';
+import { parseProps, parseDefault,
+	getTypeForLabel, generateProps, generateNewCode } from './utils';
 import s from './PropsEditor.css';
 
 export default class PropsEditor extends PureComponent {
@@ -20,6 +21,7 @@ export default class PropsEditor extends PureComponent {
 		props: PropTypes.object.isRequired,
 		componentName: PropTypes.string.isRequired,
 		code: PropTypes.string.isRequired,
+		onSubmit: PropTypes.func.isRequired,
 	};
 
 	constructor(props) {
@@ -77,8 +79,11 @@ export default class PropsEditor extends PureComponent {
 	};
 
 	handleSubmit = () => {
-		const {}
-		let propsString = '';
+		const { code, componentName } = this.props;
+		const { fields } = this.state;
+		const props = fields.map(field => generateProps(field.toJS()));
+		const newCode = generateNewCode(code, componentName, props.filter(prop => prop).toArray());
+		this.props.onSubmit(newCode);
 	};
 
 	renderTextField({ name, value, disabled, label, description, hintStyle }) {

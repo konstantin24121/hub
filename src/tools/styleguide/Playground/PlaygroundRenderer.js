@@ -63,7 +63,7 @@ export default class PlaygroundRenderer extends PureComponent {
 				<div className={s.toolWrapper}>
 					<div className={s.toolsWrapper}>
 						{(showPropsEditor && props) && (
-							<PropsEditor props={props} componentName={name} code={code} />
+							<PropsEditor props={props} componentName={name} code={code} onSubmit={onChange}/>
 						)}
 						{showCode && (
 							<div className={s.editorWrapper} >
