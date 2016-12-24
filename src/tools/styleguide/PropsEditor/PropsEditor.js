@@ -12,7 +12,7 @@ import map from 'lodash/map';
 import Immutable from 'immutable';
 
 import { unquote, getType, showSpaces } from '../Props/util';
-import { parseProps, parseDefault } from './utils';
+import { parseProps, parseDefault, getTypeForLabel } from './utils';
 import s from './PropsEditor.css';
 
 export default class PropsEditor extends PureComponent {
@@ -77,6 +77,7 @@ export default class PropsEditor extends PureComponent {
 	};
 
 	handleSubmit = () => {
+		const {}
 		let propsString = '';
 	};
 
@@ -118,10 +119,11 @@ export default class PropsEditor extends PureComponent {
 	}
 
 	renderCheckbox({ name, value, label, disabled }) {
+		const boolValue = !!value;
 		return (
 			<div className={s.customCheck}>
 				<Checkbox
-					defaultChecked={value}
+					defaultChecked={boolValue}
 					label={label}
 					labelPosition="left"
 					onCheck={this.handleChangeValueCheckBox({ name })}
@@ -139,7 +141,7 @@ export default class PropsEditor extends PureComponent {
 		const defaultVariable = defaultValue ? parseDefault(defaultValue) : '';
 		const disabled = fields.getIn([name, 'disabled']);
 		const variable = disabled ? defaultVariable : fields.getIn([name, 'value']);
-		const label = `${required ? '*' : ''}${name}`;
+		const label = `${required ? '*' : ''}${name} :${getTypeForLabel(type)}`;
 		const hintStyle = { fontSize: 12 };
 
 		let component;

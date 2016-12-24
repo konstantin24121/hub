@@ -64,13 +64,15 @@
 		width: auto;
 		max-width: 500px;
 		flex-direction: row;
-		box-shadow: rgba(0, 0, 0, 0.117647) 3px 0 3px -2px inset;
+		box-shadow: rgba(0, 0, 0, 0.117647) -3px 0 6px -2px;
 	}
 }
 
 .toolsWrapper {
 	display: flex;
 	flex-direction: column;
+	background-color: #263238;
+	min-width: 350px;
 }
 
 .toolbar {
@@ -123,22 +125,7 @@
 
 .editorWrapper {
 	width: 100%;
-}
 
-.codeToggle {
-	cursor: pointer;
-	border-top: 0;
-	padding: 6px 8px;
-	font-size: 14px;
-	line-height: 1;
-}
-
-.showCode {
-	composes: codeToggle;
-}
-
-.hideCode {
-	composes: codeToggle;
 }
 
 .root:hover .isolatedLink {

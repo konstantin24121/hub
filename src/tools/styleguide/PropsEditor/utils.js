@@ -20,3 +20,14 @@ export function parseDefault(defaultVal) {
 	const func = new Function('', `return ${defaultVal.value};`);
 	return func();
 }
+
+export function getTypeForLabel(type) {
+	switch (type.name) {
+		case 'string': return type.name;
+		case 'number': return 'int';
+		case 'enum': return 'oneOf';
+		case 'bool': return type.name;
+		case 'arrayOf': return `${type.name}[${getTypeForLabel(type.value)}]`;
+		default: return '';
+	}
+}
