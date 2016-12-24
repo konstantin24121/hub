@@ -44,12 +44,12 @@
 	font-size: 13px;
 
 	&_wide {
-		width: 300px;
+		min-width: 300px;
 	}
 }
 
 .cellDesc {
-	width: 50%;
+	width: 100%;
 	padding-left: 15px;
 }
 

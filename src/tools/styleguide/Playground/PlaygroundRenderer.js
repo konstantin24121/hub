@@ -60,83 +60,87 @@ export default class PlaygroundRenderer extends PureComponent {
 						<Preview code={code} evalInContext={evalInContext} />
 					</div>
 				</div>
-				{(showPropsEditor && props) && (
-					<PropsEditor props={props} componentName={name} code={code} />
-				)}
-				{showCode && (
-					<div>
-						<Editor code={code} onChange={onChange} />
+				<div className={s.toolWrapper}>
+					<div className={s.toolsWrapper}>
+						{(showPropsEditor && props) && (
+							<PropsEditor props={props} componentName={name} code={code} />
+						)}
+						{showCode && (
+							<div className={s.editorWrapper} >
+								<Editor code={code} onChange={onChange} />
+							</div>
+						)}
 					</div>
-				)}
-				<Toolbar>
-					<ToolbarGroup>
-						<IconButton
-							tooltip="Large container"
-							iconClassName="material-icons"
-							onClick={this.handleChangeContainerSize('Lg')}
-							iconStyle={{ color: containerSize === 'Lg' ? cyan500 : 'currentColor' }}
-						>
-							tv
-						</IconButton>
-						<IconButton
-							tooltip="Middle container"
-							iconClassName="material-icons"
-							onClick={this.handleChangeContainerSize('Md')}
-							iconStyle={{ color: containerSize === 'Md' ? cyan500 : 'currentColor' }}
-						>
-							laptop
-						</IconButton>
-						<IconButton
-							tooltip="Small container"
-							iconClassName="material-icons"
-							onClick={this.handleChangeContainerSize('Sm')}
-							iconStyle={{ color: containerSize === 'Sm' ? cyan500 : 'currentColor' }}
-						>
-							tablet_android
-						</IconButton>
-						<IconButton
-							tooltip="Extra small container"
-							iconClassName="material-icons"
-							onClick={this.handleChangeContainerSize('Xs')}
-							iconStyle={{ color: containerSize === 'Xs' ? cyan500 : 'currentColor' }}
-						>
-							phone_android
-						</IconButton>
-						<ToolbarSeparator />
-						<IconMenu
-							onChange={this.handleChangeContainerBackground}
-							value={containerBg}
-							iconButtonElement={
-								<IconButton touch>
-									<Palette />
-								</IconButton>
-							}
-						>
-							<MenuItem value="Dark" primaryText="Dark" />
-							<MenuItem value="Light" primaryText="Light" />
-							<MenuItem value="Transparent" primaryText="Transparent" />
-						</IconMenu>
-					</ToolbarGroup>
-					<ToolbarGroup>
-						<IconButton
-							tooltip={showPropsEditor ? 'Hide props editor' : 'Show props editor'}
-							iconClassName="material-icons"
-							onClick={onPropsEditorToggle}
-							iconStyle={{ color: showPropsEditor ? cyan500 : 'currentColor' }}
-						>
-							tune
-						</IconButton>
-						<ToolbarSeparator />
-						<IconButton
-							tooltip={showCode ? 'Hide code' : 'Show code'}
-							iconClassName="material-icons"
-							onClick={onCodeToggle}
-							iconStyle={{ color: showCode ? cyan500 : 'currentColor' }}
-						>
-							code
-						</IconButton>
-					</ToolbarGroup>
-				</Toolbar>
+					<div className={s.toolbar}>
+						<div className={s.toolbarGroup}>
+							<IconButton
+								tooltip="Large container"
+								iconClassName="material-icons"
+								onClick={this.handleChangeContainerSize('Lg')}
+								iconStyle={{ color: containerSize === 'Lg' ? cyan500 : 'currentColor' }}
+							>
+								tv
+							</IconButton>
+							<IconButton
+								tooltip="Middle container"
+								iconClassName="material-icons"
+								onClick={this.handleChangeContainerSize('Md')}
+								iconStyle={{ color: containerSize === 'Md' ? cyan500 : 'currentColor' }}
+							>
+								laptop
+							</IconButton>
+							<IconButton
+								tooltip="Small container"
+								iconClassName="material-icons"
+								onClick={this.handleChangeContainerSize('Sm')}
+								iconStyle={{ color: containerSize === 'Sm' ? cyan500 : 'currentColor' }}
+							>
+								tablet_android
+							</IconButton>
+							<IconButton
+								tooltip="Extra small container"
+								iconClassName="material-icons"
+								onClick={this.handleChangeContainerSize('Xs')}
+								iconStyle={{ color: containerSize === 'Xs' ? cyan500 : 'currentColor' }}
+							>
+								phone_android
+							</IconButton>
+							<div className={s.toolbarSeparator} />
+							<IconMenu
+								onChange={this.handleChangeContainerBackground}
+								value={containerBg}
+								iconButtonElement={
+									<IconButton touch>
+										<Palette />
+									</IconButton>
+								}
+							>
+								<MenuItem value="Dark" primaryText="Dark" />
+								<MenuItem value="Light" primaryText="Light" />
+								<MenuItem value="Transparent" primaryText="Transparent" />
+							</IconMenu>
+						</div>
+						<div className={cn(s.toolbarGroup, s.toolbarGroup_left)}>
+							<div className={s.toolbarSeparator} />
+							<IconButton
+								tooltip={showPropsEditor ? 'Hide props editor' : 'Show props editor'}
+								iconClassName="material-icons"
+								onClick={onPropsEditorToggle}
+								iconStyle={{ color: showPropsEditor ? cyan500 : 'currentColor' }}
+							>
+								tune
+							</IconButton>
+							<IconButton
+								tooltip={showCode ? 'Hide code' : 'Show code'}
+								iconClassName="material-icons"
+								onClick={onCodeToggle}
+								iconStyle={{ color: showCode ? cyan500 : 'currentColor' }}
+							>
+								code
+							</IconButton>
+						</div>
+					</div>
+				</div>
 			</div>
 		);
 	}

@@ -12,7 +12,7 @@ import map from 'lodash/map';
 import Immutable from 'immutable';
 
 import { unquote, getType, showSpaces } from '../Props/util';
-import generateFields from './utils';
+import { parseProps, parseDefault } from './utils';
 import s from './PropsEditor.css';
 
 export default class PropsEditor extends PureComponent {
@@ -30,14 +30,14 @@ export default class PropsEditor extends PureComponent {
 	}
 
 	componentWillMount() {
-		const fields = generateFields(this.props);
+		const fields = parseProps(this.props);
 		this.setState({
 			fields: new Immutable.Map(fields),
 		});
 	}
 
 	componentWillReceiveProps(nextProps) {
-		const fields = generateFields(nextProps);
+		const fields = parseProps(nextProps);
 		this.setState({
 			fields: new Immutable.Map(fields),
 		});
@@ -65,9 +65,14 @@ export default class PropsEditor extends PureComponent {
 
 	handleToggleProp = ({ name }) => () => {
 		const { fields } = this.state;
-		const value = fields.getIn([name, 'disabled']);
+		const field = fields.get(name);
+		const newField = field.withMutations(map => {
+			const value = map.get('disabled');
+			map.set('disabled', !value)
+				.set('value', '');
+		});
 		this.setState({
-			fields: fields.setIn([name, 'disabled'], !value),
+			fields: fields.set(name, newField),
 		});
 	};
 
@@ -76,10 +81,11 @@ export default class PropsEditor extends PureComponent {
 	};
 
 	renderTextField({ name, value, disabled, label, description, hintStyle }) {
+		const stringValue = value.toString();
 		return (
 			<TextField
 				key={name}
-				value={value}
+				value={stringValue}
 				disabled={disabled}
 				floatingLabelText={label}
 				hintText={description}
@@ -127,13 +133,15 @@ export default class PropsEditor extends PureComponent {
 		);
 	}
 
-	renderField = ({ type, value, description, required, name }) => {
+	renderField = ({ type, value, description, defaultValue, required, name }) => {
 		if (!type) return null;
 		const { fields } = this.state;
+		const defaultVariable = defaultValue ? parseDefault(defaultValue) : '';
 		const disabled = fields.getIn([name, 'disabled']);
-		const variable = fields.getIn([name, 'value']);
-		const label = `${name}${required ? '*' : ''}`;
+		const variable = disabled ? defaultVariable : fields.getIn([name, 'value']);
+		const label = `${required ? '*' : ''}${name}`;
 		const hintStyle = { fontSize: 12 };
+
 		let component;
 		switch (type.name) {
 			case 'bool': {
@@ -175,10 +183,9 @@ export default class PropsEditor extends PureComponent {
 				switch (type.value.name) {
 					case 'string':
 					case 'number': {
-						const concatValue = variable ? variable.join(', ') : variable;
 						component = this.renderTextField({
 							name,
-							value: concatValue,
+							value: variable,
 							disabled,
 							label,
 							description,
@@ -194,7 +201,7 @@ export default class PropsEditor extends PureComponent {
 				return null;
 		}
 
-		if(!component) return null;
+		if (!component) return null;
 
 		return (
 			<div className={s.item} key={name}>
@@ -220,6 +227,7 @@ export default class PropsEditor extends PureComponent {
 				type: getType(item),
 				value: item.type.value,
 				description: item.description,
+				defaultValue: item.defaultValue,
 				required: item.required,
 				name: key,
 			})

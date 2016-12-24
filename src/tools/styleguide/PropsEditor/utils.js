@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import forEach from 'lodash/forEach';
 import parseCode from '../utils/parseCode';
 
-export default function(props) {
+export function parseProps(props) {
 	const codeParams = parseCode(props.code, props.componentName);
 	const fields = {};
 	forEach(props.props, (item, key) => {
@@ -14,4 +14,9 @@ export default function(props) {
 		});
 	});
 	return fields;
+};
+
+export function parseDefault(defaultVal) {
+	const func = new Function('', `return ${defaultVal.value};`);
+	return func();
 }
