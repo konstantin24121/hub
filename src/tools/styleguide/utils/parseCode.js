@@ -15,7 +15,17 @@ function findComponent(node, componentName, code) {
 	throw Error(`Parser can't find component in code ${code}`);
 }
 
-function parseProps(conponentNode) {
+function getPureCode(name, code) {
+	const regexp = new RegExp(`${name}=\\{(.+)\\}`, 'gui');
+	try {
+		return regexp.exec(code)[1];
+	} catch (e) {
+		throw new Error(e);
+	}
+	return '';
+}
+
+function parseProps(conponentNode, code) {
 	const props = {};
 	for (const prop of conponentNode.attributes) {
 
@@ -39,7 +49,7 @@ function parseProps(conponentNode) {
 					props[prop.name.name] = propArray.join(', ');
 					break;
 				}
-				console.log(prop);
+				props[prop.name.name] = getPureCode(prop.name.name, code);
 				break;
 			}
 			default: {
@@ -56,6 +66,6 @@ export default function (code, componentName) {
 		plugins: { jsx: true },
 	});
 	const componentNode = findComponent(parseCode.body[0].expression, componentName, code);
-	const props = parseProps(componentNode);
+	const props = parseProps(componentNode, code);
 	return props;
 }

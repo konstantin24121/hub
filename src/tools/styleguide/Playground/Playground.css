@@ -73,6 +73,10 @@
 	flex-direction: column;
 	background-color: #263238;
 	min-width: 350px;
+
+	&:empty {
+		min-width: 0px;
+	}
 }
 
 .toolbar {

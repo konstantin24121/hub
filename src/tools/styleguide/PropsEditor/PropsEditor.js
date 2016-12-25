@@ -6,6 +6,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
 import Checkbox from 'material-ui/Checkbox';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import cn from 'classnames';
 import map from 'lodash/map';
@@ -140,6 +141,53 @@ export default class PropsEditor extends PureComponent {
 		);
 	}
 
+	renderObjectField({ name, value, disabled, label, description, hintStyle }) {
+		const rawVariable = typeof value === 'object'
+			? JSON.stringify(value)
+			: value;
+		return this.renderTextField({
+			name,
+			value: rawVariable,
+			disabled: true,
+			label,
+			description,
+			hintStyle,
+		});
+	}
+
+	renderRadio({ name, disabled, value }) {
+		const style = {
+			display: 'flex',
+			float: 'left',
+			marginRight: '1rem',
+			marginTop: '1rem',
+			width: 'auto',
+		};
+		return (
+			<div>
+				<RadioButtonGroup
+					name={name}
+					onChange={this.handleChangeValueCheckBox({ name })}
+					defaultSelected={value}
+				>
+					<RadioButton
+						value="(...atr) => {console.log(atr)}"
+						label="console"
+						disabled={disabled}
+						style={style}
+					/>
+					<RadioButton
+						value="(...atr) => {alert(atr)}"
+						disabled={disabled}
+						label="alert"
+						style={style}
+					/>
+				</RadioButtonGroup>
+			</div>
+		);
+	}
+
+
 	renderField = ({ type, value, description, defaultValue, required, name }) => {
 		if (!type) return null;
 		const { fields } = this.state;
@@ -150,6 +198,7 @@ export default class PropsEditor extends PureComponent {
 		const hintStyle = { fontSize: 12 };
 
 		let component;
+		let enableToggle = true;
 		switch (type.name) {
 			case 'bool': {
 				component = this.renderCheckbox({
@@ -172,6 +221,14 @@ export default class PropsEditor extends PureComponent {
 						hintStyle,
 					},
 				);
+				break;
+			}
+			case 'func': {
+				component = this.renderRadio({
+					name,
+					disabled,
+					value: variable,
+				});
 				break;
 			}
 			case 'string':
@@ -200,12 +257,32 @@ export default class PropsEditor extends PureComponent {
 						});
 						break;
 					}
-					default: break;
+					default: {
+						component = this.renderObjectField({
+							name,
+							value: variable,
+							disabled,
+							label,
+							description,
+							hintStyle,
+						});
+						enableToggle = false;
+						break;
+					}
 				}
 				break;
 			}
-			default:
-				return null;
+			default: {
+				component = this.renderObjectField({
+					name,
+					value: variable,
+					disabled,
+					label,
+					description,
+					hintStyle,
+				});
+				enableToggle = false;
+			}
 		}
 
 		if (!component) return null;
@@ -215,13 +292,15 @@ export default class PropsEditor extends PureComponent {
 				<div className={s.field}>
 					{component}
 				</div>
-				<div className={s.fieldToggle}>
-					<Toggle
-						defaultToggled={!disabled}
-						disabled={required}
-						onToggle={this.handleToggleProp({ name })}
-					/>
-				</div>
+				{enableToggle &&
+					<div className={s.fieldToggle}>
+						<Toggle
+							defaultToggled={!disabled}
+							disabled={required}
+							onToggle={this.handleToggleProp({ name })}
+						/>
+					</div>
+				}
 			</div>
 		);
 	};

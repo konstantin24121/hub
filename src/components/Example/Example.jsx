@@ -22,6 +22,18 @@ class Example extends PureComponent {
 		 */
 		string: PropTypes.string,
 		/**
+		 * Обязательный атрибут
+		 */
+		required: PropTypes.string.isRequired,
+		/**
+		 * Перечисляемое свойство
+		 */
+		list: PropTypes.oneOf(['big', 'medium', 'small']),
+		/**
+		 * Число. Просто Число
+		 */
+		integer: PropTypes.number,
+		/**
 		 * Узел
 		 */
 		node: PropTypes.node,
@@ -36,18 +48,6 @@ class Example extends PureComponent {
 			string: PropTypes.string,
 			number: PropTypes.number,
 		}),
-		/**
-		 * Обязательный атрибут
-		 */
-		required: PropTypes.string.isRequired,
-		/**
-		 * Перечисляемое свойство
-		 */
-		list: PropTypes.oneOf(['big', 'medium', 'small']),
-		/**
-		 * Число. Просто Число
-		 */
-		integer: PropTypes.number,
 		/**
 		 * Массив объектов
 		 */
@@ -66,7 +66,6 @@ class Example extends PureComponent {
 	static defaultProps = {
 		array: ['nothing'],
 		booliat: false,
-		string: 'zad',
 		list: 'medium',
 		integer: 5,
 		stringObjects: {

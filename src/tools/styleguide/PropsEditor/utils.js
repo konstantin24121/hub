@@ -15,7 +15,7 @@ export function parseProps(props) {
 		});
 	});
 	return fields;
-};
+}
 
 export function parseDefault(defaultVal) {
 	const func = new Function('', `return ${defaultVal.value};`);
@@ -24,17 +24,18 @@ export function parseDefault(defaultVal) {
 
 export function getTypeForLabel(type) {
 	switch (type.name) {
+		case 'bool':
+		case 'node':
 		case 'string': return type.name;
 		case 'number': return 'int';
 		case 'enum': return 'oneOf';
-		case 'bool': return type.name;
 		case 'arrayOf': return `${type.name}[${getTypeForLabel(type.value)}]`;
 		default: return '';
 	}
 }
 
 export function generateProps(field) {
-	const { type, name, disabled, value} = field;
+	const { type, name, disabled, value } = field;
 	if (disabled) return;
 
 	switch (type.name) {
@@ -67,7 +68,8 @@ export function generateProps(field) {
 				default: return;
 			}
 		}
-		default: return;
+		default:
+			return `${name}={${value}}`;
 	}
 }
 

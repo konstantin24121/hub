@@ -44,7 +44,6 @@ export default class Editor extends Component {
 	}
 
 	shouldComponentUpdate(nextProps, netxState) {
-		console.log(netxState.code, this.state.code);
 		return netxState.code !== this.state.code;
 	}
 

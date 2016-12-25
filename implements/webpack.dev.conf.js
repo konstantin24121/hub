@@ -21,7 +21,7 @@ module.exports = {
 		loaders: [{
 			test: /\.scss$/,
 			include: [/src/],
-			loader: 'style!css?modules&importLoaders=2!postcss!sass'
+			loader: 'style!css?modules!postcss!sass'
 		}, {
 			test: /\.css$/,
 			include: [/src/],
