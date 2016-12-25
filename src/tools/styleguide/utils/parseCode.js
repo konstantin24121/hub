@@ -18,6 +18,7 @@ function findComponent(node, componentName, code) {
 function parseProps(conponentNode) {
 	const props = {};
 	for (const prop of conponentNode.attributes) {
+
 		switch (prop.value.type) {
 			case 'Literal': {
 				props[prop.name.name] = prop.value.value;
@@ -38,9 +39,13 @@ function parseProps(conponentNode) {
 					props[prop.name.name] = propArray.join(', ');
 					break;
 				}
+				console.log(prop);
 				break;
 			}
-			default: break;
+			default: {
+				console.log(prop);
+				break;
+			}
 		}
 	}
 	return props;

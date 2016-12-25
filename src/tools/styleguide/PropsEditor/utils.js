@@ -34,7 +34,6 @@ export function getTypeForLabel(type) {
 }
 
 export function generateProps(field) {
-	// console.log(field);
 	const { type, name, disabled, value} = field;
 	if (disabled) return;
 

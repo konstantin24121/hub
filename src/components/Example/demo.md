@@ -17,6 +17,11 @@ Example component:
 			required="Best component ever"
 			integer={5}
 			node={<div>шляпа</div>}
+			stringObjects={{1: 'zad', 2:'kazadov'}}
+			arrayOfShapes={[
+				{id: 1, name: 'Piter'},
+				{id: 4, name: 'Zek'},
+			]}
 			onCallback={(...atr) => {console.log(atr)}}
 		/>
 	</span>
