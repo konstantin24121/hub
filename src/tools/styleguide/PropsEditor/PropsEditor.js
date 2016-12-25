@@ -141,20 +141,6 @@ export default class PropsEditor extends PureComponent {
 		);
 	}
 
-	renderObjectField({ name, value, disabled, label, description, hintStyle }) {
-		const rawVariable = typeof value === 'object'
-			? JSON.stringify(value)
-			: value;
-		return this.renderTextField({
-			name,
-			value: rawVariable,
-			disabled: true,
-			label,
-			description,
-			hintStyle,
-		});
-	}
-
 	renderRadio({ name, disabled, value }) {
 		const style = {
 			display: 'flex',
@@ -257,32 +243,12 @@ export default class PropsEditor extends PureComponent {
 						});
 						break;
 					}
-					default: {
-						component = this.renderObjectField({
-							name,
-							value: variable,
-							disabled,
-							label,
-							description,
-							hintStyle,
-						});
-						enableToggle = false;
+					default:
 						break;
-					}
 				}
 				break;
 			}
-			default: {
-				component = this.renderObjectField({
-					name,
-					value: variable,
-					disabled,
-					label,
-					description,
-					hintStyle,
-				});
-				enableToggle = false;
-			}
+			default: break;
 		}
 
 		if (!component) return null;
