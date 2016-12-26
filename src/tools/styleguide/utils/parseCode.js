@@ -1,6 +1,7 @@
 const acorn = require('acorn-jsx');
 
 function findComponent(node, componentName, code) {
+	console.log(node);
 	const { openingElement, children, type } = node;
 	if (type !== 'JSXElement') return false;
 
@@ -65,7 +66,8 @@ export default function (code, componentName) {
 	const parseCode = acorn.parse(code, {
 		plugins: { jsx: true },
 	});
-	const componentNode = findComponent(parseCode.body[0].expression, componentName, code);
+	const ellement = parseCode.body.find(node => node.type === 'ExpressionStatement');
+	const componentNode = findComponent(ellement.expression, componentName, code);
 	const props = parseProps(componentNode, code);
 	return props;
 }

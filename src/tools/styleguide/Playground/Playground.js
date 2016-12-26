@@ -5,10 +5,12 @@ import PlaygroundRenderer from 'rsg-components/Playground/PlaygroundRenderer';
 export default class Playground extends Component {
 	static propTypes = {
 		code: PropTypes.string.isRequired,
+		props: PropTypes.object.isRequired,
 		evalInContext: PropTypes.func.isRequired,
 		index: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
 	};
+
 	static contextTypes = {
 		config: PropTypes.object.isRequired,
 		singleExample: PropTypes.bool,
@@ -17,12 +19,9 @@ export default class Playground extends Component {
 	constructor(props, context) {
 		super(props, context);
 		const { code } = props;
-		const { showCode } = context.config;
 
 		this.state = {
 			code,
-			showCode,
-			showPropsEditor: false,
 		};
 	}
 
@@ -64,23 +63,10 @@ export default class Playground extends Component {
 			// if previewDelay is enabled debounce the code
 			this.queuedChange = debounce(queuedChange, previewDelay);
 			this.queuedChange();
-		}
-		else {
+		}	else {
 			// otherwise execute it
 			queuedChange();
 		}
-	}
-
-	handleCodeToggle() {
-		this.setState({
-			showCode: !this.state.showCode,
-		});
-	}
-
-	handlePropsEditorToggle() {
-		this.setState({
-			showPropsEditor: !this.state.showPropsEditor,
-		});
 	}
 
 	render() {
@@ -98,8 +84,6 @@ export default class Playground extends Component {
 				singleExample={singleExample}
 				evalInContext={evalInContext}
 				onChange={code => this.handleChange(code)}
-				onCodeToggle={() => this.handleCodeToggle()}
-				onPropsEditorToggle={() => this.handlePropsEditorToggle()}
 			/>
 		);
 	}

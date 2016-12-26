@@ -7,11 +7,13 @@ import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import Responsive from 'react-responsive-decorator';
 
 injectTapEventPlugin();
 
 const s = require('./StyleGuide.css');
 
+@Responsive
 class StyleGuideRenderer extends Component {
 	static displayName = 'StyleGuideRenderer';
 
@@ -28,28 +30,26 @@ class StyleGuideRenderer extends Component {
 		this.state = {
 			drawerOpen: localStorage.getItem(`${this.constructor.displayName}DrawerOpen`) === 'true',
 		};
-		this.handleResize = throttle(this.handleResize, 300);
 	}
 
 	componentWillMount() {
-		window.addEventListener('resize', this.handleResize);
-		this.handleResize();
+		const { media } = this.props;
+		media({ minWidth: 800 }, () => {
+      this.setState({
+        isMobile: false
+      });
+    });
+
+    media({ maxWidth: 800 }, () => {
+      this.setState({
+        isMobile: true
+      });
+    });
 	}
 
 	componentWillUpdate(nextProps, nextState) {
 		localStorage.setItem(`${this.constructor.displayName}DrawerOpen`, nextState.drawerOpen);
 	}
-
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize);
-		this.handleResize.cancel();
-	}
-
-	handleResize = () => {
-		this.setState({
-			isMobile: Math.max(document.documentElement.clientWidth, window.innerWidth || 0) > 800,
-		});
-	};
 
 	handleOpenDrawer = () => {
 		this.setState({
@@ -96,7 +96,7 @@ class StyleGuideRenderer extends Component {
 						</div>
 					</main>
 					{sidebar &&
-						<Drawer open={drawerOpen} docked={this.state.isMobile}>
+						<Drawer open={drawerOpen} docked={!this.state.isMobile}>
 							<h1 className={s.heading}>{title}</h1>
 							<IconButton
 								tooltip={drawerOpen ? "Close filter" : "Open filter"}

@@ -43,6 +43,9 @@ const common = {
 			{ test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=application/octet-stream" },
 			{ test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "file" },
 			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/svg+xml" },
+			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/svg+xml" },
+			{ test: /\.jpg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/jpg" },
+			{ test: /\.png(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/png" },
 		]
 	},
 

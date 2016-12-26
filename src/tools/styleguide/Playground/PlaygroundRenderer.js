@@ -1,14 +1,9 @@
 import React, { PropTypes, PureComponent } from 'react';
 import Editor from 'rsg-components/Editor';
 import Preview from 'rsg-components/Preview';
-import RaisedButton from 'material-ui/RaisedButton';
-import IconButton from 'material-ui/IconButton';
-import MenuItem from 'material-ui/MenuItem';
-import IconMenu from 'material-ui/IconMenu';
-import Palette from 'material-ui/svg-icons/image/palette';
 import cn from 'classnames';
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
-import { cyan500 } from 'material-ui/styles/colors';
+
+import Toolbar from '../Toolbar';
 import PropsEditor from '../PropsEditor';
 
 const s = require('./Playground.css');
@@ -16,15 +11,11 @@ const s = require('./Playground.css');
 export default class PlaygroundRenderer extends PureComponent {
 	static propTypes = {
 		code: PropTypes.string.isRequired,
-		showCode: PropTypes.bool.isRequired,
-		showPropsEditor: PropTypes.bool.isRequired,
 		name: PropTypes.string.isRequired,
 		index: PropTypes.number.isRequired,
 		props: PropTypes.object.isRequired,
 		evalInContext: PropTypes.func.isRequired,
 		onChange: PropTypes.func.isRequired,
-		onCodeToggle: PropTypes.func.isRequired,
-		onPropsEditorToggle: PropTypes.func.isRequired,
 		singleExample: PropTypes.bool,
 	};
 
@@ -33,6 +24,8 @@ export default class PlaygroundRenderer extends PureComponent {
 		this.state = {
 			containerSize: 'Lg',
 			containerBg: 'Light',
+			showCode: false,
+			showPropsEditor: false,
 		};
 	}
 
@@ -42,13 +35,24 @@ export default class PlaygroundRenderer extends PureComponent {
 
 	handleChangeContainerBackground = (event, value) => {
 		this.setState({ containerBg: value });
-	}
+	};
+
+	handleCodeToggle = () => {
+		this.setState(prevState => ({
+			showCode: !prevState.showCode,
+		}));
+	};
+
+	handlePropsEditorToggle = () => {
+		this.setState(prevState => ({
+			showPropsEditor: !prevState.showPropsEditor,
+		}));
+	};
 
 	render() {
-		const { code, showCode, showPropsEditor, name, index,
-			singleExample, evalInContext, onChange,
-			onCodeToggle, onPropsEditorToggle, props } = this.props;
-		const { containerSize, containerBg } = this.state;
+		const { code, name, index,
+			singleExample, evalInContext, onChange, props } = this.props;
+		const { containerSize, containerBg, showCode, showPropsEditor } = this.state;
 		const previewClass = cn(s.preview, 'rsg--example-preview',
 			s[`preview_Size${containerSize}`],
 			s[`preview_Bg${containerBg}`],
@@ -71,75 +75,16 @@ export default class PlaygroundRenderer extends PureComponent {
 							</div>
 						)}
 					</div>
-					<div className={s.toolbar}>
-						<div className={s.toolbarGroup}>
-							<IconButton
-								tooltip="Large container"
-								iconClassName="material-icons"
-								onClick={this.handleChangeContainerSize('Lg')}
-								iconStyle={{ color: containerSize === 'Lg' ? cyan500 : 'currentColor' }}
-							>
-								tv
-							</IconButton>
-							<IconButton
-								tooltip="Middle container"
-								iconClassName="material-icons"
-								onClick={this.handleChangeContainerSize('Md')}
-								iconStyle={{ color: containerSize === 'Md' ? cyan500 : 'currentColor' }}
-							>
-								laptop
-							</IconButton>
-							<IconButton
-								tooltip="Small container"
-								iconClassName="material-icons"
-								onClick={this.handleChangeContainerSize('Sm')}
-								iconStyle={{ color: containerSize === 'Sm' ? cyan500 : 'currentColor' }}
-							>
-								tablet_android
-							</IconButton>
-							<IconButton
-								tooltip="Extra small container"
-								iconClassName="material-icons"
-								onClick={this.handleChangeContainerSize('Xs')}
-								iconStyle={{ color: containerSize === 'Xs' ? cyan500 : 'currentColor' }}
-							>
-								phone_android
-							</IconButton>
-							<div className={s.toolbarSeparator} />
-							<IconMenu
-								onChange={this.handleChangeContainerBackground}
-								value={containerBg}
-								iconButtonElement={
-									<IconButton touch>
-										<Palette />
-									</IconButton>
-								}
-							>
-								<MenuItem value="Dark" primaryText="Dark" />
-								<MenuItem value="Light" primaryText="Light" />
-								<MenuItem value="Transparent" primaryText="Transparent" />
-							</IconMenu>
-						</div>
-						<div className={cn(s.toolbarGroup, s.toolbarGroup_left)}>
-							<div className={s.toolbarSeparator} />
-							<IconButton
-								tooltip={showPropsEditor ? 'Hide props editor' : 'Show props editor'}
-								iconClassName="material-icons"
-								onClick={onPropsEditorToggle}
-								iconStyle={{ color: showPropsEditor ? cyan500 : 'currentColor' }}
-							>
-								tune
-							</IconButton>
-							<IconButton
-								tooltip={showCode ? 'Hide code' : 'Show code'}
-								iconClassName="material-icons"
-								onClick={onCodeToggle}
-								iconStyle={{ color: showCode ? cyan500 : 'currentColor' }}
-							>
-								code
-							</IconButton>
-						</div>
-					</div>
+					<Toolbar
+						containerSize={containerSize}
+						containerBg={containerBg}
+						showCode={showCode}
+						showPropsEditor={showPropsEditor}
+						onSizeChange={this.handleChangeContainerSize}
+						onColorChange={this.handleChangeContainerBackground}
+						onCodeClick={this.handleCodeToggle}
+						onPropsEditorClick={this.handlePropsEditorToggle}
+					/>
 				</div>
 			</div>
 		);

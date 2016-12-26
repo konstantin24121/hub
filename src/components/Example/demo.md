@@ -1,3 +1,5 @@
+
+
 Example component:
 
 	<span>
@@ -8,6 +10,7 @@ Example component:
 
 Использовать только в экстренных случаях.
 
+	const mockData = require('./mocks');
 	<span>
 		<Example
 			string="Best component zad"
@@ -18,10 +21,7 @@ Example component:
 			integer={5}
 			node={<div>шляпа</div>}
 			stringObjects={{1: 'zad', 2:'kazadov'}}
-			arrayOfShapes={[
-				{id: 1, name: 'Piter'},
-				{id: 4, name: 'Zek'},
-			]}
+			arrayOfShapes={mockData.arrayOfSHapes}
 			onCallback={(...atr) => {console.log(atr)}}
 		/>
 	</span>
