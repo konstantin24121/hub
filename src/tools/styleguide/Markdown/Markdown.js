@@ -1,3 +1,9 @@
+/* eslint
+  import/no-extraneous-dependencies: off,
+  import/no-unresolved: off,
+  import/extensions: off,
+  react/jsx-filename-extension: off
+*/
 import { PropTypes } from 'react';
 import mapValues from 'lodash/mapValues';
 import renderMarkdown from 'react-styleguidist/src/utils/markdown-to-jsx';
@@ -5,32 +11,32 @@ import renderMarkdown from 'react-styleguidist/src/utils/markdown-to-jsx';
 import s from './Markdown.css';
 
 // Custom CSS classes for each tag: <em> → <em className={s.em}>.
-const overrides = mapValues(s, value => ({
-	props: {
-		className: value,
-	},
+const overrides = mapValues(s, (value) => ({
+  props: {
+    className: value,
+  },
 }));
 
 // Inline mode: replace <p> (usual root component) with <span>
 const overridesInline = {
-	...overrides,
-	p: {
-		component: 'span',
-		props: {
-			className: s.base,
-		},
-	},
+  ...overrides,
+  p: {
+    component: 'span',
+    props: {
+      className: s.base,
+    },
+  },
 };
 
 export default function Markdown({
-	text,
-	inline,
+  text,
+  inline,
 }) {
-	const options = { overrides: inline ? overridesInline : overrides };
-	return renderMarkdown(text, options);
+  const options = { overrides: inline ? overridesInline : overrides };
+  return renderMarkdown(text, options);
 }
 
 Markdown.propTypes = {
-	text: PropTypes.string.isRequired,
-	inline: PropTypes.bool,
+  text: PropTypes.string.isRequired,
+  inline: PropTypes.bool,
 };

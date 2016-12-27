@@ -1,15 +1,18 @@
+/* eslint
+  react/jsx-filename-extension: off
+*/
 import React, { PropTypes } from 'react';
 
 import s from './Editor.css';
 
 const EditorRenderer = ({ children }) => (
-	<div className={s.root}>
-		{children}
-	</div>
+  <div className={s.root}>
+    {children}
+  </div>
 );
 
 EditorRenderer.propTypes = {
-	children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default EditorRenderer;

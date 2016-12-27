@@ -1,88 +1,88 @@
 .root {
-	position: relative;
-	border: 1px solid rgb(224, 224, 224);
-	background-color: #fff;
-	margin-bottom: 30px;
+  position: relative;
+  border: 1px solid rgb(224, 224, 224);
+  background-color: #fff;
+  margin-bottom: 30px;
 
-	@media (min-width: 1300px) {
-		display: flex;
-		justify-content: space-between;
-	}
+  @media (min-width: 1300px) {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .previewBox {
-	width: 100%;
-	padding: 1rem;
-	overflow: hidden;
+  width: 100%;
+  padding: 1rem;
+  overflow: hidden;
 }
 
 .preview {
-	margin: 0 auto;
-	padding: 15px 24px;
-	overflow: auto;
-	transition: width 0.5s;
-	max-width: 100%;
-	box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
+  margin: 0 auto;
+  padding: 15px 24px;
+  overflow: auto;
+  transition: width 0.5s;
+  max-width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
 
-	&_SizeLg {
-		width: 1024px;
-	}
+  &_SizeLg {
+    width: 1024px;
+  }
 
-	&_SizeMd {
-		width: 800px;
-	}
+  &_SizeMd {
+    width: 800px;
+  }
 
-	&_SizeSm {
-		width: 568px;
-	}
+  &_SizeSm {
+    width: 568px;
+  }
 
-	&_SizeXs {
-		width: 320px;
-	}
+  &_SizeXs {
+    width: 320px;
+  }
 
-	&_BgLight {
-		background-color: rgb(255, 255, 255);
-	}
+  &_BgLight {
+    background-color: rgb(255, 255, 255);
+  }
 
-	&_BgDark {
-		background-color: rgb(35, 35, 35);
-	}
+  &_BgDark {
+    background-color: rgb(35, 35, 35);
+  }
 
-	&_BgTransparent {
-		background-image: url('./static/transparent.jpg');
-		background-repeat: repeat;
-	}
+  &_BgTransparent {
+    background-image: url('./static/transparent.jpg');
+    background-repeat: repeat;
+  }
 }
 
 .toolWrapper {
-	width: 100%;
-	box-shadow: rgba(0, 0, 0, 0.117647) 0 3px 3px -2px inset;
-	display: flex;
-	flex-direction: column;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0 3px 3px -2px inset;
+  display: flex;
+  flex-direction: column;
 
-	@media (min-width: 1300px) {
-		width: auto;
-		max-width: 500px;
-		flex-direction: row;
-		box-shadow: rgba(0, 0, 0, 0.117647) -3px 0 6px -2px;
-	}
+  @media (min-width: 1300px) {
+    width: auto;
+    max-width: 500px;
+    flex-direction: row;
+    box-shadow: rgba(0, 0, 0, 0.117647) -3px 0 6px -2px;
+  }
 }
 
 .toolsWrapper {
-	display: flex;
-	flex-direction: column;
-	background-color: #263238;
-	min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  background-color: #263238;
+  min-width: 350px;
 
-	&:empty {
-		min-width: 0;
-	}
+  &:empty {
+    min-width: 0;
+  }
 }
 
 .editorWrapper {
-	width: 100%;
+  width: 100%;
 }
 
 .root:hover .isolatedLink {
-	opacity: 1;
+  opacity: 1;
 }

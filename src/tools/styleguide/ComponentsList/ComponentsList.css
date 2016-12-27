@@ -1,22 +1,22 @@
 .list {
-	margin: 15px 0;
+  margin: 15px 0;
 }
 
 .item {
-	margin: 0 0 15px;
-	font-size: 15px;
+  margin: 0 0 15px;
+  font-size: 15px;
 
-	.isParent & {
-		margin: 0 0 7px;
-		padding-left: 1rem;
-	}
+  .isParent & {
+    margin: 0 0 7px;
+    padding-left: 1rem;
+  }
 }
 
 .link {
-	text-decoration: none;
-	color: rgb(0, 0, 0);
+  text-decoration: none;
+  color: rgb(0, 0, 0);
 }
 
 .heading {
-	font-weight: bold;
+  font-weight: bold;
 }

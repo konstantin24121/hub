@@ -1,60 +1,60 @@
 .root {
-	padding-bottom: 1rem;
-	height: 100%;
-	background-color: white;
+  padding-bottom: 1rem;
+  height: 100%;
+  background-color: white;
 
-	&::after {
-		content: '';
-		display: block;
-		clear: both;
-	}
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
 }
 
 .items {
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
 
-	@media (min-width: 800px) {
-		width: 80%;
-	}
+  @media (min-width: 800px) {
+    width: 80%;
+  }
 
-	@media (min-width: 1300px) {
-		width: 100%;
-	}
+  @media (min-width: 1300px) {
+    width: 100%;
+  }
 }
 
 .item {
-	width: 100%;
-	padding: 0 1rem;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  width: 100%;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-	&:empty {
-		margin-bottom: 0;
-	}
+  &:empty {
+    margin-bottom: 0;
+  }
 
-	&_last {
-		margin-top: 2rem;
-	}
+  &_last {
+    margin-top: 2rem;
+  }
 }
 
 .field {
-	flex: 1 1 100%;
+  flex: 1 1 100%;
 }
 
 .fieldToggle {
-	margin-top: 1.4rem;
-	padding: 0 1rem;
+  margin-top: 1.4rem;
+  padding: 0 1rem;
 }
 
 .customCheck {
-	height: 72px;
-	padding-bottom: 14px;
-	display: flex;
-	justify-content: flex-start;
-	align-items: flex-end;
-	max-width: 300px;
+  height: 72px;
+  padding-bottom: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  max-width: 300px;
 }

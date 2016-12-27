@@ -1,1 +1,1 @@
-export { default } from './Changelog.js';
+export { default } from './Changelog';

@@ -6,8 +6,8 @@ import { Route, IndexRoute } from 'react-router';
 import { App, Home } from 'containers';
 
 export default () => (
-	<Route path="/" component={App}>
-		{ /* Home (main) route */ }
-		<IndexRoute component={Home} />
-	</Route>
+  <Route path="/" component={App}>
+    { /* Home (main) route */ }
+    <IndexRoute component={Home} />
+  </Route>
 );
