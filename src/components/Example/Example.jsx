@@ -58,6 +58,15 @@ class Example extends PureComponent {
 			})
 		),
 		/**
+		 * Массив объектов c мокой
+		 */
+		mockedShape: PropTypes.arrayOf(
+			PropTypes.shape({
+				id: PropTypes.number,
+				name: PropTypes.string,
+			})
+		),
+		/**
 		 * Срабатывает при клике на компонент
 		 */
 		onCallback: PropTypes.func,
@@ -110,9 +119,16 @@ class Example extends PureComponent {
 		);
 	}
 
+	renderMockedShape() {
+		const { mockedShape } = this.props;
+		return mockedShape.map(
+			({ id, name }, key) => <li key={key}>{id}: {name}</li>
+		);
+	}
+
 	render() {
 		const { array, string, required, booliat,
-			integer, list, node, arrayOfShapes } = this.props;
+			integer, list, node, arrayOfShapes, mockedShape } = this.props;
 		const rootClass = cn(s.root, s[`root_${list}`]);
 		return (
 			<div className={rootClass} onClick={this.handleClick}>
@@ -132,6 +148,11 @@ class Example extends PureComponent {
 				{arrayOfShapes &&
 					<ul>
 						{this.renderArrayShape()}
+					</ul>
+				}
+				{mockedShape &&
+					<ul>
+						{this.renderMockedShape()}
 					</ul>
 				}
 			</div>

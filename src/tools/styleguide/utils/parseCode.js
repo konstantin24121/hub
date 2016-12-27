@@ -1,7 +1,6 @@
 const acorn = require('acorn-jsx');
 
 function findComponent(node, componentName, code) {
-	console.log(node);
 	const { openingElement, children, type } = node;
 	if (type !== 'JSXElement') return false;
 
@@ -16,10 +15,22 @@ function findComponent(node, componentName, code) {
 	throw Error(`Parser can't find component in code ${code}`);
 }
 
+function getPureProps(name, code) {
+	let regexp = new RegExp(`${name}=(\\{)`, 'gui');
+	let match = regexp.exec(code);
+	const cutStart = code.slice(match.index);
+
+	regexp = new RegExp('(\\}\n)');
+	match = regexp.exec(cutStart);
+	const pureProp = cutStart.slice(0, match.index + 1);
+	return pureProp;
+}
+
 function getPureCode(name, code) {
-	const regexp = new RegExp(`${name}=\\{(.+)\\}`, 'gui');
+	const pureProps = getPureProps(name, code);
+	const regexp = new RegExp(`${name}=\\{((.*\\n?\\s*)*)\\}`, 'gui');
 	try {
-		return regexp.exec(code)[1];
+		return regexp.exec(pureProps)[1];
 	} catch (e) {
 		throw new Error(e);
 	}
@@ -29,7 +40,6 @@ function getPureCode(name, code) {
 function parseProps(conponentNode, code) {
 	const props = {};
 	for (const prop of conponentNode.attributes) {
-
 		switch (prop.value.type) {
 			case 'Literal': {
 				props[prop.name.name] = prop.value.value;
@@ -47,8 +57,10 @@ function parseProps(conponentNode, code) {
 						if (node.type !== 'Literal') continue;
 						propArray.push(node.value);
 					}
-					props[prop.name.name] = propArray.join(', ');
-					break;
+					if (propArray.length !== 0) {
+						props[prop.name.name] = propArray.join(', ');
+						break;
+					}
 				}
 				props[prop.name.name] = getPureCode(prop.name.name, code);
 				break;

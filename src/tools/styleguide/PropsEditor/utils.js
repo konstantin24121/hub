@@ -29,6 +29,7 @@ export function getTypeForLabel(type) {
 		case 'string': return type.name;
 		case 'number': return 'int';
 		case 'enum': return 'oneOf';
+		case 'shape': return 'shape';
 		case 'arrayOf': return `${type.name}[${getTypeForLabel(type.value)}]`;
 		default: return '';
 	}
@@ -63,8 +64,10 @@ export function generateProps(field) {
 
 				case 'string': {
 					const rawValue = value.replace(/([\wа-я]+)($|,){1}\s*/iug, `'\$1'\$2 `);
-					return `${name}={[${rawValue}]}`;
+					return `${name}={[${rawValue.trim()}]}`;
 				}
+				case 'shape':
+					return `${name}={${value}}`;
 				default: return;
 			}
 		}
@@ -74,7 +77,7 @@ export function generateProps(field) {
 }
 
 function getTabsForProps(code, componentName) {
-	const regExp = new RegExp(`<${componentName}\n+([\t]+)`, 'g');
+	const regExp = new RegExp(`<${componentName}\n+([\\s]+)`, 'g');
 	try {
 		const tabs = regExp.exec(code)[1];
 		return tabs;

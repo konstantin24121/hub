@@ -184,7 +184,6 @@ export default class PropsEditor extends PureComponent {
 		const hintStyle = { fontSize: 12 };
 
 		let component;
-		let enableToggle = true;
 		switch (type.name) {
 			case 'bool': {
 				component = this.renderCheckbox({
@@ -258,15 +257,13 @@ export default class PropsEditor extends PureComponent {
 				<div className={s.field}>
 					{component}
 				</div>
-				{enableToggle &&
-					<div className={s.fieldToggle}>
-						<Toggle
-							defaultToggled={!disabled}
-							disabled={required}
-							onToggle={this.handleToggleProp({ name })}
-						/>
-					</div>
-				}
+				<div className={s.fieldToggle}>
+					<Toggle
+						defaultToggled={!disabled}
+						disabled={required}
+						onToggle={this.handleToggleProp({ name })}
+					/>
+				</div>
 			</div>
 		);
 	};
