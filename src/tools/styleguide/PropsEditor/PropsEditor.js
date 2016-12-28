@@ -1,3 +1,10 @@
+/* eslint
+  import/no-extraneous-dependencies: off,
+  import/no-unresolved: off,
+  import/extensions: off,
+  react/forbid-prop-types: off,
+  react/jsx-filename-extension: off
+*/
 import React, { PropTypes, PureComponent } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -6,7 +13,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
 import Checkbox from 'material-ui/Checkbox';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
 import cn from 'classnames';
 import map from 'lodash/map';
@@ -69,9 +76,9 @@ export default class PropsEditor extends PureComponent {
   handleToggleProp = ({ name }) => () => {
     const { fields } = this.state;
     const field = fields.get(name);
-    const newField = field.withMutations(map => {
-      const value = map.get('disabled');
-      map.set('disabled', !value)
+    const newField = field.withMutations((immutableMap) => {
+      const value = immutableMap.get('disabled');
+      immutableMap.set('disabled', !value)
         .set('value', '');
     });
     this.setState({
@@ -82,8 +89,8 @@ export default class PropsEditor extends PureComponent {
   handleSubmit = () => {
     const { code, componentName } = this.props;
     const { fields } = this.state;
-    const props = fields.map(field => generateProps(field.toJS()));
-    const newCode = generateNewCode(code, componentName, props.filter(prop => prop).toArray());
+    const props = fields.map((field) => generateProps(field.toJS()));
+    const newCode = generateNewCode(code, componentName, props.filter((prop) => prop).toArray());
     this.props.onSubmit(newCode);
   };
 

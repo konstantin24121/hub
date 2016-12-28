@@ -36,13 +36,13 @@ class StyleGuideRenderer extends Component {
     const { media } = this.props;
     media({ minWidth: 800 }, () => {
       this.setState({
-        isMobile: false
+        isMobile: false,
       });
     });
 
     media({ maxWidth: 800 }, () => {
       this.setState({
-        isMobile: true
+        isMobile: true,
       });
     });
   }
@@ -99,7 +99,7 @@ class StyleGuideRenderer extends Component {
             <Drawer open={drawerOpen} docked={!this.state.isMobile}>
               <h1 className={s.heading}>{title}</h1>
               <IconButton
-                tooltip={drawerOpen ? "Close filter" : "Open filter"}
+                tooltip={drawerOpen ? 'Close filter' : 'Open filter'}
                 tooltipPosition="bottom-left"
                 onClick={drawerOpen ? this.handleCloseDrawer : this.handleOpenDrawer}
                 style={{ position: 'absolute', top: '0.5rem', right: 0, zIndex: 2 }}

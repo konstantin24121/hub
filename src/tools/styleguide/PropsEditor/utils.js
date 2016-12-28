@@ -18,6 +18,7 @@ export function parseProps(props) {
 }
 
 export function parseDefault(defaultVal) {
+  // eslint-disable-next-line no-new-func
   const func = new Function('', `return ${defaultVal.value};`);
   return func();
 }
@@ -35,45 +36,58 @@ export function getTypeForLabel(type) {
   }
 }
 
+
 export function generateProps(field) {
   const { type, name, disabled, value } = field;
-  if (disabled) return;
+  if (disabled) return '';
 
+  let propCode = '';
   switch (type.name) {
     case 'string':
-      return `${name}="${value}"`;
+      propCode = `${name}="${value}"`;
+      break;
 
     case 'number':
-      return `${name}={${parseFloat(value)}}`;
+      propCode = `${name}={${parseFloat(value)}}`;
+      break;
 
     case 'enum': {
       const rawValue = parseFloat(value);
       if (rawValue) {
-        return `${name}={${rawValue}}`;
+        propCode = `${name}={${rawValue}}`;
       }
-      return `${name}="${value}"`;
+      propCode = `${name}="${value}"`;
+      break;
     }
 
     case 'bool':
-      return `${name}={${value ? 'true' : 'false'}}`;
+      propCode = `${name}={${value ? 'true' : 'false'}}`;
+      break;
 
     case 'arrayOf': {
       switch (type.value.name) {
         case 'number':
-          return `${name}={[${value}]}`;
+          propCode = `${name}={[${value}]}`;
+          break;
 
         case 'string': {
-          const rawValue = value.replace(/([\wа-я]+)($|,){1}\s*/iug, `'\$1'\$2 `);
-          return `${name}={[${rawValue.trim()}]}`;
+          const rawValue = value.replace(/([\wа-я]+)($|,){1}\s*/iug, "'$1'$2 ");
+          propCode = `${name}={[${rawValue.trim()}]}`;
+          break;
         }
+
         case 'shape':
-          return `${name}={${value}}`;
-        default: return;
+          propCode = `${name}={${value}}`;
+          break;
+
+        default: break;
       }
+      break;
     }
     default:
-      return `${name}={${value}}`;
+      propCode = `${name}={${value}}`;
   }
+  return propCode;
 }
 
 function getTabsForProps(code, componentName) {

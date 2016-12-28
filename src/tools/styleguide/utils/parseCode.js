@@ -78,7 +78,7 @@ export default function (code, componentName) {
   const parseCode = acorn.parse(code, {
     plugins: { jsx: true },
   });
-  const ellement = parseCode.body.find(node => node.type === 'ExpressionStatement');
+  const ellement = parseCode.body.find((node) => node.type === 'ExpressionStatement');
   const componentNode = findComponent(ellement.expression, componentName, code);
   const props = parseProps(componentNode, code);
   return props;
