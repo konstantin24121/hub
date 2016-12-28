@@ -9,8 +9,7 @@ function findComponent(node, componentName, code) {
   }
   for (const child of children) {
     const findedComponent = findComponent(child, componentName);
-    if (!findedComponent) continue;
-    return findedComponent;
+    if (findedComponent) return findedComponent;
   }
   throw Error(`Parser can't find component in code ${code}`);
 }
@@ -20,7 +19,7 @@ function getPureProps(name, code) {
   let match = regexp.exec(code);
   const cutStart = code.slice(match.index);
 
-  regexp = new RegExp('(\\}\n)');
+  regexp = /(\}\n)/;
   match = regexp.exec(cutStart);
   const pureProp = cutStart.slice(0, match.index + 1);
   return pureProp;
@@ -34,7 +33,6 @@ function getPureCode(name, code) {
   } catch (e) {
     throw new Error(e);
   }
-  return '';
 }
 
 function parseProps(conponentNode, code) {
@@ -54,8 +52,9 @@ function parseProps(conponentNode, code) {
         if (expression.type === 'ArrayExpression') {
           const propArray = [];
           for (const node of expression.elements) {
-            if (node.type !== 'Literal') continue;
-            propArray.push(node.value);
+            if (node.type === 'Literal') {
+              propArray.push(node.value);
+            }
           }
           if (propArray.length !== 0) {
             props[prop.name.name] = propArray.join(', ');

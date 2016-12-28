@@ -39,6 +39,11 @@
     "react/prefer-stateless-function": 1,
     "react/no-unused-prop-types": 1,
     "react/jsx-indent-props": [1, 2],
+    "react/prop-types": [1, {
+      "ignore": [
+        "media"
+      ]
+    }],
 
     // Import
     // "import/extensions": [2, "never", { "svg": "always", "png": "always" }],

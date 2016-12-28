@@ -1,3 +1,6 @@
+/* eslint
+  react/jsx-filename-extension: off
+*/
 import React, { PureComponent, PropTypes } from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';

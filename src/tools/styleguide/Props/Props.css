@@ -26,9 +26,6 @@
   border-bottom: 2px solid rgb(224, 224, 224);
 }
 
-.tableBody {
-}
-
 .cell {
   padding-right: 15px;
   padding-top: 0.8rem;
@@ -54,7 +51,7 @@
 }
 
 .required {
-  color: #EF5350;
+  color: #ef5350;
 
   &::after {
     content: '*';
@@ -63,7 +60,7 @@
 }
 
 .name {
-  color: #43A047;
+  color: #43a047;
 }
 
 .type {

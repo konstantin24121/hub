@@ -13,7 +13,7 @@ const customComponents = [
   'StyleGuide/StyleGuideRenderer',
   'TableOfContents/TableOfContentsRenderer',
   'ComponentsList',
-  'Section/SectionRenderer',
+  'Section',
   'Props',
   'Playground',
   'Editor',

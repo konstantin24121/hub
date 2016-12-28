@@ -1,7 +1,13 @@
+/* eslint
+  import/no-extraneous-dependencies: off,
+  import/no-unresolved: off,
+  import/extensions: off,
+  react/forbid-prop-types: off,
+  react/jsx-filename-extension: off
+*/
 import React, { Component, PropTypes } from 'react';
 import Markdown from 'rsg-components/Markdown';
 import cx from 'classnames';
-import throttle from 'lodash/throttle';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
