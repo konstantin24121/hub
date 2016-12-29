@@ -81,9 +81,11 @@ export default class PropsEditor extends PureComponent {
 
   render() {
     const { props } = this.props;
+    const { fields } = this.state;
     return (
       <PropsEditorRenderer
         props={props}
+        fields={fields}
         onSubmit={this.handleSubmit}
         onToggle={this.handleToggleProp}
         onTextChange={this.handleChangeValueTextfield}

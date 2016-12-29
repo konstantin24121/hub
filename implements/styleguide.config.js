@@ -26,7 +26,8 @@ module.exports = {
   serverPort: port,
   serverHost: host,
   highlightTheme: 'material',
-  template: path.resolve(__dirname, '../src/tools/styleguide/template.html'),
+  template: path.resolve(__dirname, '../src/tools/styleguide/template/index.html'),
+  favicon: path.resolve(__dirname, '../src/tools/styleguide/template/icon.png'),
   contextDependencies: [
     path.resolve(__dirname, '../src/components'),
   ],

@@ -25,6 +25,7 @@ import s from './PropsEditor.css';
 class PropsEditorRenderer extends PureComponent {
   static propTypes = {
     props: PropTypes.object.isRequired,
+    fields: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCheck: PropTypes.func.isRequired,
     onToggle: PropTypes.func.isRequired,
@@ -121,7 +122,7 @@ class PropsEditorRenderer extends PureComponent {
 
   renderField = ({ type, value, description, defaultValue, required, name }) => {
     if (!type) return null;
-    const { fields } = this.state;
+    const { fields } = this.props;
     const defaultVariable = defaultValue ? parseDefault(defaultValue) : '';
     const disabled = fields.getIn([name, 'disabled']);
     const variable = disabled ? defaultVariable : fields.getIn([name, 'value']);

@@ -36,7 +36,11 @@ export function getTypeForLabel(type) {
   }
 }
 
-
+/**
+ * Генерирует код из полей формы
+ * @param  object field поля формы
+ * @return string       props со значением
+ */
 export function generateProps(field) {
   const { type, name, disabled, value } = field;
   if (disabled) return '';
@@ -90,6 +94,10 @@ export function generateProps(field) {
   return propCode;
 }
 
+/**
+ * Получить отступ для props
+ * @return string
+ */
 function getTabsForProps(code, componentName) {
   const regExp = new RegExp(`<${componentName}\n+([\\s]+)`, 'g');
   try {
