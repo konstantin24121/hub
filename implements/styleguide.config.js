@@ -32,8 +32,8 @@ module.exports = {
   contextDependencies: [
     path.resolve(__dirname, '../src/components'),
   ],
-  getExampleFilename: componentpath => path.join(path.dirname(componentpath), 'demo.md'),
-  getChangelogFilename: componentpath => path.join(path.dirname(componentpath), 'changelog.md'),
+  getExampleFilename: componentpath => path.join(path.dirname(componentpath), 'demo/demo.md'),
+  getChangelogFilename: componentpath => path.join(path.dirname(componentpath), 'demo/changelog.md'),
   sections: [
     {
       name: 'Introduction',
