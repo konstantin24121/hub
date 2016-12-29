@@ -16,7 +16,8 @@
     "lint": "npm run eslint && npm run stylelint",
     "stylelint": "stylelint src/**/*.css",
     "eslint": "eslint src",
-    "styleguide-server": "better-npm-run start-styleguide"
+    "styleguide": "better-npm-run styleguide",
+    "styleguide:build": "better-npm-run styleguide:build"
   },
   "betterScripts": {
     "start-dev": {
@@ -39,10 +40,16 @@
         "PORT": 3000
       }
     },
-    "start-styleguide": {
+    "styleguide": {
       "command": "styleguidist server --config implements/styleguide.config.js",
       "env": {
         "NODE_ENV": "development"
+      }
+    },
+    "styleguide:build": {
+      "command": "styleguidist build --config implements/styleguide.config.js",
+      "env": {
+        "NODE_ENV": "production"
       }
     }
   },
