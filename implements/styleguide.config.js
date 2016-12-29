@@ -28,6 +28,7 @@ module.exports = {
   highlightTheme: 'material',
   template: path.resolve(__dirname, '../src/tools/styleguide/template/index.html'),
   favicon: path.resolve(__dirname, '../src/tools/styleguide/template/icon.png'),
+  styleguideDir:  path.resolve(__dirname, '../styleguide'),
   contextDependencies: [
     path.resolve(__dirname, '../src/components'),
   ],
