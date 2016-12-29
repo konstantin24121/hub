@@ -6,9 +6,10 @@
   ],
   "rules": {
     "at-rule-no-vendor-prefix": true,
-    "indentation": "tab",
+    "indentation": 2,
     "no-eol-whitespace": true,
     "property-no-vendor-prefix": true,
     "value-no-vendor-prefix": true,
+    "declaration-block-no-redundant-longhand-properties": null,
   }
 }
