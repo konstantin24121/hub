@@ -104,7 +104,7 @@ function getTabsForProps(code, componentName) {
     const tabs = regExp.exec(code)[1];
     return tabs;
   } catch (e) {
-    throw new Error(e);
+    return '\t';
   }
 }
 
