@@ -74,7 +74,8 @@
     "redux-devtools-dispatch": "^2.2.0",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-multiple-monitors": "^1.0.1",
-    "redux-slider-monitor": "^1.0.7"
+    "redux-slider-monitor": "^1.0.7",
+    "stylelint-performance-animation": "^1.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
