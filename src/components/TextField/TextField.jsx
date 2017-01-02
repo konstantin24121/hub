@@ -1,5 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
+// Helpers
 import cn from 'classnames';
+import capitalize from 'lodash/capitalize';
 
 import s from './TextField.css';
 
@@ -21,11 +23,27 @@ class TextField extends PureComponent {
      * Placeholder для поля
      */
     placeholder: PropTypes.string,
+    /**
+     * Плавающий label
+     */
+    floatingLabel: PropTypes.string,
+    /**
+     * Подсказка для поля ввода
+     * самое распространненное использование в качестве
+     * показа ошибок валидации
+     */
+    hint: PropTypes.string,
+    /**
+     * Статус поля
+     */
+    status: PropTypes.oneOf(['normal', 'warning', 'danger']),
   };
 
   static defaultProps = {
     value: '',
     placeholder: '',
+    floatingLabel: '',
+    status: 'normal',
   };
 
   constructor(props) {
@@ -34,7 +52,8 @@ class TextField extends PureComponent {
       value: props.value,
       isFocused: false,
       /**
-       * Поле было тронуто пользователем
+       * Поле было затронуто пользователем
+       * как церковный мальчик католическим священником
        */
       isDirty: false,
     };
@@ -72,24 +91,34 @@ class TextField extends PureComponent {
    * Renders
    */
   render() {
-    const { name, placeholder } = this.props;
+    const { name, placeholder, floatingLabel, status, hint } = this.props;
     const { value, isFocused, isDirty } = this.state;
 
-    const rootStyle = cn(s.root, {
+    const isEmpty = !value;
+    const hasFloatingLabel = !!floatingLabel;
+    const isLabelFloating = !isEmpty || isFocused;
+
+    const rootStyle = cn(s.root, s[`root_is${capitalize(status)}`], {
       [s.root_isFocused]: isFocused,
       [s.root_isDirty]: isDirty,
     });
+    const labelStyle = cn(s.root__label, {
+      [s.root__label_isFloat]: isLabelFloating,
+    });
     const placeholderStyle = cn(s.root__placeholder, {
-      [s.root__placeholder_isVisible]: !value,
+      [s.root__placeholder_isVisible]: (isLabelFloating && isEmpty)
+      || (!hasFloatingLabel && isEmpty),
     });
     const inputStyle = cn(s.root__input);
     const underlineStyle = cn(s.root__underline);
     const underlineStaticStyle = cn(s.root__underline_static);
     const underlineDynamicStyle = cn(s.root__underline_dynamic);
+    const hintStyle = cn(s.root__hint);
 
     return (
       <div className={rootStyle}>
-        <div className={placeholderStyle}>{placeholder}</div>
+        {placeholder && <div className={placeholderStyle}>{placeholder}</div>}
+        {floatingLabel && <div className={labelStyle}>{floatingLabel}</div>}
         <input
           type="text"
           name={name}
@@ -103,6 +132,7 @@ class TextField extends PureComponent {
           <hr className={underlineStaticStyle} />
           <hr className={underlineDynamicStyle} />
         </div>
+        {hint && <div className={hintStyle}>{hint}</div>}
       </div>
     );
   }

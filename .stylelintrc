@@ -11,5 +11,11 @@
     "property-no-vendor-prefix": true,
     "value-no-vendor-prefix": true,
     "declaration-block-no-redundant-longhand-properties": null,
+    "declaration-block-no-duplicate-properties": false,
+    "selector-type-no-unknown": [true,
+      {
+        "ignoreTypes": "/\^/"
+      }
+    ]
   }
 }
