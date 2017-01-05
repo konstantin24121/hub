@@ -1,11 +1,11 @@
 export function incrementCounter() {
-	return {
-		type: 'INC',
-	};
+  return {
+    type: 'INC',
+  };
 }
 
 export function decrementCounter() {
-	return {
-		type: 'DEC',
-	};
+  return {
+    type: 'DEC',
+  };
 }

@@ -24,3 +24,6 @@ static/dist/*
 .env
 public/*
 reports/*
+styleguide/*
+*.sublime-project
+*.sublime-workspace

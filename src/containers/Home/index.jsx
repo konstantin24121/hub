@@ -1,48 +1,19 @@
-import React, { Component, PropTypes } from 'react';
-import {connect} from 'react-redux';
-import * as testActions from 'actions/testAction';
+import React, { PureComponent } from 'react';
 
-import TestComponent from 'components/TestComponent';
+import { Example } from 'components';
 
-class Home extends Component {
-	static propTypes = {
-		name: PropTypes.string,
+export default class Home extends PureComponent {
 
-		// Store
-		counter: PropTypes.number,
+  constructor(props) {
+    super(props);
+  }
 
-		// Dispatchers
-		decrementCounter: PropTypes.func,
-	};
-
-	constructor(props) {
-		super(props);
-	}
-
-	handleClick = () => {
-		console.log('click');
-	};
-
-	render() {
-		const { counter } = this.props;
-		return (
-			<div>
-				Home. Counter from store zad - {counter}
-				<TestComponent name="inc" onClick={this.handleClick} />
-				<TestComponent name="dec" onClick={this.props.decrementCounter} />
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div>
+        <Example />
+        Home Container
+      </div>
+    );
+  }
 }
-
-function mapStateToProps(state) {
-	return {
-		counter: state.sample.counter,
-	};
-}
-
-function matchDispatchToProps(dispatch){
-
-}
-
-export default connect(mapStateToProps, testActions)(Home);

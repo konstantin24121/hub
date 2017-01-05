@@ -20,9 +20,11 @@ module.exports = {
 	module: {
 		loaders: [{
 			test: /\.scss$/,
-			loader: 'style!css?modules&importLoaders=2!postcss!sass'
+			include: [/src/],
+			loader: 'style!css?modules!postcss!sass'
 		}, {
 			test: /\.css$/,
+			include: [/src/],
 			loader: 'style!css?modules&localIdentName=[path][name]--[local]&sourceMap!postcss'
 		},
 		]

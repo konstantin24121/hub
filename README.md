@@ -20,4 +20,5 @@ One used
 * `yarn start` - start dev server with HMR and DevTools
 * `yarn start:prod` - start prod server and generate dist files
 * `yarn lint` - lint js and scss code with eslint and stylelint
+* `yarn styleguide` - start styleguide server
 

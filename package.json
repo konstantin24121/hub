@@ -15,7 +15,9 @@
     "build": "better-npm-run build",
     "lint": "npm run eslint && npm run stylelint",
     "stylelint": "stylelint src/**/*.css",
-    "eslint": "eslint src"
+    "eslint": "eslint src",
+    "styleguide": "better-npm-run styleguide",
+    "styleguide:build": "better-npm-run styleguide:build"
   },
   "betterScripts": {
     "start-dev": {
@@ -26,7 +28,7 @@
       }
     },
     "build": {
-      "command": "webpack --verbose --colors --inline --progress --display-error-details --config implements/webpack.common.js",
+      "command": "webpack --verbose --colors --inline --progress --display-error-details --config implements/webpack.config.js",
       "env": {
         "NODE_ENV": "production"
       }
@@ -37,23 +39,43 @@
         "NODE_ENV": "production",
         "PORT": 3000
       }
+    },
+    "styleguide": {
+      "command": "styleguidist server --config implements/styleguide.config.js",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "styleguide:build": {
+      "command": "styleguidist build --config implements/styleguide.config.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
     }
   },
   "dependencies": {
+    "acorn-jsx": "^3.0.1",
     "babel-polyfill": "^6.16.0",
     "express": "^4.14.0",
+    "immutable": "^3.8.1",
+    "lodash": "^4.17.3",
+    "material-ui": "^0.16.5",
     "react": "^15.3.2",
+    "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-redux": "^4.4.5",
+    "react-responsive-decorator": "^0.0.1",
     "react-router": "^3.0.0",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-devtools": "^3.3.1",
     "redux-devtools-diff-monitor": "^5.0.5",
     "redux-devtools-dispatch": "^2.2.0",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-multiple-monitors": "^1.0.1",
-    "redux-slider-monitor": "^1.0.7"
+    "redux-slider-monitor": "^1.0.7",
+    "stylelint-performance-animation": "^1.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
@@ -70,7 +92,7 @@
     "eslint": "^3.8.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-import-resolver-webpack": "^0.7.0",
-    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.4.1",
@@ -90,6 +112,8 @@
     "postcss-mixins": "^5.4.0",
     "postcss-nested": "^1.0.0",
     "postcss-simple-vars": "^3.0.0",
+    "react-styleguidist": "https://github.com/konstantin24121/react-styleguidist#4.4.4",
+    "recast": "^0.11.18",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "stylelint": "^7.6.0",

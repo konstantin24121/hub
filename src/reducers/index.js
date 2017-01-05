@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import sample from './sample';
 
 const rootReduser = combineReducers({
-	sample,
+  sample,
 });
 
 export default rootReduser;
