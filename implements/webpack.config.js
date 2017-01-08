@@ -51,6 +51,7 @@ const common = {
 
 	postcss: function() {
 		return [
+      require('postcss-nested-ancestors'),
 			require('postcss-nested'),
 			require('postcss-simple-vars'),
 			require('postcss-custom-media'),
