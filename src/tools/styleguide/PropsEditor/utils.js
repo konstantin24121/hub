@@ -28,6 +28,7 @@ export function getTypeForLabel(type) {
     case 'bool':
     case 'node':
     case 'string': return type.name;
+    case 'func': return 'callback';
     case 'number': return 'int';
     case 'enum': return 'oneOf';
     case 'shape': return 'shape';

@@ -87,20 +87,35 @@ class PropsEditorRenderer extends PureComponent {
     );
   }
 
-  renderRadio({ name, disabled, value }) {
+  renderRadio({ name, disabled, value, label }) {
     const style = {
       display: 'flex',
       float: 'left',
       marginRight: '1rem',
-      marginTop: '1rem',
+      marginBottom: '1rem',
       width: 'auto',
     };
     return (
       <div>
+        <label
+          htmlFor={name}
+          style={{
+            verticalAlign: 'top',
+            marginRight: '1rem',
+            display: 'inline-block',
+            width: '200px',
+            fontSize: 14,
+            lineHeight: '24px',
+            color: disabled ? 'rgba(0, 0, 0, 0.298039)' : 'rgba(0, 0, 0, 0.870588)',
+          }}
+        >
+          {label}
+        </label>
         <RadioButtonGroup
           name={name}
           onChange={this.props.onCheck({ name })}
           defaultSelected={value}
+          style={{ display: 'inline-block' }}
         >
           <RadioButton
             value="(...atr) => {console.log(atr)}"
@@ -158,6 +173,7 @@ class PropsEditorRenderer extends PureComponent {
         component = this.renderRadio({
           name,
           disabled,
+          label,
           value: variable,
         });
         break;
