@@ -9,12 +9,20 @@
 Поле с подсказкой. Подсказка может использоватся как указание до ввода данных
 для пользователя что вводить в поле ввода или же для показа ошибок валидации уже после ввода.
 
-    <span>
-      <TextField
-        name="the_field"
-        value="Wrong value"
-        status="danger"
-        hint="You put wrong value idiot"
-        floatingLabel="label"
-      />
-    </span>
+    <TextField
+      name="the_field"
+      value="Wrong value"
+      status="danger"
+      hint="You put wrong value idiot"
+      floatingLabel="label"
+    />
+
+Иногда поле может быть неактивно, для этого ему можно просто передать атрибут disabled, совсем как в HTML не правда ли
+
+    <TextField
+      name="the_field"
+      placeholder="This field disable"
+      floatingLabel="label"
+      disabled={true}
+      onFocus={() => {console.log('Focus mother fucker, can you do it?')}}
+    />

@@ -38,6 +38,10 @@ class TextField extends PureComponent {
      */
     status: PropTypes.oneOf(['normal', 'warning', 'danger']),
     /**
+     * Деактивировать поле
+     */
+    disabled: PropTypes.bool,
+    /**
      * Срабатывает при изменении value в поле ввода
      */
     onChange: PropTypes.func,
@@ -56,8 +60,9 @@ class TextField extends PureComponent {
     placeholder: '',
     floatingLabel: '',
     status: 'normal',
+    disabled: false,
     /* eslint-disable no-unused-vars */
-    onChange: ({ value }, e) => {},
+    onChange: ({ value }, event) => {},
     onFocus: (event) => {},
     onBlur: (event) => {},
     /* eslint-enable no-unused-vars */
@@ -110,7 +115,7 @@ class TextField extends PureComponent {
    * Renders
    */
   render() {
-    const { name, placeholder, floatingLabel, status, hint } = this.props;
+    const { name, placeholder, floatingLabel, status, hint, disabled } = this.props;
     const { value, isFocused, isDirty } = this.state;
 
     const isEmpty = !value;
@@ -120,6 +125,7 @@ class TextField extends PureComponent {
     const rootStyle = cn(s.root, s[`root_is${capitalize(status)}`], {
       [s.root_isFocused]: isFocused,
       [s.root_isDirty]: isDirty,
+      [s.root_isDisabled]: disabled,
       [s.root_hasFloatingLabel]: hasFloatingLabel,
       [s.root_hasHint]: !!hint,
     });
@@ -145,6 +151,7 @@ class TextField extends PureComponent {
           name={name}
           value={value}
           className={inputStyle}
+          disabled={disabled}
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
