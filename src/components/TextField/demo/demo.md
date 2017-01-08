@@ -9,9 +9,12 @@
 Поле с подсказкой. Подсказка может использоватся как указание до ввода данных
 для пользователя что вводить в поле ввода или же для показа ошибок валидации уже после ввода.
 
-    <TextField
-      name="the_field"
-      value="Wrong value"
-      status="danger"
-      hint="You put wrong value idiot"
-    />
+    <span>
+      <TextField
+        name="the_field"
+        value="Wrong value"
+        status="danger"
+        hint="You put wrong value idiot"
+        floatingLabel="label"
+      />
+    </span>

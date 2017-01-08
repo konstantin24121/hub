@@ -1,8 +1,11 @@
 {
   "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-css-modules",
+  ],
+  "plugins": [
   	"stylelint-selector-bem-pattern",
-  	"stylelint-config-standard",
-  	"stylelint-config-css-modules",
+    "stylelint-performance-animation",
   ],
   "rules": {
     "at-rule-no-vendor-prefix": true,
@@ -11,11 +14,16 @@
     "property-no-vendor-prefix": true,
     "value-no-vendor-prefix": true,
     "declaration-block-no-redundant-longhand-properties": null,
-    "declaration-block-no-duplicate-properties": false,
+    "declaration-block-no-duplicate-properties": [true,
+      {
+        "ignore": ["consecutive-duplicates-with-different-values"]
+      }
+    ],
     "selector-type-no-unknown": [true,
       {
-        "ignoreTypes": "/\^/"
+        "ignoreTypes": ["/^/"]
       }
-    ]
+    ],
+    "plugin/no-low-performance-animation": true
   }
 }

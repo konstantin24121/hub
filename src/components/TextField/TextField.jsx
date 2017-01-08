@@ -37,6 +37,18 @@ class TextField extends PureComponent {
      * Статус поля
      */
     status: PropTypes.oneOf(['normal', 'warning', 'danger']),
+    /**
+     * Срабатывает при изменении value в поле ввода
+     */
+    onChange: PropTypes.func,
+    /**
+     * Срабатывает при получении фокуса полем
+     */
+    onFocus: PropTypes.func,
+    /**
+     * Срабатывает при потере фокуса полем
+     */
+    onBlur: PropTypes.func,
   };
 
   static defaultProps = {
@@ -44,6 +56,11 @@ class TextField extends PureComponent {
     placeholder: '',
     floatingLabel: '',
     status: 'normal',
+    /* eslint-disable no-unused-vars */
+    onChange: ({ value }, e) => {},
+    onFocus: (event) => {},
+    onBlur: (event) => {},
+    /* eslint-enable no-unused-vars */
   };
 
   constructor(props) {
@@ -68,23 +85,25 @@ class TextField extends PureComponent {
   /**
    * Handles
    */
-  handleFocus = () => {
+  handleFocus = (e) => {
     this.setState({
       isFocused: true,
       isDirty: true,
     });
+    this.props.onFocus(e);
   };
 
-  handleBlur = () => {
+  handleBlur = (e) => {
     this.setState({
       isFocused: false,
     });
+    this.props.onBlur(e);
   };
 
   handleChange = (e) => {
-    this.setState({
-      value: e.target.value,
-    });
+    const { value } = e.target;
+    this.setState({ value });
+    this.props.onChange({ value }, e);
   }
 
   /**
@@ -101,6 +120,8 @@ class TextField extends PureComponent {
     const rootStyle = cn(s.root, s[`root_is${capitalize(status)}`], {
       [s.root_isFocused]: isFocused,
       [s.root_isDirty]: isDirty,
+      [s.root_hasFloatingLabel]: hasFloatingLabel,
+      [s.root_hasHint]: !!hint,
     });
     const labelStyle = cn(s.root__label, {
       [s.root__label_isFloat]: isLabelFloating,

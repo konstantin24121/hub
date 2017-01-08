@@ -1,6 +1,6 @@
 .root {
-  $root: &;
-
+  display: inline-block;
+  width: 100%;
   position: relative;
   height: 48px;
   line-height: 24px;
@@ -25,6 +25,14 @@
 
   &_isDirty {
     /* When user touch field */
+  }
+
+  &_hasFloatingLabel {
+    margin-top: 14px;
+  }
+
+  &_hasHint {
+    margin-bottom: 14px;
   }
 
   &__placeholder {
@@ -128,6 +136,6 @@
     position: relative;
     font-size: 0.75em;
     color: inherit;
-    margin-top: -8px;
+    margin-top: -9px;
   }
 }
