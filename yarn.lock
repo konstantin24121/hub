@@ -4059,6 +4059,10 @@ lodash@>=3.10.0, lodash@^4.0.0, lodash@^4.1.0, lodash@^4.11.1, lodash@^4.14.0, l
   version "4.17.3"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.3.tgz#557ed7d2a9438cac5fd5a43043ca60cb455e01f7"
 
+lodash@^4.17.4:
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+
 lodash@~2.4.1:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.4.2.tgz#fadd834b9683073da179b3eae6d9c0d15053f73e"
@@ -6652,10 +6656,11 @@ stylelint-config-standard@^15.0.0:
   version "15.0.1"
   resolved "https://registry.yarnpkg.com/stylelint-config-standard/-/stylelint-config-standard-15.0.1.tgz#f588e036bca6bb52391ea784198e773a9ca70efe"
 
-stylelint-performance-animation:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/stylelint-performance-animation/-/stylelint-performance-animation-1.0.1.tgz#7aee3ad9b6b9a35cc115e10b3f798cc07ae90f0b"
+stylelint-performance-animation@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/stylelint-performance-animation/-/stylelint-performance-animation-1.1.2.tgz#66db31dade6d579a82a9fb45b7ed4eb8e9d1fe48"
   dependencies:
+    lodash "^4.17.4"
     postcss-value-parser "^3.3.0"
     stylelint "^7.2.0"
 

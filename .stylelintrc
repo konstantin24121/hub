@@ -24,6 +24,10 @@
         "ignoreTypes": ["/^/"]
       }
     ],
-    "plugin/no-low-performance-animation": true
+    "plugin/no-low-performance-animation": [true,
+      {
+        "ignore": ["color"]
+      }
+    ]
   }
 }
