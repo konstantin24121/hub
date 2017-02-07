@@ -65,6 +65,7 @@ module.exports = {
     	analyzerMode: 'static',
     	reportFilename: '../reports/report.html',
     	generateStatsFile: true,
+      openAnalyzer: false,
     	statsFilename: '../reports/stats.json',
     })
 	],

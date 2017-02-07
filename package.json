@@ -28,7 +28,7 @@
       }
     },
     "build": {
-      "command": "webpack --verbose --colors --inline --progress --display-error-details --config implements/webpack.config.js",
+      "command": "webpack --verbose --colors --progress --display-error-details --config implements/webpack.config.js",
       "env": {
         "NODE_ENV": "production"
       }
@@ -125,7 +125,7 @@
     "stylelint-config-standard": "^15.0.0",
     "stylelint-selector-bem-pattern": "^1.0.0",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.3",
+    "webpack": "^2.2.1",
     "webpack-bundle-analyzer": "^1.5.3",
     "webpack-dashboard": "^0.2.0",
     "webpack-dev-middleware": "^1.8.4",

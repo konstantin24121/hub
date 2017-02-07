@@ -9,6 +9,8 @@ const assetsPath = path.resolve(__dirname, '../static/dist');
 const host = (process.env.HOST || 'localhost');
 const port = (+process.env.PORT) || 3000;
 
+const context = path.resolve(__dirname, '../');
+
 const common = {
 	context: path.resolve(__dirname, '../'),
 
@@ -19,12 +21,15 @@ const common = {
 	},
 
 	resolve: {
-		modulesDirectories: [
-			'src',
+		modules: [
+			context,
 			'node_modules',
 		],
-		extensions: ['', '.js', '.jsx', '.json', '.json5'],
+    enforceExtension: true,
+    enforceModuleExtension: true,
+		extensions: ['.js', '.jsx', '.json', '.json5'],
 		alias: {
+      components: path.resolve(context, 'components'),
 		},
 	},
 
@@ -46,7 +51,17 @@ const common = {
 			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/svg+xml" },
 			{ test: /\.jpg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/jpg" },
 			{ test: /\.png(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/png" },
-		]
+		],
+    rules: [
+      {
+				test: /\.jsx?$/,
+				include: [/src/],
+				loader: 'babel-loader',
+        option: {
+          cacheDirecory: rue,
+        }
+			},
+    ],
 	},
 
 	postcss: function() {
