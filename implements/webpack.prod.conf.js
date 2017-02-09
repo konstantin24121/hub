@@ -23,17 +23,31 @@ module.exports = {
 	},
 
 	module: {
-		loaders: [{
-				test: /\.scss$/,
-				loader: ExtractTextPlugin.extract('css?modules&importLoaders=2!sass'),
-			}, {
+		rules: [
+      {
 				test: /\.css$/,
-				loader: ExtractTextPlugin.extract('css?modules&importLoaders=2!postcss'),
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [
+            {
+              loader: 'css-loader',
+              query: {
+                modules: true,
+                importLoaders: 2,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+            }
+          ]
+        })
 			},
 		]
 	},
 	plugins:[
-		new ExtractTextPlugin('bundle.css?v=[hash]'),
+		new ExtractTextPlugin({
+      filename: 'bundle.css?v=[hash]',
+    }),
 
 		new HtmlWebpackPlugin({
       template: 'static/index.tpl.html',
@@ -52,13 +66,10 @@ module.exports = {
     }),
 
     // optimizations
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
     }),
+    new webpack.optimize.UglifyJsPlugin(),
 
     //Analization
     new BundleAnalyzerPlugin({

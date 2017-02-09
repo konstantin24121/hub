@@ -10,6 +10,7 @@ const host = (process.env.HOST || 'localhost');
 const port = (+process.env.PORT) || 3000;
 
 const context = path.resolve(__dirname, '../');
+const src = path.resolve(__dirname, '../src/');
 
 const common = {
 	context: path.resolve(__dirname, '../'),
@@ -34,48 +35,21 @@ const common = {
 	},
 
 	module: {
-		loaders: [{
-				test: /\.jsx?$/,
-				include: [/src/],
-				loaders: ['babel?cacheDirectory=true'],
-			}, {
-				test: /\.json5?$/,
-				include: [/src/],
-				loader: 'json5-loader',
-			},
-			{ test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=application/font-woff" },
-			{ test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=application/font-woff" },
-			{ test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=application/octet-stream" },
-			{ test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "file" },
-			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/svg+xml" },
-			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/svg+xml" },
-			{ test: /\.jpg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/jpg" },
-			{ test: /\.png(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/png" },
-		],
     rules: [
       {
 				test: /\.jsx?$/,
-				include: [/src/],
+				include: [src],
 				loader: 'babel-loader',
-        option: {
-          cacheDirecory: rue,
+        query: {
+          cacheDirecory: true,
         }
 			},
+			{
+				test: /\.json5?$/,
+				include: [src],
+				loader: 'json5-loader',
+			}
     ],
-	},
-
-	postcss: function() {
-		return [
-      require('postcss-nested-ancestors'),
-			require('postcss-nested'),
-			require('postcss-simple-vars'),
-			require('postcss-custom-media'),
-			require('postcss-media-minmax'),
-			require('postcss-conditionals'),
-			require('postcss-mixins'),
-			require('postcss-cssnext')({ browsers: ['last 2 versions'] }),
-			require('postcss-easings'),
-		];
 	},
 
 	plugins: [
