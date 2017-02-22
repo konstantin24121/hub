@@ -31,7 +31,7 @@ module.exports = {
           use: [
             {
               loader: 'css-loader',
-              query: {
+              options: {
                 modules: true,
                 importLoaders: 2,
               },
@@ -50,7 +50,7 @@ module.exports = {
     }),
 
 		new HtmlWebpackPlugin({
-      template: 'static/index.tpl.html',
+      template: './static/index.tpl.html',
       filename: 'index.html',
       chunks: ['app'],
       inject: 'body',

@@ -26,11 +26,14 @@ const common = {
 			context,
 			'node_modules',
 		],
-    enforceExtension: true,
-    enforceModuleExtension: true,
 		extensions: ['.js', '.jsx', '.json', '.json5'],
 		alias: {
-      components: path.resolve(context, 'components'),
+      components: path.resolve(src, 'components'),
+      config: path.resolve(src, 'config'),
+      containers: path.resolve(src, 'containers'),
+      actions: path.resolve(src, 'actions'),
+      reducers: path.resolve(src, 'reducers'),
+      tools: path.resolve(src, 'tools'),
 		},
 	},
 
@@ -40,15 +43,16 @@ const common = {
 				test: /\.jsx?$/,
 				include: [src],
 				loader: 'babel-loader',
-        query: {
-          cacheDirecory: true,
-        }
 			},
 			{
 				test: /\.json5?$/,
 				include: [src],
 				loader: 'json5-loader',
-			}
+			},
+      {
+        test: /\.html$/,
+        loader: 'html-loader'
+      }
     ],
 	},
 
