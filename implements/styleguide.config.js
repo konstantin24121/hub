@@ -47,10 +47,12 @@ module.exports = {
   ],
   updateWebpackConfig: (webpackConfig) => {
     const dir = path.resolve(__dirname, '../src');
-    for (const loader of common.module.loaders) {
-      loader.include = dir;
-      webpackConfig.module.loaders.push(loader);
+    webpackConfig.module.rules = webpackConfig.module.loaders;
+    for (const rule of common.module.rules) {
+      rule.include = dir;
+      webpackConfig.module.loaders.push(rule);
     }
+    webpackConfig.module.loaders = [];
 
     // Use webpack plugins only if
     // env is equal to production
@@ -59,6 +61,7 @@ module.exports = {
         // Skip HtmlWebpackPlugin because it rewrite
         // plugin in styleguidist config
         if ( plugin.constructor.name === 'HtmlWebpackPlugin') continue;
+        if ( plugin.constructor.name === 'BundleAnalyzerPlugin') continue;
         webpackConfig.plugins.push(plugin);
       }
     }
@@ -71,7 +74,7 @@ module.exports = {
     webpackConfig.resolve.alias['tools/styles'] =
       path.join(__dirname, '../src/tools/styles');
 
-    webpackConfig.postcss = common.postcss;
+    // webpackConfig.postcss = common.postcss;
     return webpackConfig;
   },
   handlers: require('react-docgen').defaultHandlers.concat(

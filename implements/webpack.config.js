@@ -52,7 +52,16 @@ const common = {
       {
         test: /\.html$/,
         loader: 'html-loader'
-      }
+      },
+      {
+        test: /\.jpg(\?v=\d+\.\d+\.\d+)?$/,
+        include: [src],
+        loader: "url-loader",
+        options: {
+          limit: 10000,
+          mimetype: 'image/jpg',
+        },
+      },
     ],
 	},
 
