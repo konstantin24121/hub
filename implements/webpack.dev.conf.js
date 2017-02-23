@@ -18,21 +18,34 @@ module.exports = {
 	},
 
 	module: {
-		loaders: [{
-			test: /\.scss$/,
-			include: [/src/],
-			loader: 'style!css?modules!postcss!sass'
-		}, {
-			test: /\.css$/,
-			include: [/src/],
-			loader: 'style!css?modules&localIdentName=[path][name]--[local]&sourceMap!postcss'
-		},
+		rules: [
+      {
+  			test: /\.css$/,
+  			include: [/src/],
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 2,
+              localIdentName: '[path]--[name]--[local]',
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+          },
+        ],
+  		},
 		]
 	},
 
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoErrorsPlugin(),
+		new webpack.NoEmitOnErrorsPlugin(),
 		new webpack.DefinePlugin({
       __ENV__: JSON.stringify(process.env.NODE_ENV),
       __DEVELOPMENT__: true,
