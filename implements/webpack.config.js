@@ -43,6 +43,9 @@ const common = {
 				test: /\.jsx?$/,
 				include: [src],
 				loader: 'babel-loader',
+        options: {
+          compact: false,
+        },
 			},
 			{
 				test: /\.json5?$/,
@@ -52,7 +55,25 @@ const common = {
       {
         test: /\.html$/,
         loader: 'html-loader'
-      }
+      },
+      // {
+      //   test: /\.jpg(\?v=\d+\.\d+\.\d+)?$/,
+      //   include: [src],
+      //   loader: "url-loader",
+      //   options: {
+      //     limit: 10000,
+      //     mimetype: 'image/jpg',
+      //   },
+      // },
+      // {
+      //   test: /\.png(\?v=\d+\.\d+\.\d+)?$/,
+      //   include: [src],
+      //   loader: "url-loader",
+      //   options: {
+      //     limit: 10000,
+      //     mimetype: 'image/png',
+      //   },
+      // },
     ],
 	},
 
