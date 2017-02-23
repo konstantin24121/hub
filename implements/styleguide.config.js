@@ -61,6 +61,7 @@ module.exports = {
         // Skip HtmlWebpackPlugin because it rewrite
         // plugin in styleguidist config
         if ( plugin.constructor.name === 'HtmlWebpackPlugin') continue;
+        // Skip BundleAnalyzerPlugin because it does'n need
         if ( plugin.constructor.name === 'BundleAnalyzerPlugin') continue;
         webpackConfig.plugins.push(plugin);
       }
@@ -74,7 +75,6 @@ module.exports = {
     webpackConfig.resolve.alias['tools/styles'] =
       path.join(__dirname, '../src/tools/styles');
 
-    // webpackConfig.postcss = common.postcss;
     return webpackConfig;
   },
   handlers: require('react-docgen').defaultHandlers.concat(

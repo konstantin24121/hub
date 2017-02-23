@@ -43,6 +43,9 @@ const common = {
 				test: /\.jsx?$/,
 				include: [src],
 				loader: 'babel-loader',
+        options: {
+          compact: false,
+        },
 			},
 			{
 				test: /\.json5?$/,
