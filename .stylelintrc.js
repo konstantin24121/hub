@@ -1,10 +1,10 @@
-{
+module.exports = {
   "extends": [
     "stylelint-config-standard",
     "stylelint-config-css-modules",
   ],
   "plugins": [
-  	"stylelint-selector-bem-pattern",
+    "stylelint-selector-bem-pattern",
     "stylelint-performance-animation",
   ],
   "rules": {
