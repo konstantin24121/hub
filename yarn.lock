@@ -5959,9 +5959,9 @@ react-router@^3.0.0:
     loose-envify "^1.2.0"
     warning "^3.0.0"
 
-"react-styleguidist@https://github.com/konstantin24121/react-styleguidist#4.4.4":
-  version "4.4.2"
-  resolved "https://github.com/konstantin24121/react-styleguidist#9d254fcfa27d44782089c149c3301ccf9ba408eb"
+"react-styleguidist@https://github.com/konstantin24121/react-styleguidist#4.4.5":
+  version "4.4.5"
+  resolved "https://github.com/konstantin24121/react-styleguidist#080455c1645a2b4855d9602cbdcd8c0b895c5c37"
   dependencies:
     babel-core "6.18.2"
     babel-loader "6.2.7"

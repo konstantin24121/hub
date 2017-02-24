@@ -4,6 +4,7 @@ const path = require('path');
 
 const host = (process.env.HOST || 'localhost');
 const port = (+process.env.PORT ) || 3000;
+const src = path.resolve(__dirname, '../src/');
 
 // Plugins
 
@@ -21,7 +22,7 @@ module.exports = {
 		rules: [
       {
   			test: /\.css$/,
-  			include: [/src/],
+  			include: [src],
         use: [
           {
             loader: 'style-loader',
@@ -31,8 +32,9 @@ module.exports = {
             options: {
               modules: true,
               importLoaders: 2,
-              localIdentName: '[path]--[name]--[local]',
+              localIdentName: '[name]--[local]',
               sourceMap: true,
+              context: '/',
             },
           },
           {
