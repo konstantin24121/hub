@@ -8,6 +8,8 @@ const recast = require('recast');
 
 const port = process.env.STYLEGUIDE_PORT || (+process.env.PORT || 3000) + 1;
 const host = (process.env.HOST || 'localhost');
+const env = process.env.NODE_ENV;
+
 const customComponents = [
   'ReactComponent',
   'StyleGuide/StyleGuideRenderer',
@@ -48,6 +50,17 @@ module.exports = {
     for (const loader of common.module.loaders) {
       loader.include = dir;
       webpackConfig.module.loaders.push(loader);
+    }
+
+    // Use webpack plugins only if
+    // env is equal to production
+    if (env === 'production') {
+      for (const plugin of common.plugins) {
+        // Skip HtmlWebpackPlugin because it rewrite
+        // plugin in styleguidist config
+        if ( plugin.constructor.name === 'HtmlWebpackPlugin') continue;
+        webpackConfig.plugins.push(plugin);
+      }
     }
 
     for (const component of customComponents) {

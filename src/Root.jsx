@@ -30,11 +30,11 @@ export default class Root extends Component {
     const routes = getRoutes();
     return (
       <Provider store={store} key="provider">
+        {/* Когда не работал  HMR и кидал ошибку
+          https://github.com/ReactTraining/react-router/issues/2704#issuecomment-256611906
+          фараону помогло */}
         <div>
           <Router
-            /* Когда не работал  HMR и кидал ошибку
-            https://github.com/ReactTraining/react-router/issues/2704#issuecomment-256611906
-            фараону помогло */
             key={Math.random()}
             history={history}
             routes={routes}

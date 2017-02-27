@@ -14,6 +14,20 @@
     "property-no-vendor-prefix": true,
     "value-no-vendor-prefix": true,
     "declaration-block-no-redundant-longhand-properties": null,
-    "plugin/no-low-performance-animation": true
+    "declaration-block-no-duplicate-properties": [true,
+      {
+        "ignore": ["consecutive-duplicates-with-different-values"]
+      }
+    ],
+    "selector-type-no-unknown": [true,
+      {
+        "ignoreTypes": ["/^/"]
+      }
+    ],
+    "plugin/no-low-performance-animation": [true,
+      {
+        "ignore": ["color"]
+      }
+    ]
   }
 }

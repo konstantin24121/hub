@@ -28,6 +28,7 @@ export function getTypeForLabel(type) {
     case 'bool':
     case 'node':
     case 'string': return type.name;
+    case 'func': return 'callback';
     case 'number': return 'int';
     case 'enum': return 'oneOf';
     case 'shape': return 'shape';
@@ -104,7 +105,7 @@ function getTabsForProps(code, componentName) {
     const tabs = regExp.exec(code)[1];
     return tabs;
   } catch (e) {
-    throw new Error(e);
+    return '\t';
   }
 }
 

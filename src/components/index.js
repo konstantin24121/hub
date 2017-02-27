@@ -6,3 +6,4 @@
  */
 
 export Example from './Example';
+export TextField from './TextField';

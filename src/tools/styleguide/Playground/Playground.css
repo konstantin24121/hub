@@ -23,6 +23,7 @@
   transition: width 0.5s;
   max-width: 100%;
   box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
+  height: 100%;
 
   &_SizeLg {
     width: 1024px;

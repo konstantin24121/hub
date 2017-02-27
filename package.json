@@ -56,6 +56,7 @@
   "dependencies": {
     "acorn-jsx": "^3.0.1",
     "babel-polyfill": "^6.16.0",
+    "classnames": "^2.2.5",
     "express": "^4.14.0",
     "immutable": "^3.8.1",
     "lodash": "^4.17.3",
@@ -75,7 +76,7 @@
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-multiple-monitors": "^1.0.1",
     "redux-slider-monitor": "^1.0.7",
-    "stylelint-performance-animation": "^1.0.1"
+    "stylelint-performance-animation": "^1.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
@@ -89,6 +90,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "better-npm-run": "^0.0.13",
     "css-loader": "^0.25.0",
+    "dotenv": "^4.0.0",
     "eslint": "^3.8.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-import-resolver-webpack": "^0.7.0",
@@ -112,6 +114,7 @@
     "postcss-media-minmax": "^2.1.2",
     "postcss-mixins": "^5.4.0",
     "postcss-nested": "^1.0.0",
+    "postcss-nested-ancestors": "^1.0.0",
     "postcss-simple-vars": "^3.0.0",
     "react-styleguidist": "https://github.com/konstantin24121/react-styleguidist#4.4.4",
     "recast": "^0.11.18",

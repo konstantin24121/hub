@@ -38,8 +38,9 @@ class ReactComponentRenderer extends PureComponent {
       changelog, importString, version } = this.props;
     return (
       <div className={s.root} id={`${name}-container`}>
+        <div className={s.anchor} id={name} />
         <header className={s.header}>
-          <h2 className={s.primaryHeading} id={name}>
+          <h2 className={s.primaryHeading}>
             {name}
             {version && <span className={s.version}>v{version}</span>}
             {pure &&
@@ -66,7 +67,7 @@ class ReactComponentRenderer extends PureComponent {
             }
           </h2>
           <div className={s.pathLine}>{pathLine}</div>
-
+          {sidebar && <a className={s.anchorLink} href={`#${name}`}>#</a>}
           {sidebar ? (
             <a className={s.isolatedLink} href={`#!/${name}`}>
               <IconButton
