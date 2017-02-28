@@ -9,6 +9,9 @@ const assetsPath = path.resolve(__dirname, '../static/dist');
 const host = (process.env.HOST || 'localhost');
 const port = (+process.env.PORT) || 3000;
 
+const context = path.resolve(__dirname, '../');
+const src = path.resolve(__dirname, '../src/');
+
 const common = {
 	context: path.resolve(__dirname, '../'),
 
@@ -19,48 +22,50 @@ const common = {
 	},
 
 	resolve: {
-		modulesDirectories: [
-			'src',
+		modules: [
+			context,
 			'node_modules',
 		],
-		extensions: ['', '.js', '.jsx', '.json', '.json5'],
+		extensions: ['.js', '.jsx', '.json', '.json5'],
 		alias: {
+      components: path.resolve(src, 'components'),
+      config: path.resolve(src, 'config'),
+      containers: path.resolve(src, 'containers'),
+      actions: path.resolve(src, 'actions'),
+      reducers: path.resolve(src, 'reducers'),
+      tools: path.resolve(src, 'tools'),
 		},
 	},
 
 	module: {
-		loaders: [{
+    rules: [
+      {
 				test: /\.jsx?$/,
-				include: [/src/],
-				loaders: ['babel?cacheDirectory=true'],
-			}, {
+				include: [src],
+				loader: 'babel-loader',
+        options: {
+          compact: false,
+        },
+			},
+			{
 				test: /\.json5?$/,
-				include: [/src/],
+				include: [src],
 				loader: 'json5-loader',
 			},
-			{ test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=application/font-woff" },
-			{ test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=application/font-woff" },
-			{ test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=application/octet-stream" },
-			{ test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "file" },
-			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/svg+xml" },
-			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/svg+xml" },
-			{ test: /\.jpg(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/jpg" },
-			{ test: /\.png(\?v=\d+\.\d+\.\d+)?$/, include: [/src/], loader: "url?limit=10000&mimetype=image/png" },
-		]
-	},
-
-	postcss: function() {
-		return [
-      require('postcss-nested-ancestors'),
-			require('postcss-nested'),
-			require('postcss-simple-vars'),
-			require('postcss-custom-media'),
-			require('postcss-media-minmax'),
-			require('postcss-conditionals'),
-			require('postcss-mixins'),
-			require('postcss-cssnext')({ browsers: ['last 2 versions'] }),
-			require('postcss-easings'),
-		];
+      {
+        test: /\.html$/,
+        loader: 'html-loader'
+      },
+      {
+        test: /\.jpg(\?v=\d+\.\d+\.\d+)?$/,
+        include: [src],
+        loader: "url-loader",
+        options: {
+          limit: 10000,
+          mimetype: 'image/jpg',
+        },
+      },
+    ],
 	},
 
 	plugins: [

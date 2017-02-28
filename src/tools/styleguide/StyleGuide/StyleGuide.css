@@ -3,6 +3,7 @@
 $sidebarWidth: 256px;
 
 .root {
+  /* stylelint-disable-next-line plugin/no-low-performance-animation */
   transition: padding 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   padding-top: 64px;
 
