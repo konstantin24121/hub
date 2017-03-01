@@ -19,6 +19,7 @@ export default class ReactComponent extends Component {
   static propTypes = {
     component: PropTypes.object.isRequired,
     sidebar: PropTypes.bool,
+    singleExample: PropTypes.bool,
   };
 
   componentWillMount() {
@@ -37,17 +38,18 @@ export default class ReactComponent extends Component {
   }
 
   render() {
-    const { sidebar, component } = this.props;
+    const { sidebar, component, singleExample } = this.props;
     const { name, pathLine, examples, changelog } = component;
     const { description, props, pure, importString, version } = component.props;
     const { isMobile } = this.state;
 
     return (
       <Paper
-        zDepth={1}
+        zDepth={singleExample ? 0 : 1}
         style={{ padding: '0.2rem 2rem', margin: isMobile ? '1rem -1rem' : '2rem 0' }}
       >
-        <ReactComponentRenderer
+        {singleExample && <Examples examples={examples} name={name} props={props} />}
+        {!singleExample && <ReactComponentRenderer
           name={name}
           pathLine={pathLine}
           description={description && <Markdown text={description} />}
@@ -57,8 +59,9 @@ export default class ReactComponent extends Component {
           version={version}
           examples={examples && <Examples examples={examples} name={name} props={props} />}
           sidebar={sidebar}
+          singleExample={singleExample}
           changelog={changelog && <Changelog text={changelog[0].content} />}
-        />
+        />}
       </Paper>
     );
   }

@@ -36,6 +36,13 @@ $sidebarWidth: 256px;
   z-index: 100;
 }
 
+.titleline {
+  float: left;
+  padding: 12px 2rem;
+  font-size: 20px;
+  font-weight: 500;
+}
+
 .sidebar {
   border-width: 0 1px 0 0;
   position: fixed;
