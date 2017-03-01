@@ -65,11 +65,11 @@ export default class PlaygroundRenderer extends PureComponent {
     return (
       <div className={s.root}>
         <div className={s.previewBox}>
-          <div className={previewClass}>
-            <Preview code={code} evalInContext={evalInContext} />
-          </div>
+          <Preview code={code} evalInContext={evalInContext} />
+          {/* <div className={previewClass}>
+          </div> */}
         </div>
-        <div className={s.toolWrapper}>
+        {/* <div className={s.toolWrapper}>
           <div className={s.toolsWrapper}>
             {(showPropsEditor && props) && (
               <PropsEditor
@@ -95,7 +95,7 @@ export default class PlaygroundRenderer extends PureComponent {
             onCodeClick={this.handleCodeToggle}
             onPropsEditorClick={this.handlePropsEditorToggle}
           />
-        </div>
+        </div> */}
       </div>
     );
   }

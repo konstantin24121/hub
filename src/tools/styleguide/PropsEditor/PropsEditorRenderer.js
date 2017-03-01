@@ -92,11 +92,11 @@ class PropsEditorRenderer extends PureComponent {
       display: 'flex',
       float: 'left',
       marginRight: '1rem',
-      marginBottom: '1rem',
+      marginTop: '1rem',
       width: 'auto',
     };
     return (
-      <div>
+      <div style={{ display: 'flex', alignItems: 'flex-end' }}>
         <label
           htmlFor={name}
           style={{

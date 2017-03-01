@@ -45,7 +45,7 @@ export default class ReactComponent extends Component {
     return (
       <Paper
         zDepth={1}
-        style={{ padding: '0.2rem 1rem', margin: isMobile ? '1rem -1rem' : '2rem 0' }}
+        style={{ padding: '0.2rem 2rem', margin: isMobile ? '1rem -1rem' : '2rem 0' }}
       >
         <ReactComponentRenderer
           name={name}
