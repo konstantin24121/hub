@@ -15,7 +15,6 @@ const customComponents = [
   'StyleGuide',
   'TableOfContents/TableOfContentsRenderer',
   'ComponentsList',
-  'Components',
   'Section',
   'Props',
   'Playground',

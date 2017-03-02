@@ -28,7 +28,7 @@ class Toolbar extends PureComponent {
 
   componentWillMount() {
     const { media } = this.props;
-    media({ minWidth: 800 }, () => {
+    media({ minWidth: 450 }, () => {
       this.setState({
         isMobile: false,
       });
@@ -47,7 +47,6 @@ class Toolbar extends PureComponent {
       <span>
 
         <IconButton
-          tooltip="Large container"
           iconClassName="material-icons"
           onClick={onSizeChange('Lg')}
           iconStyle={{ color: containerSize === 'Lg' ? cyan500 : 'currentColor' }}
@@ -55,7 +54,6 @@ class Toolbar extends PureComponent {
           tv
         </IconButton>
         <IconButton
-          tooltip="Middle container"
           iconClassName="material-icons"
           onClick={onSizeChange('Md')}
           iconStyle={{ color: containerSize === 'Md' ? cyan500 : 'currentColor' }}
@@ -63,7 +61,6 @@ class Toolbar extends PureComponent {
           laptop
         </IconButton>
         <IconButton
-          tooltip="Small container"
           iconClassName="material-icons"
           onClick={onSizeChange('Sm')}
           iconStyle={{ color: containerSize === 'Sm' ? cyan500 : 'currentColor' }}
@@ -71,7 +68,6 @@ class Toolbar extends PureComponent {
           tablet_android
         </IconButton>
         <IconButton
-          tooltip="Extra small container"
           iconClassName="material-icons"
           onClick={onSizeChange('Xs')}
           iconStyle={{ color: containerSize === 'Xs' ? cyan500 : 'currentColor' }}
@@ -136,7 +132,6 @@ class Toolbar extends PureComponent {
         <div className={cn(s.toolbarGroup, s.toolbarGroup_left)}>
           <div className={s.toolbarSeparator} />
           <IconButton
-            tooltip={showPropsEditor ? 'Hide props editor' : 'Show props editor'}
             iconClassName="material-icons"
             onClick={onPropsEditorClick}
             iconStyle={{ color: showPropsEditor ? cyan500 : 'currentColor' }}
@@ -144,7 +139,6 @@ class Toolbar extends PureComponent {
             tune
           </IconButton>
           <IconButton
-            tooltip={showCode ? 'Hide code' : 'Show code'}
             iconClassName="material-icons"
             onClick={onCodeClick}
             iconStyle={{ color: showCode ? cyan500 : 'currentColor' }}

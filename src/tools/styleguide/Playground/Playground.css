@@ -4,7 +4,11 @@
   background-color: #fff;
   margin-bottom: 30px;
 
-  @media (min-width: 1300px) {
+  &_singleExample {
+    border: none;
+  }
+
+  @media (min-width: 768px) {
     display: flex;
     justify-content: space-between;
   }
@@ -14,6 +18,30 @@
   width: 100%;
   padding: 1rem;
   overflow: hidden;
+
+  &_withToolbar {
+    @media (min-width: 768px) {
+      padding-right: calc(50px + 1rem);
+    }
+  }
+
+  &_withEditor {
+    @media (min-width: 768px) {
+      padding-right: calc(400px + 50px + 1rem);
+    }
+  }
+}
+
+.tools {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  display: none;
+
+  .root:hover > & {
+    display: block;
+  }
 }
 
 .preview {
@@ -58,15 +86,17 @@
 
 .toolWrapper {
   width: 100%;
-  box-shadow: rgba(0, 0, 0, 0.117647) 0 3px 3px -2px inset;
   display: flex;
   flex-direction: column;
 
-  @media (min-width: 1300px) {
+  @media (min-width: 768px) {
+    position: fixed;
+    top: 64px;
+    bottom: 0;
+    right: 0;
     width: auto;
     max-width: 500px;
     flex-direction: row;
-    box-shadow: rgba(0, 0, 0, 0.117647) -3px 0 6px -2px;
   }
 }
 
@@ -74,10 +104,17 @@
   display: flex;
   flex-direction: column;
   background-color: #263238;
-  min-width: 350px;
+  width: 400px;
+  border-top: 1px solid rgb(245, 245, 245);
+
+  @media (min-width: 768px) {
+    border-top: none;
+    border-left: 1px solid rgb(245, 245, 245);
+  }
 
   &:empty {
-    min-width: 0;
+    width: 0;
+    border: none;
   }
 }
 

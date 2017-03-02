@@ -94,9 +94,9 @@ class StyleGuideRenderer extends Component {
               </IconButton>
             }
             {!sidebar &&
-              <a href="/#">
+              <a href={singleExample ? `/#!/${targetComponentName}` : "/#"}>
                 <IconButton
-                  tooltip="Back to styleguide"
+                  tooltip={singleExample ? `Back to ${targetComponentName}` : "Back to styleguide"}
                   tooltipPosition="bottom-left"
                 >
                   <FontIcon className="material-icons" color="white">widgets</FontIcon>

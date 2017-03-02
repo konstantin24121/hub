@@ -14,6 +14,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
 import Checkbox from 'material-ui/Checkbox';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import cn from 'classnames';
 import map from 'lodash/map';
@@ -92,11 +93,11 @@ class PropsEditorRenderer extends PureComponent {
       display: 'flex',
       float: 'left',
       marginRight: '1rem',
-      marginTop: '1rem',
+      marginBottom: '1rem',
       width: 'auto',
     };
     return (
-      <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+      <div>
         <label
           htmlFor={name}
           style={{
@@ -106,6 +107,7 @@ class PropsEditorRenderer extends PureComponent {
             width: '200px',
             fontSize: 14,
             lineHeight: '24px',
+            marginBottom: '0.75rem',
             color: disabled ? 'rgba(0, 0, 0, 0.298039)' : 'rgba(0, 0, 0, 0.870588)',
           }}
         >
@@ -244,13 +246,19 @@ class PropsEditorRenderer extends PureComponent {
     );
     return (
       <div className={s.root}>
-        <Subheader>Change component props how you like</Subheader>
-        <div className={s.items}>
-          {fields}
-        </div>
-        <div className={cn(s.item, s.item_last)}>
-          <RaisedButton label="Submit new props" primary onClick={onSubmit} />
-        </div>
+        <Scrollbars
+          autoHide
+          autoHideTimeout={1000}
+          autoHideDuration={200}
+        >
+          <Subheader>Change component props how you like</Subheader>
+          <div className={s.items}>
+            {fields}
+          </div>
+          <div className={cn(s.item, s.item_last)}>
+            <RaisedButton label="Submit new props" primary onClick={onSubmit} />
+          </div>
+        </Scrollbars>
       </div>
     );
   }
