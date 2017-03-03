@@ -10,6 +10,7 @@ import TextField from 'material-ui/TextField';
 import Subheader from 'material-ui/Subheader';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
+import SyncIcon from 'material-ui/svg-icons/notification/sync';
 import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
 import Checkbox from 'material-ui/Checkbox';
@@ -27,11 +28,18 @@ class PropsEditorRenderer extends PureComponent {
   static propTypes = {
     props: PropTypes.object.isRequired,
     fields: PropTypes.object.isRequired,
+    submitPosition: PropTypes.number,
+    submitIsVisible: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     onCheck: PropTypes.func.isRequired,
     onToggle: PropTypes.func.isRequired,
     onTextChange: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    submitPosition: 0,
+    submitIsVisible: false,
   };
 
   renderTextField({ name, value, disabled, label, description, hintStyle }) {
@@ -233,7 +241,7 @@ class PropsEditorRenderer extends PureComponent {
   };
 
   render() {
-    const { props, onSubmit } = this.props;
+    const { props, onSubmit, submitPosition, submitIsVisible } = this.props;
     const fields = map(props, (item, key) =>
       this.renderField({
         type: getType(item),
@@ -246,19 +254,35 @@ class PropsEditorRenderer extends PureComponent {
     );
     return (
       <div className={s.root}>
-        <Scrollbars
-          autoHide
-          autoHideTimeout={1000}
-          autoHideDuration={200}
+        <div className={s.fields}>
+          <Scrollbars
+            autoHide
+            autoHideTimeout={1000}
+            autoHideDuration={200}
+          >
+            <Subheader>Change component props how you like</Subheader>
+            <div className={s.items}>
+              {fields}
+            </div>
+            <div className={cn(s.item, s.item_last)}>
+              <RaisedButton label="Submit new props" primary onClick={onSubmit} />
+            </div>
+          </Scrollbars>
+        </div>
+        <div
+          className={cn(s.fluidPlate, {
+            [s.fluidPlate_visible]: submitIsVisible,
+          })}
+          style={{
+            top: submitPosition,
+          }}
         >
-          <Subheader>Change component props how you like</Subheader>
-          <div className={s.items}>
-            {fields}
-          </div>
-          <div className={cn(s.item, s.item_last)}>
-            <RaisedButton label="Submit new props" primary onClick={onSubmit} />
-          </div>
-        </Scrollbars>
+          <RaisedButton
+            icon={<SyncIcon />}
+            primary
+            onClick={onSubmit}
+          />
+        </div>
       </div>
     );
   }

@@ -18,6 +18,7 @@
   width: 100%;
   padding: 1rem;
   overflow: hidden;
+  position: relative;
 
   &_withToolbar {
     @media (min-width: 768px) {
@@ -48,27 +49,13 @@
   margin: 0 auto;
   padding: 15px 24px;
   overflow: auto;
+  position: relative;
   /* stylelint-disable-next-line plugin/no-low-performance-animation */
-  transition: width 0.5s;
+  transition: width 0.5s, height 0.5s;
   max-width: 100%;
+  max-height: 100%;
   box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
   height: 100%;
-
-  &_SizeLg {
-    width: 1024px;
-  }
-
-  &_SizeMd {
-    width: 800px;
-  }
-
-  &_SizeSm {
-    width: 568px;
-  }
-
-  &_SizeXs {
-    width: 320px;
-  }
 
   &_BgLight {
     background-color: rgb(255, 255, 255);
@@ -82,6 +69,45 @@
     background-image: url('./static/transparent.jpg');
     background-repeat: repeat;
   }
+}
+
+.sizeDrag {
+  position: static;
+  width: 0;
+  height: 0;
+}
+
+.sizeDragV,
+.sizeDragH {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 5px;
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 150ms ease;
+  background-color: rgba(0, 0, 0, 0.117647);
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.sizeDragH {
+  top: auto;
+  left: 0;
+  width: auto;
+  height: 5px;
+}
+
+.previewSize {
+  font-size: 0.7rem;
+  position: fixed;
+  bottom: 1em;
+  right: 60px;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.298039);
 }
 
 .toolWrapper {

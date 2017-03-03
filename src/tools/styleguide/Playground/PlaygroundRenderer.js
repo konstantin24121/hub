@@ -18,6 +18,25 @@ import PropsEditor from '../PropsEditor';
 
 const s = require('./Playground.css');
 
+const containerSizes = {
+  Lg: {
+    width: 1024,
+    height: 600,
+  },
+  Md: {
+    width: 800,
+    height: 600,
+  },
+  Sm: {
+    width: 568,
+    height: 480,
+  },
+  Xs: {
+    width: 320,
+    height: 480,
+  },
+}
+
 export default class PlaygroundRenderer extends PureComponent {
   static propTypes = {
     code: PropTypes.string.isRequired,
@@ -32,7 +51,9 @@ export default class PlaygroundRenderer extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      containerSize: 'Lg',
+      containerSize: containerSizes.Lg,
+      cursorPosition: {},
+      containerSizeKey: 'Lg',
       containerBg: 'Light',
       showCode: false,
       showPropsEditor: false,
@@ -40,7 +61,7 @@ export default class PlaygroundRenderer extends PureComponent {
   }
 
   handleChangeContainerSize = (size) => () => {
-    this.setState({ containerSize: size });
+    this.setState({ containerSize: containerSizes[size], containerSizeKey: size });
   };
 
   handleChangeContainerBackground = (event, value) => {
@@ -61,10 +82,42 @@ export default class PlaygroundRenderer extends PureComponent {
     }));
   };
 
+  handleDragStart = (event) => {
+    const { nativeEvent } = event;
+    this.setState({
+      containerSize: {
+        width: this._previewContainer.offsetWidth,
+        height: this._previewContainer.offsetHeight,
+      },
+      containerSizeKey: 'Custom',
+      cursorPosition: {
+        x: nativeEvent.clientX,
+        y: nativeEvent.clientY,
+      },
+    });
+  };
+
+  handleDragVertical = (event) => {
+    const { nativeEvent } = event;
+    this.setState((prevState) => {
+      console.log(prevState.containerSize.width,prevState.cursorPosition.x, nativeEvent.clientX)
+      return {
+        containerSize: {
+          width: prevState.containerSize.width + nativeEvent.clientX - prevState.cursorPosition.x,
+          height: prevState.containerSize.height,
+        },
+        cursorPosition: {
+          x: nativeEvent.clientX,
+          y: nativeEvent.clientY,
+        },
+    }});
+  };
+
   render() {
     const { code, name, evalInContext,
       onChange, props, index, singleExample } = this.props;
-    const { containerSize, containerBg, showCode, showPropsEditor } = this.state;
+    const { containerSize, containerBg, showCode, showPropsEditor,
+    containerSizeKey, cursorPosition } = this.state;
 
     const rootClass = cn(s.root, {
       [s.root_singleExample]: singleExample,
@@ -72,7 +125,6 @@ export default class PlaygroundRenderer extends PureComponent {
 
 
     const previewClass = cn(s.preview, 'rsg--example-preview',
-      s[`preview_Size${containerSize}`],
       s[`preview_Bg${containerBg}`],
     );
 
@@ -96,8 +148,27 @@ export default class PlaygroundRenderer extends PureComponent {
         }
         <div className={previewBoxClass}>
           {singleExample &&
-            <div className={previewClass}>
+            <div
+              ref={(c) => { this._previewContainer = c; }}
+              className={previewClass}
+              style={{
+                ...containerSize,
+              }}
+            >
               {preview}
+              <div className={s.sizeDrag}>
+                <div
+                  className={s.sizeDragH}
+                />
+                <div
+                  className={s.sizeDragV}
+                  onDrag={this.handleDragVertical}
+                  onDragStart={this.handleDragStart}
+                />
+              </div>
+              <div className={s.previewSize}>
+                {containerSize.width}x{containerSize.height} ; {cursorPosition.x}, {cursorPosition.y}
+              </div>
             </div>
           }
           {!singleExample && preview}
@@ -120,7 +191,7 @@ export default class PlaygroundRenderer extends PureComponent {
               )}
             </div>
             <Toolbar
-              containerSize={containerSize}
+              containerSize={containerSizeKey}
               containerBg={containerBg}
               showCode={showCode}
               showPropsEditor={showPropsEditor}
