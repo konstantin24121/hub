@@ -33,7 +33,7 @@ $sidebarWidth: 256px;
   right: 0;
   color: white;
   text-align: right;
-  z-index: 100;
+  z-index: 100000;
 }
 
 .titleline {

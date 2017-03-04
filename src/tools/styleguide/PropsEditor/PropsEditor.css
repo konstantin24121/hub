@@ -1,13 +1,16 @@
 .root {
   position: relative;
   padding-bottom: 1rem;
-  height: 100%;
   background-color: white;
 
   &::after {
     content: '';
     display: block;
     clear: both;
+  }
+
+  @media (min-width: 768px) {
+    height: 100%;
   }
 }
 
@@ -16,14 +19,6 @@
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
-
-  @media (min-width: 800px) {
-    width: 80%;
-  }
-
-  @media (min-width: 768px) {
-    width: 100%;
-  }
 }
 
 .item {
@@ -68,6 +63,7 @@
 }
 
 .fluidPlate {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -78,6 +74,10 @@
 
   &_visible {
     transform: translateX(-95%);
+  }
+
+  @media (min-width: 768px) {
+    display: block;
   }
 }
 

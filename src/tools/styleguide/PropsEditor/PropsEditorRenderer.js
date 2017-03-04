@@ -16,6 +16,7 @@ import Toggle from 'material-ui/Toggle';
 import Checkbox from 'material-ui/Checkbox';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Scrollbars } from 'react-custom-scrollbars';
+import Responsive from 'react-responsive-decorator';
 
 import cn from 'classnames';
 import map from 'lodash/map';
@@ -24,6 +25,7 @@ import { unquote, getType, showSpaces } from '../Props/util';
 import { parseDefault, getTypeForLabel } from './utils';
 import s from './PropsEditor.css';
 
+@Responsive
 class PropsEditorRenderer extends PureComponent {
   static propTypes = {
     props: PropTypes.object.isRequired,
@@ -41,6 +43,21 @@ class PropsEditorRenderer extends PureComponent {
     submitPosition: 0,
     submitIsVisible: false,
   };
+
+  componentWillMount() {
+    const { media } = this.props;
+    media({ minWidth: 767 }, () => {
+      this.setState({
+        isMobile: true,
+      });
+    });
+
+    media({ maxWidth: 768 }, () => {
+      this.setState({
+        isMobile: false,
+      });
+    });
+  }
 
   renderTextField({ name, value, disabled, label, description, hintStyle }) {
     const stringValue = value.toString();
@@ -252,22 +269,32 @@ class PropsEditorRenderer extends PureComponent {
         name: key,
       })
     );
+
+    const content = (
+      <span>
+        <Subheader>Change component props how you like</Subheader>
+        <div className={s.items}>
+          {fields}
+        </div>
+        <div className={cn(s.item, s.item_last)}>
+          <RaisedButton label="Submit new props" primary onClick={onSubmit} />
+        </div>
+      </span>
+    );
+
     return (
       <div className={s.root}>
         <div className={s.fields}>
-          <Scrollbars
-            autoHide
-            autoHideTimeout={1000}
-            autoHideDuration={200}
-          >
-            <Subheader>Change component props how you like</Subheader>
-            <div className={s.items}>
-              {fields}
-            </div>
-            <div className={cn(s.item, s.item_last)}>
-              <RaisedButton label="Submit new props" primary onClick={onSubmit} />
-            </div>
-          </Scrollbars>
+          {this.state.isMobile &&
+            <Scrollbars
+              autoHide
+              autoHideTimeout={1000}
+              autoHideDuration={200}
+            >
+              {content}
+            </Scrollbars>
+          }
+          {!this.state.isMobile && content}
         </div>
         <div
           className={cn(s.fluidPlate, {

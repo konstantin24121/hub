@@ -98,7 +98,6 @@ export default class PropsEditor extends PureComponent {
     const { props } = this.props;
     const { fields, submitPosition, oldFields } = this.state;
     const submitIsVisible = !fields.equals(oldFields);
-    console.log(fields.toJS(), oldFields.toJS())
     return (
       <PropsEditorRenderer
         props={props}

@@ -56,7 +56,7 @@ export default class ReactComponent extends Component {
         {!singleExample &&
           <Paper
             zDepth={1}
-            style={{ padding: '0.2rem 2rem', margin: isMobile ? '1rem -1rem' : '2rem 0' }}
+            style={{ padding: '0.2rem 2rem', margin: isMobile ? '1rem -1rem' : '2rem 0', overflow: 'hidden' }}
             >
               <ReactComponentRenderer
                 name={name}

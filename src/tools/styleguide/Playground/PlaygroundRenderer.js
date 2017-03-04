@@ -12,6 +12,7 @@ import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import { grey200 } from 'material-ui/styles/colors';
 import cn from 'classnames';
+import { throttle } from 'lodash';
 
 import Toolbar from '../Toolbar';
 import PropsEditor from '../PropsEditor';
@@ -35,7 +36,7 @@ const containerSizes = {
     width: 320,
     height: 480,
   },
-}
+};
 
 export default class PlaygroundRenderer extends PureComponent {
   static propTypes = {
@@ -58,10 +59,38 @@ export default class PlaygroundRenderer extends PureComponent {
       showCode: false,
       showPropsEditor: false,
     };
+    this.setNewVertikalDimentions = throttle(this.setNewVertikalDimentions, 1000 / 60);
+    this.setNewHorizontalDimentions = throttle(this.setNewHorizontalDimentions, 1000 / 60);
   }
 
-  handleChangeContainerSize = (size) => () => {
-    this.setState({ containerSize: containerSizes[size], containerSizeKey: size });
+  setNewVertikalDimentions = (event) => {
+    const { nativeEvent } = event;
+    if (nativeEvent.clientX === 0) return;
+    this.setState((prevState) => ({
+      containerSize: {
+        width: prevState.containerSize.width + (nativeEvent.clientX - prevState.cursorPosition.x),
+        height: prevState.containerSize.height,
+      },
+      cursorPosition: {
+        x: nativeEvent.clientX,
+        y: nativeEvent.clientY,
+      },
+    }));
+  };
+
+  setNewHorizontalDimentions = (event) => {
+    const { nativeEvent } = event;
+    if (nativeEvent.clientY === 0) return;
+    this.setState((prevState) => ({
+      containerSize: {
+        width: prevState.containerSize.width,
+        height: prevState.containerSize.height + (nativeEvent.clientY - prevState.cursorPosition.y),
+      },
+      cursorPosition: {
+        x: nativeEvent.clientX,
+        y: nativeEvent.clientY,
+      },
+    }));
   };
 
   handleChangeContainerBackground = (event, value) => {
@@ -97,20 +126,18 @@ export default class PlaygroundRenderer extends PureComponent {
     });
   };
 
+  handleChangeContainerSize = (size) => () => {
+    this.setState({ containerSize: containerSizes[size], containerSizeKey: size });
+  };
+
   handleDragVertical = (event) => {
-    const { nativeEvent } = event;
-    this.setState((prevState) => {
-      console.log(prevState.containerSize.width,prevState.cursorPosition.x, nativeEvent.clientX)
-      return {
-        containerSize: {
-          width: prevState.containerSize.width + nativeEvent.clientX - prevState.cursorPosition.x,
-          height: prevState.containerSize.height,
-        },
-        cursorPosition: {
-          x: nativeEvent.clientX,
-          y: nativeEvent.clientY,
-        },
-    }});
+    event.persist();
+    this.setNewVertikalDimentions(event);
+  };
+
+  handleDragHorizontal = (event) => {
+    event.persist();
+    this.setNewHorizontalDimentions(event);
   };
 
   render() {
@@ -159,6 +186,8 @@ export default class PlaygroundRenderer extends PureComponent {
               <div className={s.sizeDrag}>
                 <div
                   className={s.sizeDragH}
+                  onDrag={this.handleDragHorizontal}
+                  onDragStart={this.handleDragStart}
                 />
                 <div
                   className={s.sizeDragV}
@@ -167,7 +196,7 @@ export default class PlaygroundRenderer extends PureComponent {
                 />
               </div>
               <div className={s.previewSize}>
-                {containerSize.width}x{containerSize.height} ; {cursorPosition.x}, {cursorPosition.y}
+                {containerSize.width}x{containerSize.height}
               </div>
             </div>
           }
