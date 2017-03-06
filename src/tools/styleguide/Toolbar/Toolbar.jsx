@@ -14,19 +14,23 @@ import { cyan500 } from 'material-ui/styles/colors';
 import Responsive from 'react-responsive-decorator';
 import cn from 'classnames';
 
+import { createSettingsLink } from '../utils/settingsLink';
 import s from './Toolbar.css';
 
 @Responsive
 class Toolbar extends PureComponent {
   static propTypes = {
-    containerSize: PropTypes.string.isRequired,
+    containerSizeKey: PropTypes.string.isRequired,
     containerBg: PropTypes.string.isRequired,
     showCode: PropTypes.bool.isRequired,
     showPropsEditor: PropTypes.bool.isRequired,
     onColorChange: PropTypes.func.isRequired,
     onSizeChange: PropTypes.func.isRequired,
     onCodeClick: PropTypes.func.isRequired,
-    settingsLink: PropTypes.string.isRequired,
+    containerSize: PropTypes.shape(
+      { width: PropTypes.number, height: PropTypes.number }
+    ).isRequired,
+    urlProps: PropTypes.arrayOf(PropTypes.string),
     onPropsEditorClick: PropTypes.func.isRequired,
   };
 
@@ -35,6 +39,7 @@ class Toolbar extends PureComponent {
 
     this.state = {
       snackbarOpen: false,
+      settingsLink: location.href,
     };
   }
 
@@ -53,6 +58,15 @@ class Toolbar extends PureComponent {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { containerSizeKey, containerBg, containerSize } = nextProps;
+    const settings = { containerSizeKey, containerBg };
+    if (containerSizeKey === 'Custom') settings.containerSize = containerSize;
+    this.setState({
+      settingsLink: createSettingsLink(nextProps.urlProps, settings),
+    });
+  }
+
   handleOnCopy = () => {
     this.setState({
       snackbarOpen: true,
@@ -66,35 +80,35 @@ class Toolbar extends PureComponent {
   }
 
   renderDimentionSet = () => {
-    const { containerSize, onSizeChange } = this.props;
+    const { containerSizeKey, onSizeChange } = this.props;
     return (
       <span>
 
         <IconButton
           iconClassName="material-icons"
           onClick={onSizeChange('Lg')}
-          iconStyle={{ color: containerSize === 'Lg' ? cyan500 : 'currentColor' }}
+          iconStyle={{ color: containerSizeKey === 'Lg' ? cyan500 : 'currentColor' }}
         >
           tv
         </IconButton>
         <IconButton
           iconClassName="material-icons"
           onClick={onSizeChange('Md')}
-          iconStyle={{ color: containerSize === 'Md' ? cyan500 : 'currentColor' }}
+          iconStyle={{ color: containerSizeKey === 'Md' ? cyan500 : 'currentColor' }}
         >
           laptop
         </IconButton>
         <IconButton
           iconClassName="material-icons"
           onClick={onSizeChange('Sm')}
-          iconStyle={{ color: containerSize === 'Sm' ? cyan500 : 'currentColor' }}
+          iconStyle={{ color: containerSizeKey === 'Sm' ? cyan500 : 'currentColor' }}
         >
           tablet_android
         </IconButton>
         <IconButton
           iconClassName="material-icons"
           onClick={onSizeChange('Xs')}
-          iconStyle={{ color: containerSize === 'Xs' ? cyan500 : 'currentColor' }}
+          iconStyle={{ color: containerSizeKey === 'Xs' ? cyan500 : 'currentColor' }}
         >
           phone_android
         </IconButton>
@@ -103,21 +117,21 @@ class Toolbar extends PureComponent {
   };
 
   renderDimentionSelect = () => {
-    const { containerSize, onSizeChange } = this.props;
+    const { containerSizeKey, onSizeChange } = this.props;
     const handle = (event, value) => onSizeChange(value)();
     return (
       <IconMenu
         onChange={handle}
-        value={containerSize}
+        value={containerSizeKey}
         iconButtonElement={
           <IconButton
             touch
             iconStyle={{ color: cyan500 }}
           >
-            {containerSize === 'Lg' && <Tv />}
-            {containerSize === 'Md' && <Laptop />}
-            {containerSize === 'Sm' && <Tablet />}
-            {containerSize === 'Xs' && <Phone />}
+            {containerSizeKey === 'Lg' && <Tv />}
+            {containerSizeKey === 'Md' && <Laptop />}
+            {containerSizeKey === 'Sm' && <Tablet />}
+            {containerSizeKey === 'Xs' && <Phone />}
           </IconButton>
         }
       >
@@ -132,8 +146,8 @@ class Toolbar extends PureComponent {
 
   render() {
     const { containerBg, showCode, showPropsEditor,
-    onColorChange, onCodeClick, onPropsEditorClick, settingsLink } = this.props;
-    const { isMobile } = this.state;
+    onColorChange, onCodeClick, onPropsEditorClick } = this.props;
+    const { isMobile, settingsLink } = this.state;
 
     return (
       <div className={s.toolbar}>

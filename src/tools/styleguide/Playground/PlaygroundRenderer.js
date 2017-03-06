@@ -14,6 +14,7 @@ import FontIcon from 'material-ui/FontIcon';
 import { grey200 } from 'material-ui/styles/colors';
 import cn from 'classnames';
 
+import { getQueryVariable } from '../utils/settingsLink';
 import Toolbar from '../Toolbar';
 import PropsEditor from '../PropsEditor';
 
@@ -42,26 +43,41 @@ export default class PlaygroundRenderer extends PureComponent {
   static propTypes = {
     code: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    settingsLink: PropTypes.string.isRequired,
     props: PropTypes.object.isRequired,
     evalInContext: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
     singleExample: PropTypes.bool,
+    urlProps: PropTypes.arrayOf(PropTypes.string),
   };
 
   constructor(props) {
     super(props);
-    this.state = {
-      containerSize: containerSizes.Lg,
-      containerSizeLine: containerSizes.Lg,
-      containerSizeKey: 'Lg',
-      containerBg: 'Light',
+
+    const initialState = {
       showCode: false,
       showPropsEditor: false,
     };
-  }
 
+    const settingsFromLink = getQueryVariable('settings');
+    if (settingsFromLink) {
+      const settings = JSON.parse(settingsFromLink);
+      if (settings.containerSizeKey === 'Custom') {
+        initialState.containerSize = settings.containerSize;
+      } else {
+        initialState.containerSize = containerSizes[settings.containerSizeKey];
+      }
+      initialState.containerSizeLine = initialState.containerSize;
+      initialState.containerSizeKey = settings.containerSizeKey;
+      initialState.containerBg = settings.containerBg;
+    } else {
+      initialState.containerSize = containerSizes.Lg;
+      initialState.containerSizeLine = containerSizes.Lg;
+      initialState.containerSizeKey = 'Lg';
+      initialState.containerBg = 'Light';
+    }
+    this.state = initialState;
+  }
 
   handleChangeContainerBackground = (event, value) => {
     this.setState({ containerBg: value });
@@ -110,7 +126,7 @@ export default class PlaygroundRenderer extends PureComponent {
 
   render() {
     const { code, name, evalInContext,
-      onChange, props, index, singleExample, settingsLink } = this.props;
+      props, index, singleExample, urlProps, onChange } = this.props;
     const { containerSize, containerSizeLine, containerBg, showCode, showPropsEditor,
     containerSizeKey, isResize } = this.state;
 
@@ -188,11 +204,12 @@ export default class PlaygroundRenderer extends PureComponent {
               )}
             </div>
             <Toolbar
-              containerSize={containerSizeKey}
+              urlProps={urlProps}
+              containerSize={containerSize}
+              containerSizeKey={containerSizeKey}
               containerBg={containerBg}
               showCode={showCode}
               showPropsEditor={showPropsEditor}
-              settingsLink={settingsLink}
               onSizeChange={this.handleChangeContainerSize}
               onColorChange={this.handleChangeContainerBackground}
               onCodeClick={this.handleCodeToggle}

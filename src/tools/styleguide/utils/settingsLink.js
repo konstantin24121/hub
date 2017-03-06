@@ -3,9 +3,14 @@
  * @param  {Object} props
  * @return {String}
  */
-export function createSettingsLink(props) {
+export function createSettingsLink(props, settings) {
   const jsonProps = JSON.stringify(props);
-  return `${location.origin}?props=${encodeURIComponent(jsonProps)}${location.hash.replace(/(\?.*)/, '')}`;
+  const jsonSettings = JSON.stringify(settings);
+  const queryArray = [];
+  if (props) queryArray.push(`props=${encodeURIComponent(jsonProps)}`);
+  if (settings) queryArray.push(`settings=${encodeURIComponent(jsonSettings)}`);
+  const queryString = queryArray.length === 0 ? '' : `?${queryArray.join('&')}`;
+  return `${location.origin}${queryString}${location.hash.replace(/(\?.*)/, '')}`;
 }
 
 /**

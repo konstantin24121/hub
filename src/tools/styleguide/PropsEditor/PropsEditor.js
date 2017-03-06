@@ -36,6 +36,7 @@ export default class PropsEditor extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const fields = parseProps(nextProps);
+
     this.setState({
       oldFields: new Immutable.Map(fields),
       fields: new Immutable.Map(fields),
@@ -92,7 +93,7 @@ export default class PropsEditor extends PureComponent {
     const props = fields.map((field) => generateProps(field.toJS()));
     const simpleProps = props.filter((prop) => prop).toArray();
     const newCode = generateNewCode(code, componentName, simpleProps);
-    this.props.onSubmit(newCode, simpleProps);
+    this.props.onSubmit(newCode);
   };
   render() {
     const { props } = this.props;
