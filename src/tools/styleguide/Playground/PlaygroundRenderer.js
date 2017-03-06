@@ -205,7 +205,7 @@ export default class PlaygroundRenderer extends PureComponent {
             </div>
             <Toolbar
               urlProps={urlProps}
-              containerSize={containerSize}
+              containerSize={containerSizeLine}
               containerSizeKey={containerSizeKey}
               containerBg={containerBg}
               showCode={showCode}
