@@ -22,6 +22,7 @@ export default class StyleGuide extends Component {
 		codeKey: PropTypes.number.isRequired,
 		config: PropTypes.object.isRequired,
 		singleExample: PropTypes.bool,
+    targetComponentName: PropTypes.string,
 	};
 
 	getChildContext() {
@@ -29,6 +30,7 @@ export default class StyleGuide extends Component {
 			codeKey: this.props.codeKey,
 			config: this.props.config,
 			singleExample: this.props.singleExample,
+      targetComponentName: this.props.targetComponentName,
 		};
 	}
 

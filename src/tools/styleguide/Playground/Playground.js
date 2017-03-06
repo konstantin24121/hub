@@ -8,6 +8,8 @@
 import React, { Component, PropTypes } from 'react';
 import debounce from 'lodash/debounce';
 import PlaygroundRenderer from 'rsg-components/Playground/PlaygroundRenderer';
+import { createSettingsLink, getQueryVariable } from '../utils/settingsLink';
+import { generateNewCode } from '../PropsEditor/utils';
 
 export default class Playground extends Component {
   static propTypes = {
@@ -21,16 +23,29 @@ export default class Playground extends Component {
   static contextTypes = {
     config: PropTypes.object.isRequired,
     singleExample: PropTypes.bool,
+    targetComponentName: PropTypes.string,
   };
 
   constructor(props, context) {
     super(props, context);
     const { code } = props;
-
+    const propsFromLink = getQueryVariable('props');
+    let resultCode;
+    if (propsFromLink) {
+      const propsSettings = JSON.parse(propsFromLink);
+      resultCode = generateNewCode(
+        code,
+        context.targetComponentName,
+        propsSettings);
+    } else {
+      resultCode = code;
+    }
     this.state = {
-      code,
+      code: resultCode,
+      settingsLink: location.href,
     };
   }
+
 
   componentWillReceiveProps(nextProps) {
     const { code } = nextProps;
@@ -54,7 +69,7 @@ export default class Playground extends Component {
     }
   }
 
-  handleChange(code) {
+  handleChange(code, props) {
     // clear pending changes before proceed
     if (this.queuedChange) {
       this.queuedChange.cancel();
@@ -62,6 +77,7 @@ export default class Playground extends Component {
     // stored update action
     const queuedChange = () => this.setState({
       code,
+      settingsLink: createSettingsLink(props),
     });
 
     const { previewDelay } = this.context.config;
@@ -77,20 +93,22 @@ export default class Playground extends Component {
   }
 
   render() {
-    const { code, showCode, showPropsEditor } = this.state;
+    const { code, showCode, showPropsEditor, settingsLink } = this.state;
     const { evalInContext, index, name, props } = this.props;
     const { singleExample } = this.context;
+
     return (
       <PlaygroundRenderer
         code={code}
         showCode={showCode}
+        settingsLink={settingsLink}
         showPropsEditor={showPropsEditor}
         index={index}
         name={name}
         props={props}
         singleExample={singleExample}
         evalInContext={evalInContext}
-        onChange={(newCode) => { this.handleChange(newCode); }}
+        onChange={(newCode, newProps) => { this.handleChange(newCode, newProps); }}
       />
     );
   }

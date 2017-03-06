@@ -9,10 +9,10 @@ import React, { PropTypes, PureComponent } from 'react';
 import Editor from 'rsg-components/Editor';
 import Preview from 'rsg-components/Preview';
 import IconButton from 'material-ui/IconButton';
+import Resizable from 'react-resizable-box';
 import FontIcon from 'material-ui/FontIcon';
 import { grey200 } from 'material-ui/styles/colors';
 import cn from 'classnames';
-import { throttle } from 'lodash';
 
 import Toolbar from '../Toolbar';
 import PropsEditor from '../PropsEditor';
@@ -42,6 +42,7 @@ export default class PlaygroundRenderer extends PureComponent {
   static propTypes = {
     code: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    settingsLink: PropTypes.string.isRequired,
     props: PropTypes.object.isRequired,
     evalInContext: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
@@ -53,45 +54,14 @@ export default class PlaygroundRenderer extends PureComponent {
     super(props);
     this.state = {
       containerSize: containerSizes.Lg,
-      cursorPosition: {},
+      containerSizeLine: containerSizes.Lg,
       containerSizeKey: 'Lg',
       containerBg: 'Light',
       showCode: false,
       showPropsEditor: false,
     };
-    this.setNewVertikalDimentions = throttle(this.setNewVertikalDimentions, 1000 / 60);
-    this.setNewHorizontalDimentions = throttle(this.setNewHorizontalDimentions, 1000 / 60);
   }
 
-  setNewVertikalDimentions = (event) => {
-    const { nativeEvent } = event;
-    if (nativeEvent.clientX === 0) return;
-    this.setState((prevState) => ({
-      containerSize: {
-        width: prevState.containerSize.width + (nativeEvent.clientX - prevState.cursorPosition.x),
-        height: prevState.containerSize.height,
-      },
-      cursorPosition: {
-        x: nativeEvent.clientX,
-        y: nativeEvent.clientY,
-      },
-    }));
-  };
-
-  setNewHorizontalDimentions = (event) => {
-    const { nativeEvent } = event;
-    if (nativeEvent.clientY === 0) return;
-    this.setState((prevState) => ({
-      containerSize: {
-        width: prevState.containerSize.width,
-        height: prevState.containerSize.height + (nativeEvent.clientY - prevState.cursorPosition.y),
-      },
-      cursorPosition: {
-        x: nativeEvent.clientX,
-        y: nativeEvent.clientY,
-      },
-    }));
-  };
 
   handleChangeContainerBackground = (event, value) => {
     this.setState({ containerBg: value });
@@ -111,40 +81,38 @@ export default class PlaygroundRenderer extends PureComponent {
     }));
   };
 
-  handleDragStart = (event) => {
-    const { nativeEvent } = event;
+  handleResizeStart = () => {
     this.setState({
-      containerSize: {
-        width: this._previewContainer.offsetWidth,
-        height: this._previewContainer.offsetHeight,
-      },
       containerSizeKey: 'Custom',
-      cursorPosition: {
-        x: nativeEvent.clientX,
-        y: nativeEvent.clientY,
-      },
+      isResize: true,
+    });
+  };
+
+  handleOnResize = (direction, styleSize, clientSize) => {
+    this.setState({
+      containerSizeLine: clientSize,
+    });
+  };
+
+  handleResizeStop = () => {
+    this.setState({
+      isResize: false,
     });
   };
 
   handleChangeContainerSize = (size) => () => {
-    this.setState({ containerSize: containerSizes[size], containerSizeKey: size });
-  };
-
-  handleDragVertical = (event) => {
-    event.persist();
-    this.setNewVertikalDimentions(event);
-  };
-
-  handleDragHorizontal = (event) => {
-    event.persist();
-    this.setNewHorizontalDimentions(event);
+    this.setState({
+      containerSize: containerSizes[size],
+      containerSizeLine: containerSizes[size],
+      containerSizeKey: size,
+    });
   };
 
   render() {
     const { code, name, evalInContext,
-      onChange, props, index, singleExample } = this.props;
-    const { containerSize, containerBg, showCode, showPropsEditor,
-    containerSizeKey, cursorPosition } = this.state;
+      onChange, props, index, singleExample, settingsLink } = this.props;
+    const { containerSize, containerSizeLine, containerBg, showCode, showPropsEditor,
+    containerSizeKey, isResize } = this.state;
 
     const rootClass = cn(s.root, {
       [s.root_singleExample]: singleExample,
@@ -158,6 +126,10 @@ export default class PlaygroundRenderer extends PureComponent {
     const previewBoxClass = cn(s.previewBox, {
       [s.previewBox_withToolbar]: singleExample,
       [s.previewBox_withEditor]: singleExample && (showPropsEditor || showCode),
+    });
+
+    const resizebleClass = cn(s.resizeble, {
+      [s.resizeble_isResize]: isResize,
     });
 
     const preview = <Preview code={code} evalInContext={evalInContext} />;
@@ -175,30 +147,26 @@ export default class PlaygroundRenderer extends PureComponent {
         }
         <div className={previewBoxClass}>
           {singleExample &&
-            <div
-              ref={(c) => { this._previewContainer = c; }}
-              className={previewClass}
-              style={{
-                ...containerSize,
-              }}
+            <Resizable
+              customClass={resizebleClass}
+              width={containerSize.width}
+              height={containerSize.height}
+              minWidth={150}
+              minHeight={150}
+              onResizeStart={this.handleResizeStart}
+              onResize={this.handleOnResize}
+              onResizeStop={this.handleResizeStop}
             >
-              {preview}
-              <div className={s.sizeDrag}>
-                <div
-                  className={s.sizeDragH}
-                  onDrag={this.handleDragHorizontal}
-                  onDragStart={this.handleDragStart}
-                />
-                <div
-                  className={s.sizeDragV}
-                  onDrag={this.handleDragVertical}
-                  onDragStart={this.handleDragStart}
-                />
+              <div
+                ref={(c) => { this._previewContainer = c; }}
+                className={previewClass}
+              >
+                {preview}
+                <div className={s.previewSize}>
+                  {containerSizeLine.width}x{containerSizeLine.height}
+                </div>
               </div>
-              <div className={s.previewSize}>
-                {containerSize.width}x{containerSize.height}
-              </div>
-            </div>
+            </Resizable>
           }
           {!singleExample && preview}
         </div>
@@ -224,6 +192,7 @@ export default class PlaygroundRenderer extends PureComponent {
               containerBg={containerBg}
               showCode={showCode}
               showPropsEditor={showPropsEditor}
+              settingsLink={settingsLink}
               onSizeChange={this.handleChangeContainerSize}
               onColorChange={this.handleChangeContainerBackground}
               onCodeClick={this.handleCodeToggle}

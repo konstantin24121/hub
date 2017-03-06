@@ -3,10 +3,13 @@ import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
 import Palette from 'material-ui/svg-icons/image/palette';
+import Snackbar from 'material-ui/Snackbar';
 import Tv from 'material-ui/svg-icons/hardware/tv';
 import Laptop from 'material-ui/svg-icons/hardware/laptop';
 import Tablet from 'material-ui/svg-icons/hardware/tablet-android';
 import Phone from 'material-ui/svg-icons/hardware/phone-android';
+import CopyToClipboard from 'react-copy-to-clipboard';
+
 import { cyan500 } from 'material-ui/styles/colors';
 import Responsive from 'react-responsive-decorator';
 import cn from 'classnames';
@@ -23,8 +26,17 @@ class Toolbar extends PureComponent {
     onColorChange: PropTypes.func.isRequired,
     onSizeChange: PropTypes.func.isRequired,
     onCodeClick: PropTypes.func.isRequired,
+    settingsLink: PropTypes.string.isRequired,
     onPropsEditorClick: PropTypes.func.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      snackbarOpen: false,
+    };
+  }
 
   componentWillMount() {
     const { media } = this.props;
@@ -38,6 +50,18 @@ class Toolbar extends PureComponent {
       this.setState({
         isMobile: true,
       });
+    });
+  }
+
+  handleOnCopy = () => {
+    this.setState({
+      snackbarOpen: true,
+    });
+  }
+
+  handleClose = () => {
+    this.setState({
+      snackbarOpen: false,
     });
   }
 
@@ -105,9 +129,10 @@ class Toolbar extends PureComponent {
     );
   };
 
+
   render() {
     const { containerBg, showCode, showPropsEditor,
-    onColorChange, onCodeClick, onPropsEditorClick } = this.props;
+    onColorChange, onCodeClick, onPropsEditorClick, settingsLink } = this.props;
     const { isMobile } = this.state;
 
     return (
@@ -145,7 +170,24 @@ class Toolbar extends PureComponent {
           >
             code
           </IconButton>
+          <CopyToClipboard
+            text={settingsLink}
+            onCopy={this.handleOnCopy}
+          >
+            <IconButton
+              iconClassName="material-icons"
+              onClick={this.handleOpen}
+            >
+              link
+            </IconButton>
+          </CopyToClipboard>
         </div>
+        <Snackbar
+          open={this.state.snackbarOpen}
+          message="Component settings copy at you buffer"
+          autoHideDuration={4000}
+          onRequestClose={this.handleClose}
+        />
       </div>
     );
   }

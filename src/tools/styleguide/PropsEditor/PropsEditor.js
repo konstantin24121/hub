@@ -90,10 +90,10 @@ export default class PropsEditor extends PureComponent {
     const { code, componentName } = this.props;
     const { fields } = this.state;
     const props = fields.map((field) => generateProps(field.toJS()));
-    const newCode = generateNewCode(code, componentName, props.filter((prop) => prop).toArray());
-    this.props.onSubmit(newCode);
+    const simpleProps = props.filter((prop) => prop).toArray();
+    const newCode = generateNewCode(code, componentName, simpleProps);
+    this.props.onSubmit(newCode, simpleProps);
   };
-
   render() {
     const { props } = this.props;
     const { fields, submitPosition, oldFields } = this.state;
