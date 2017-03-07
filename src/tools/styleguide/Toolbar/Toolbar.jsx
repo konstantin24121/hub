@@ -188,8 +188,8 @@ class Toolbar extends PureComponent {
               </IconButton>
             }
           >
-            <MenuItem value="Dark" primaryText="Dark" />
             <MenuItem value="Light" primaryText="Light" />
+            <MenuItem value="Dark" primaryText="Dark" />
             <MenuItem value="Transparent" primaryText="Transparent" />
           </IconMenu>
           <IconMenu
