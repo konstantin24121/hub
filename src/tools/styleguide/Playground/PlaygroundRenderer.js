@@ -8,12 +8,36 @@
 import React, { PropTypes, PureComponent } from 'react';
 import Editor from 'rsg-components/Editor';
 import Preview from 'rsg-components/Preview';
+import IconButton from 'material-ui/IconButton';
+import Resizable from 'react-resizable-box';
+import FontIcon from 'material-ui/FontIcon';
+import { grey200 } from 'material-ui/styles/colors';
 import cn from 'classnames';
 
+import { getQueryVariable } from '../utils/settingsLink';
 import Toolbar from '../Toolbar';
 import PropsEditor from '../PropsEditor';
 
 const s = require('./Playground.css');
+
+const containerSizes = {
+  Lg: {
+    width: 1024,
+    height: 600,
+  },
+  Md: {
+    width: 800,
+    height: 600,
+  },
+  Sm: {
+    width: 568,
+    height: 480,
+  },
+  Xs: {
+    width: 320,
+    height: 480,
+  },
+};
 
 export default class PlaygroundRenderer extends PureComponent {
   static propTypes = {
@@ -22,21 +46,40 @@ export default class PlaygroundRenderer extends PureComponent {
     props: PropTypes.object.isRequired,
     evalInContext: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
+    singleExample: PropTypes.bool,
+    urlProps: PropTypes.arrayOf(PropTypes.string),
   };
 
   constructor(props) {
     super(props);
-    this.state = {
-      containerSize: 'Lg',
-      containerBg: 'Light',
+
+    const initialState = {
       showCode: false,
       showPropsEditor: false,
     };
-  }
 
-  handleChangeContainerSize = (size) => () => {
-    this.setState({ containerSize: size });
-  };
+    const settingsFromLink = getQueryVariable('settings');
+    if (settingsFromLink) {
+      const settings = JSON.parse(settingsFromLink);
+      if (settings.containerSizeKey === 'Custom') {
+        initialState.containerSize = settings.containerSize;
+      } else {
+        initialState.containerSize = containerSizes[settings.containerSizeKey];
+      }
+      initialState.containerSizeLine = initialState.containerSize;
+      initialState.containerSizeKey = settings.containerSizeKey;
+      initialState.containerBg = settings.containerBg;
+      initialState.componentsCount = settings.componentsCount;
+    } else {
+      initialState.containerSize = containerSizes.Lg;
+      initialState.containerSizeLine = containerSizes.Lg;
+      initialState.containerSizeKey = 'Lg';
+      initialState.containerBg = 'Light';
+      initialState.componentsCount = '1';
+    }
+    this.state = initialState;
+  }
 
   handleChangeContainerBackground = (event, value) => {
     this.setState({ containerBg: value });
@@ -45,57 +88,146 @@ export default class PlaygroundRenderer extends PureComponent {
   handleCodeToggle = () => {
     this.setState((prevState) => ({
       showCode: !prevState.showCode,
+      showPropsEditor: false,
     }));
   };
 
   handlePropsEditorToggle = () => {
     this.setState((prevState) => ({
       showPropsEditor: !prevState.showPropsEditor,
+      showCode: false,
     }));
+  };
+
+  handleResizeStart = () => {
+    this.setState({
+      containerSizeKey: 'Custom',
+      isResize: true,
+    });
+  };
+
+  handleOnResize = (direction, styleSize, clientSize) => {
+    this.setState({
+      containerSizeLine: clientSize,
+    });
+  };
+
+  handleChangeComponentsCount = (event, value) => {
+    this.setState({ componentsCount: value });
+  }
+
+  handleResizeStop = () => {
+    this.setState({
+      isResize: false,
+    });
+  };
+
+  handleChangeContainerSize = (size) => () => {
+    this.setState({
+      containerSize: containerSizes[size],
+      containerSizeLine: containerSizes[size],
+      containerSizeKey: size,
+    });
   };
 
   render() {
     const { code, name, evalInContext,
-      onChange, props } = this.props;
-    const { containerSize, containerBg, showCode, showPropsEditor } = this.state;
+      props, index, singleExample, urlProps, onChange } = this.props;
+    const { containerSize, containerSizeLine, containerBg, showCode, showPropsEditor,
+    containerSizeKey, isResize, componentsCount } = this.state;
+
+    const rootClass = cn(s.root, {
+      [s.root_singleExample]: singleExample,
+    });
+
+
     const previewClass = cn(s.preview, 'rsg--example-preview',
-      s[`preview_Size${containerSize}`],
       s[`preview_Bg${containerBg}`],
     );
+
+    const previewBoxClass = cn(s.previewBox, {
+      [s.previewBox_withToolbar]: singleExample,
+      [s.previewBox_withEditor]: singleExample && (showPropsEditor || showCode),
+    });
+
+    const resizebleClass = cn(s.resizeble, {
+      [s.resizeble_isResize]: isResize,
+    });
+
+    const preview = [];
+    for (let i = 1; i <= parseInt(componentsCount, 10); i += 1) {
+      preview.push(<Preview code={code} evalInContext={evalInContext} key={i} />);
+    }
     return (
-      <div className={s.root}>
-        <div className={s.previewBox}>
-          <div className={previewClass}>
-            <Preview code={code} evalInContext={evalInContext} />
-          </div>
-        </div>
-        <div className={s.toolWrapper}>
-          <div className={s.toolsWrapper}>
-            {(showPropsEditor && props) && (
-              <PropsEditor
-                props={props}
-                componentName={name}
-                code={code}
-                onSubmit={onChange}
-              />
-            )}
-            {showCode && (
-              <div className={s.editorWrapper} >
-                <Editor code={code} onChange={onChange} />
+      <div className={rootClass}>
+        {!singleExample &&
+          <a href={`/#!/${name}/${index}`} className={s.tools}>
+            <IconButton
+              tooltip="Customise example"
+              tooltipPosition="bottom-left"
+            >
+              <FontIcon className="material-icons" color={grey200}>settings</FontIcon>
+            </IconButton>
+          </a>
+        }
+        <div className={previewBoxClass}>
+          {singleExample &&
+            <Resizable
+              customClass={resizebleClass}
+              width={containerSize.width}
+              height={containerSize.height}
+              minWidth={150}
+              minHeight={150}
+              onResizeStart={this.handleResizeStart}
+              onResize={this.handleOnResize}
+              onResizeStop={this.handleResizeStop}
+            >
+              <div
+                ref={(c) => { this._previewContainer = c; }}
+                className={previewClass}
+              >
+                {preview}
               </div>
-            )}
-          </div>
-          <Toolbar
-            containerSize={containerSize}
-            containerBg={containerBg}
-            showCode={showCode}
-            showPropsEditor={showPropsEditor}
-            onSizeChange={this.handleChangeContainerSize}
-            onColorChange={this.handleChangeContainerBackground}
-            onCodeClick={this.handleCodeToggle}
-            onPropsEditorClick={this.handlePropsEditorToggle}
-          />
+              <div className={s.previewSize}>
+                {containerSizeLine.width}x{containerSizeLine.height}
+              </div>
+            </Resizable>
+          }
+          {!singleExample && preview}
         </div>
+        {singleExample &&
+          <div className={s.toolWrapper}>
+            <div className={s.toolsWrapper}>
+              {(showPropsEditor && props) && (
+                <PropsEditor
+                  props={props}
+                  componentName={name}
+                  code={code}
+                  onSubmit={onChange}
+                />
+              )}
+              {showCode && (
+                <div className={s.editorWrapper} >
+                  <Editor code={code} onChange={onChange} />
+                </div>
+              )}
+            </div>
+            <Toolbar
+              urlProps={urlProps}
+              containerSize={containerSizeLine}
+              containerSizeKey={containerSizeKey}
+              containerBg={containerBg}
+              componentsCount={componentsCount}
+              showCode={showCode}
+              showPropsEditor={showPropsEditor}
+              onSizeChange={this.handleChangeContainerSize}
+              onColorChange={this.handleChangeContainerBackground}
+              onCountChange={this.handleChangeComponentsCount}
+              onCodeClick={this.handleCodeToggle}
+              onPropsEditorClick={this.handlePropsEditorToggle}
+            />
+          </div>
+         }
       </div>
     );
   }

@@ -12,7 +12,7 @@ const env = process.env.NODE_ENV;
 
 const customComponents = [
   'ReactComponent',
-  'StyleGuide/StyleGuideRenderer',
+  'StyleGuide',
   'TableOfContents/TableOfContentsRenderer',
   'ComponentsList',
   'Section',

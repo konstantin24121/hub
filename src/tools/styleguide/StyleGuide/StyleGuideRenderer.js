@@ -29,6 +29,8 @@ class StyleGuideRenderer extends Component {
     components: PropTypes.object.isRequired,
     toc: PropTypes.node.isRequired,
     sidebar: PropTypes.bool,
+    singleExample: PropTypes.bool,
+    targetComponentName: PropTypes.string,
   }
 
   constructor(props) {
@@ -70,12 +72,18 @@ class StyleGuideRenderer extends Component {
   };
 
   render() {
-    const { title, homepageUrl, components, toc, sidebar } = this.props;
+    const { title, homepageUrl, components, toc, sidebar,
+      singleExample, targetComponentName } = this.props;
     const { drawerOpen } = this.state;
     return (
       <MuiThemeProvider>
         <div className={cx(s.root, drawerOpen && sidebar && s.root_HasSidebar)}>
           <div className={s.header}>
+            {singleExample &&
+              <div className={s.titleline}>
+                {targetComponentName}
+              </div>
+            }
             {sidebar &&
               <IconButton
                 tooltip={drawerOpen ? 'Close filter' : 'Open filter'}
@@ -86,9 +94,9 @@ class StyleGuideRenderer extends Component {
               </IconButton>
             }
             {!sidebar &&
-              <a href="/#">
+              <a href={singleExample ? `/#!/${targetComponentName}` : "/#"}>
                 <IconButton
-                  tooltip="Back to styleguide"
+                  tooltip={singleExample ? `Back to ${targetComponentName}` : "Back to styleguide"}
                   tooltipPosition="bottom-left"
                 >
                   <FontIcon className="material-icons" color="white">widgets</FontIcon>
@@ -96,11 +104,14 @@ class StyleGuideRenderer extends Component {
               </a>
             }
           </div>
-          <main className={s.content}>
-            <div className={s.components}>
-              {components}
-            </div>
-          </main>
+          {!singleExample &&
+            <main className={s.content}>
+              <div className={s.components}>
+                {components}
+              </div>
+            </main>
+          }
+          {singleExample && components}
           {sidebar &&
             <Drawer open={drawerOpen} docked={!this.state.isMobile}>
               <h1 className={s.heading}>{title}</h1>

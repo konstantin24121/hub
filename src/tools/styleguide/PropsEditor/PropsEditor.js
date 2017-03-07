@@ -20,20 +20,25 @@ export default class PropsEditor extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      oldFields: new Immutable.Map({}),
       fields: new Immutable.Map({}),
+      submitPosition: 0,
     };
   }
 
   componentWillMount() {
     const fields = parseProps(this.props);
     this.setState({
+      oldFields: new Immutable.Map(fields),
       fields: new Immutable.Map(fields),
     });
   }
 
   componentWillReceiveProps(nextProps) {
     const fields = parseProps(nextProps);
+
     this.setState({
+      oldFields: new Immutable.Map(fields),
       fields: new Immutable.Map(fields),
     });
   }
@@ -45,20 +50,30 @@ export default class PropsEditor extends PureComponent {
     });
   };
 
+  setSubmitPosition = (event) => {
+    const { target } = event;
+    this.setState({
+      submitPosition: target.getClientRects()[0].top - 64,
+    });
+  };
+
   handleChangeValueTextfield = ({ name }) => (event) => {
     const { value } = event.target;
     this.setFieldValue(name, value);
+    this.setSubmitPosition(event);
   };
 
   handleChangeValueSelectfield = ({ name }) => (event, index, value) => {
     this.setFieldValue(name, value);
+    this.setSubmitPosition(event);
   };
 
   handleChangeValueCheckBox = ({ name }) => (event, value) => {
     this.setFieldValue(name, value);
+    this.setSubmitPosition(event);
   };
 
-  handleToggleProp = ({ name }) => () => {
+  handleToggleProp = ({ name }) => (event) => {
     const { fields } = this.state;
     const field = fields.get(name);
     const newField = field.withMutations((immutableMap) => {
@@ -69,23 +84,27 @@ export default class PropsEditor extends PureComponent {
     this.setState({
       fields: fields.set(name, newField),
     });
+    this.setSubmitPosition(event);
   };
 
   handleSubmit = () => {
     const { code, componentName } = this.props;
     const { fields } = this.state;
     const props = fields.map((field) => generateProps(field.toJS()));
-    const newCode = generateNewCode(code, componentName, props.filter((prop) => prop).toArray());
+    const simpleProps = props.filter((prop) => prop).toArray();
+    const newCode = generateNewCode(code, componentName, simpleProps);
     this.props.onSubmit(newCode);
   };
-
   render() {
     const { props } = this.props;
-    const { fields } = this.state;
+    const { fields, submitPosition, oldFields } = this.state;
+    const submitIsVisible = !fields.equals(oldFields);
     return (
       <PropsEditorRenderer
         props={props}
         fields={fields}
+        submitPosition={submitPosition}
+        submitIsVisible={submitIsVisible}
         onSubmit={this.handleSubmit}
         onToggle={this.handleToggleProp}
         onTextChange={this.handleChangeValueTextfield}

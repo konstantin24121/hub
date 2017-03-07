@@ -1,10 +1,15 @@
 .root {
   position: relative;
-  border: 1px solid rgb(224, 224, 224);
+  border: 1px solid rgb(245, 245, 245);
   background-color: #fff;
   margin-bottom: 30px;
 
-  @media (min-width: 1300px) {
+  &_singleExample {
+    border: none;
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 768px) {
     display: flex;
     justify-content: space-between;
   }
@@ -14,33 +19,56 @@
   width: 100%;
   padding: 1rem;
   overflow: hidden;
+  position: relative;
+
+  &_withToolbar {
+    @media (min-width: 768px) {
+      padding-right: calc(50px + 1rem);
+    }
+  }
+
+  &_withEditor {
+    @media (min-width: 768px) {
+      padding-right: calc(400px + 50px + 1rem);
+    }
+  }
+}
+
+.tools {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+
+  @media (min-width: 768px) {
+    display: none;
+
+    .root:hover > & {
+      display: block;
+    }
+  }
+}
+
+.resizeble {
+  margin: 0 auto;
+  max-width: 100%;
+  /* stylelint-disable-next-line plugin/no-low-performance-animation */
+  transition: width 0.5s, height 0.5s;
+
+  &_isResize {
+    transition: none;
+  }
 }
 
 .preview {
   margin: 0 auto;
   padding: 15px 24px;
   overflow: auto;
-  /* stylelint-disable-next-line plugin/no-low-performance-animation */
-  transition: width 0.5s;
+  position: relative;
   max-width: 100%;
+  max-height: 100%;
   box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
   height: 100%;
-
-  &_SizeLg {
-    width: 1024px;
-  }
-
-  &_SizeMd {
-    width: 800px;
-  }
-
-  &_SizeSm {
-    width: 568px;
-  }
-
-  &_SizeXs {
-    width: 320px;
-  }
 
   &_BgLight {
     background-color: rgb(255, 255, 255);
@@ -56,17 +84,45 @@
   }
 }
 
+.previewSize {
+  font-size: 0.7rem;
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.298039);
+
+  @media (min-width: 768px) {
+    position: fixed;
+    right: 60px;
+  }
+
+  .previewBox_withToolbar & {
+    @media (min-width: 768px) {
+      right: calc(50px + 1rem);
+    }
+  }
+
+  .previewBox_withEditor & {
+    @media (min-width: 768px) {
+      right: calc(400px + 50px + 1rem);
+    }
+  }
+}
+
 .toolWrapper {
   width: 100%;
-  box-shadow: rgba(0, 0, 0, 0.117647) 0 3px 3px -2px inset;
   display: flex;
   flex-direction: column;
 
-  @media (min-width: 1300px) {
+  @media (min-width: 768px) {
+    position: fixed;
+    top: 64px;
+    bottom: 0;
+    right: 0;
     width: auto;
     max-width: 500px;
     flex-direction: row;
-    box-shadow: rgba(0, 0, 0, 0.117647) -3px 0 6px -2px;
   }
 }
 
@@ -74,10 +130,18 @@
   display: flex;
   flex-direction: column;
   background-color: #263238;
-  min-width: 350px;
+  border-top: 1px solid rgb(245, 245, 245);
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: 400px;
+    border-top: none;
+    border-left: 1px solid rgb(245, 245, 245);
+  }
 
   &:empty {
-    min-width: 0;
+    width: 0;
+    border: none;
   }
 }
 

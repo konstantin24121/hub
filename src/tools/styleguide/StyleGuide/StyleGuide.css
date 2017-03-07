@@ -18,6 +18,8 @@ $sidebarWidth: 256px;
   max-width: 1600px;
   padding: 15px 0;
   margin: 0 auto;
+  position: relative;
+  z-index: 999;
 
   @media (min-width: 800px) {
     padding: 15px 30px;
@@ -33,7 +35,14 @@ $sidebarWidth: 256px;
   right: 0;
   color: white;
   text-align: right;
-  z-index: 100;
+  z-index: 1000;
+}
+
+.titleline {
+  float: left;
+  padding: 12px 2rem;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .sidebar {
