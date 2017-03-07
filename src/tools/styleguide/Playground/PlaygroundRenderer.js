@@ -70,11 +70,13 @@ export default class PlaygroundRenderer extends PureComponent {
       initialState.containerSizeLine = initialState.containerSize;
       initialState.containerSizeKey = settings.containerSizeKey;
       initialState.containerBg = settings.containerBg;
+      initialState.componentsCount = settings.componentsCount;
     } else {
       initialState.containerSize = containerSizes.Lg;
       initialState.containerSizeLine = containerSizes.Lg;
       initialState.containerSizeKey = 'Lg';
       initialState.containerBg = 'Light';
+      initialState.componentsCount = '1';
     }
     this.state = initialState;
   }
@@ -110,6 +112,10 @@ export default class PlaygroundRenderer extends PureComponent {
     });
   };
 
+  handleChangeComponentsCount = (event, value) => {
+    this.setState({ componentsCount: value });
+  }
+
   handleResizeStop = () => {
     this.setState({
       isResize: false,
@@ -128,7 +134,7 @@ export default class PlaygroundRenderer extends PureComponent {
     const { code, name, evalInContext,
       props, index, singleExample, urlProps, onChange } = this.props;
     const { containerSize, containerSizeLine, containerBg, showCode, showPropsEditor,
-    containerSizeKey, isResize } = this.state;
+    containerSizeKey, isResize, componentsCount } = this.state;
 
     const rootClass = cn(s.root, {
       [s.root_singleExample]: singleExample,
@@ -148,7 +154,10 @@ export default class PlaygroundRenderer extends PureComponent {
       [s.resizeble_isResize]: isResize,
     });
 
-    const preview = <Preview code={code} evalInContext={evalInContext} />;
+    const preview = [];
+    for (let i = 1; i <= parseInt(componentsCount, 10); i += 1) {
+      preview.push(<Preview code={code} evalInContext={evalInContext} key={i} />);
+    }
     return (
       <div className={rootClass}>
         {!singleExample &&
@@ -208,10 +217,12 @@ export default class PlaygroundRenderer extends PureComponent {
               containerSize={containerSizeLine}
               containerSizeKey={containerSizeKey}
               containerBg={containerBg}
+              componentsCount={componentsCount}
               showCode={showCode}
               showPropsEditor={showPropsEditor}
               onSizeChange={this.handleChangeContainerSize}
               onColorChange={this.handleChangeContainerBackground}
+              onCountChange={this.handleChangeComponentsCount}
               onCodeClick={this.handleCodeToggle}
               onPropsEditorClick={this.handlePropsEditorToggle}
             />

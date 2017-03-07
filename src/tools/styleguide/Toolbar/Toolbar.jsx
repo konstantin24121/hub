@@ -3,6 +3,10 @@ import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
 import Palette from 'material-ui/svg-icons/image/palette';
+import SignalOneBar from 'material-ui/svg-icons/device/signal-cellular-1-bar';
+import SignalTwoBar from 'material-ui/svg-icons/device/signal-cellular-connected-no-internet-1-bar';
+import SignalThreeBar from 'material-ui/svg-icons/device/signal-cellular-connected-no-internet-2-bar';
+import SignalFourBar from 'material-ui/svg-icons/device/signal-cellular-connected-no-internet-4-bar';
 import Snackbar from 'material-ui/Snackbar';
 import Tv from 'material-ui/svg-icons/hardware/tv';
 import Laptop from 'material-ui/svg-icons/hardware/laptop';
@@ -10,7 +14,7 @@ import Tablet from 'material-ui/svg-icons/hardware/tablet-android';
 import Phone from 'material-ui/svg-icons/hardware/phone-android';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import { cyan500 } from 'material-ui/styles/colors';
+import { cyan500, red500, red600, red700 } from 'material-ui/styles/colors';
 import Responsive from 'react-responsive-decorator';
 import cn from 'classnames';
 
@@ -25,10 +29,15 @@ class Toolbar extends PureComponent {
     showCode: PropTypes.bool.isRequired,
     showPropsEditor: PropTypes.bool.isRequired,
     onColorChange: PropTypes.func.isRequired,
+    onCountChange: PropTypes.func.isRequired,
     onSizeChange: PropTypes.func.isRequired,
     onCodeClick: PropTypes.func.isRequired,
+    componentsCount: PropTypes.string.isRequired,
     containerSize: PropTypes.shape(
-      { width: PropTypes.number, height: PropTypes.number }
+      {
+        width: PropTypes.number,
+        height: PropTypes.number,
+      }
     ).isRequired,
     urlProps: PropTypes.arrayOf(PropTypes.string),
     onPropsEditorClick: PropTypes.func.isRequired,
@@ -59,8 +68,8 @@ class Toolbar extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { containerSizeKey, containerBg, containerSize } = nextProps;
-    const settings = { containerSizeKey, containerBg };
+    const { containerSizeKey, containerBg, containerSize, componentsCount } = nextProps;
+    const settings = { containerSizeKey, containerBg, componentsCount };
     if (containerSizeKey === 'Custom') settings.containerSize = containerSize;
     this.setState({
       settingsLink: createSettingsLink(nextProps.urlProps, settings),
@@ -123,6 +132,7 @@ class Toolbar extends PureComponent {
       <IconMenu
         onChange={handle}
         value={containerSizeKey}
+        selectedMenuItemStyle={{ color: cyan500 }}
         iconButtonElement={
           <IconButton
             touch
@@ -146,7 +156,7 @@ class Toolbar extends PureComponent {
 
   render() {
     const { containerBg, showCode, showPropsEditor,
-    onColorChange, onCodeClick, onPropsEditorClick } = this.props;
+    onColorChange, onCodeClick, onPropsEditorClick, onCountChange, componentsCount } = this.props;
     const { isMobile, settingsLink } = this.state;
 
     return (
@@ -157,6 +167,7 @@ class Toolbar extends PureComponent {
           <IconMenu
             onChange={onColorChange}
             value={containerBg}
+            selectedMenuItemStyle={{ color: cyan500 }}
             iconButtonElement={
               <IconButton touch>
                 <Palette />
@@ -166,6 +177,24 @@ class Toolbar extends PureComponent {
             <MenuItem value="Dark" primaryText="Dark" />
             <MenuItem value="Light" primaryText="Light" />
             <MenuItem value="Transparent" primaryText="Transparent" />
+          </IconMenu>
+          <IconMenu
+            onChange={onCountChange}
+            value={componentsCount}
+            selectedMenuItemStyle={{ color: cyan500 }}
+            iconButtonElement={
+              <IconButton touch>
+                {parseInt(componentsCount, 10) === 1 && <SignalOneBar color={cyan500}/>}
+                {parseInt(componentsCount, 10) === 10 && <SignalTwoBar color={red500} />}
+                {parseInt(componentsCount, 10) === 100 && <SignalThreeBar color={red600} />}
+                {parseInt(componentsCount, 10) === 1000 && <SignalFourBar color={red700} />}
+              </IconButton>
+            }
+          >
+            <MenuItem value="1" primaryText="One" />
+            <MenuItem value="10" primaryText="Ten" />
+            <MenuItem value="100" primaryText="Hundred" />
+            <MenuItem value="1000" primaryText="Thousand" />
           </IconMenu>
         </div>
         <div className={cn(s.toolbarGroup, s.toolbarGroup_left)}>
