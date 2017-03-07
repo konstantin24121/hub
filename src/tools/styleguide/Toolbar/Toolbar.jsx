@@ -8,6 +8,8 @@ import SignalTwoBar from 'material-ui/svg-icons/device/signal-cellular-connected
 import SignalThreeBar from 'material-ui/svg-icons/device/signal-cellular-connected-no-internet-2-bar';
 import SignalFourBar from 'material-ui/svg-icons/device/signal-cellular-connected-no-internet-4-bar';
 import Snackbar from 'material-ui/Snackbar';
+import PhoneSetup from 'material-ui/svg-icons/communication/phonelink-setup';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Tv from 'material-ui/svg-icons/hardware/tv';
 import Laptop from 'material-ui/svg-icons/hardware/laptop';
 import Tablet from 'material-ui/svg-icons/hardware/tablet-android';
@@ -54,13 +56,25 @@ class Toolbar extends PureComponent {
 
   componentWillMount() {
     const { media } = this.props;
-    media({ minWidth: 450 }, () => {
+    media({ maxWidth: 400 }, () => {
+      this.setState({
+        isMobileSmall: true,
+      });
+    });
+
+    media({ minWidth: 400 }, () => {
+      this.setState({
+        isMobileSmall: false,
+      });
+    });
+
+    media({ minWidth: 600 }, () => {
       this.setState({
         isMobile: false,
       });
     });
 
-    media({ maxWidth: 800 }, () => {
+    media({ maxWidth: 600 }, () => {
       this.setState({
         isMobile: true,
       });
@@ -142,6 +156,7 @@ class Toolbar extends PureComponent {
             {containerSizeKey === 'Md' && <Laptop />}
             {containerSizeKey === 'Sm' && <Tablet />}
             {containerSizeKey === 'Xs' && <Phone />}
+            {containerSizeKey === 'Custom' && <PhoneSetup />}
           </IconButton>
         }
       >
@@ -153,11 +168,10 @@ class Toolbar extends PureComponent {
     );
   };
 
-
   render() {
     const { containerBg, showCode, showPropsEditor,
     onColorChange, onCodeClick, onPropsEditorClick, onCountChange, componentsCount } = this.props;
-    const { isMobile, settingsLink } = this.state;
+    const { isMobile, isMobileSmall, settingsLink } = this.state;
 
     return (
       <div className={s.toolbar}>
@@ -184,7 +198,7 @@ class Toolbar extends PureComponent {
             selectedMenuItemStyle={{ color: cyan500 }}
             iconButtonElement={
               <IconButton touch>
-                {parseInt(componentsCount, 10) === 1 && <SignalOneBar color={cyan500}/>}
+                {parseInt(componentsCount, 10) === 1 && <SignalOneBar color={cyan500} />}
                 {parseInt(componentsCount, 10) === 10 && <SignalTwoBar color={red500} />}
                 {parseInt(componentsCount, 10) === 100 && <SignalThreeBar color={red600} />}
                 {parseInt(componentsCount, 10) === 1000 && <SignalFourBar color={red700} />}
@@ -206,13 +220,13 @@ class Toolbar extends PureComponent {
           >
             tune
           </IconButton>
-          <IconButton
+          {!isMobileSmall && <IconButton
             iconClassName="material-icons"
             onClick={onCodeClick}
             iconStyle={{ color: showCode ? cyan500 : 'currentColor' }}
           >
             code
-          </IconButton>
+          </IconButton>}
           <CopyToClipboard
             text={settingsLink}
             onCopy={this.handleOnCopy}

@@ -187,9 +187,9 @@ export default class PlaygroundRenderer extends PureComponent {
                 className={previewClass}
               >
                 {preview}
-                <div className={s.previewSize}>
-                  {containerSizeLine.width}x{containerSizeLine.height}
-                </div>
+              </div>
+              <div className={s.previewSize}>
+                {containerSizeLine.width}x{containerSizeLine.height}
               </div>
             </Resizable>
           }
