@@ -1,3 +1,4 @@
+// @flow
 /*
   Main export file for сomponents
   Use it when you want add some Component into package,
@@ -5,5 +6,12 @@
   import { Component } from 'components'
  */
 
-export Example from './Example';
-export TextField from './TextField';
+import Example from './Example';
+import TextField from './TextField';
+import FlowTest from './FlowTest';
+
+module.exports = {
+  Example,
+  TextField,
+  FlowTest,
+};

@@ -16,6 +16,7 @@
     "lint": "npm run eslint & npm run stylelint",
     "stylelint": "stylelint src/**/*.css",
     "eslint": "eslint src",
+    "flow": "flow --color always",
     "styleguide": "better-npm-run styleguide",
     "styleguide:build": "better-npm-run styleguide:build"
   },
