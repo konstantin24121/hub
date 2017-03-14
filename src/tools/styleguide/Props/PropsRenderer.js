@@ -142,6 +142,7 @@ function renderRows(props) {
 }
 
 export default function PropsRenderer({ props }) {
+  console.log(props);
   return (
     <div className={s.tableWrapper}>
       <table className={s.table}>

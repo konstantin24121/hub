@@ -1,8 +1,8 @@
 
-Example component:
+Simple component:
 
     <span>
-      <Example
+      <Simple
         required="Best component ever"
       />
     </span>
@@ -11,18 +11,18 @@ Example component:
 
     const mockData = require('./mocks');
     <span>
-      <Example
+      <Simple
         string="Best component zad"
         list="big"
         booliat={true}
-        array={['zad', 'zad', 'zad', 'zad', 'zad', 'zad', 'zad', 'zad', 'zad']}
+        array={['zad', 'zad', 'zad']}
         required="Best component ever"
         integer={5}
-        node={<div>шляпа</div>}
-        stringObjects={{1: 'zad', 2:'kazadov'}}
+        node={<div>😱</div>}
+        stringObjects={{1: 'Alexander', 2:'Nevski'}}
         arrayOfShapes={[
-          { id: 1, name: 'Rashpil' },
-          { id: 4, name: 'Raps' },
+          { id: 1, name: 'Like' },
+          { id: 4, name: 'that' },
         ]}
         mockedShape={mockData.shape}
         onCallback={(...atr) => {console.log(atr)}}

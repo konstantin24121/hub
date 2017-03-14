@@ -35,7 +35,7 @@ class ReactComponentRenderer extends PureComponent {
   render() {
     const { name, pathLine, description,
       props, examples, sidebar, pure,
-      changelog, importString, version } = this.props;
+      changelog, importString, version, flow } = this.props;
     return (
       <div className={s.root} id={`${name}-container`}>
         <div className={s.anchor} id={name} />
@@ -62,6 +62,26 @@ class ReactComponentRenderer extends PureComponent {
                   >
                     flash_on
                   </FontIcon>
+                </IconButton>
+              </a>
+            }
+            {flow &&
+              <a
+                href="https://flowtype.org/docs/react.html#_"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ verticalAlign: 'middle' }}
+              >
+                <IconButton
+                  tooltip="This component is Flow typed"
+                  tooltipPosition="top-right"
+                  style={{ padding: 0, width: 'auto', height: 'auto', top: -3 }}
+                  iconStyle={{ fontSize: '0.75rem' }}
+                >
+                  <FontIcon
+                    className="fa fa-foursquare"
+                    color={lime500}
+                  />
                 </IconButton>
               </a>
             }

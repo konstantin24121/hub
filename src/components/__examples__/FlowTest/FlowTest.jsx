@@ -1,4 +1,5 @@
 // @flow
+// eslint-disabled
 import type { Children } from 'react';
 import React, { PureComponent } from 'react';
 
@@ -42,5 +43,5 @@ class FlowTest extends PureComponent {
 
 export default FlowTest;
 /**
- * version: 0.0.1
+ * version: 0.1.1
  */

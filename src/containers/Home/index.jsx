@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 
-import { FlowTest, TextField } from 'components';
+import { TextField } from 'components';
 
 export default class Home extends PureComponent {
   handle = () => {};
@@ -10,7 +10,6 @@ export default class Home extends PureComponent {
     return (
       <div>
         <TextField />
-        <FlowTest onZad={this.handle} />
         Home Container
       </div>
     );

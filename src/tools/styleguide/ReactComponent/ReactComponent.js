@@ -40,13 +40,27 @@ export default class ReactComponent extends Component {
     });
   }
 
+  getLastVersion = () => {
+    const { component } = this.props;
+    const { changelog } = component;
+
+    if (!changelog) return component.props.version;
+    try {
+      const regexp = /v(\d(\.\d+){1,2}((-(?=\w+)[\w\.]*)|$|\r|\n))/;
+      const match = regexp.exec(changelog[0].content);
+      return match[1];
+    } catch (e) {
+      return component.props.version;
+    }
+  };
 
   render() {
     const { sidebar, component } = this.props;
     const { name, pathLine, examples, changelog } = component;
-    const { description, props, pure, importString, version } = component.props;
+    const { description, props, pure, importString, flow } = component.props;
     const { isMobile } = this.state;
     const { singleExample } = this.context;
+
     return (
       <span>
         {singleExample &&
@@ -62,9 +76,10 @@ export default class ReactComponent extends Component {
               pathLine={pathLine}
               description={description && <Markdown text={description} />}
               props={props && <Props props={props} />}
+              flow={flow}
               pure={pure}
               importString={importString}
-              version={version}
+              version={this.getLastVersion()}
               examples={examples && <Examples examples={examples} name={name} props={props} />}
               sidebar={sidebar}
               singleExample={singleExample}

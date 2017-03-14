@@ -6,12 +6,8 @@
   import { Component } from 'components'
  */
 
-import Example from './Example';
 import TextField from './TextField';
-import FlowTest from './FlowTest';
 
 module.exports = {
-  Example,
   TextField,
-  FlowTest,
 };

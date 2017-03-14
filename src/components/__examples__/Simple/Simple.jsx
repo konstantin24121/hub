@@ -2,54 +2,54 @@ import React, { PureComponent, PropTypes } from 'react';
 import cn from 'classnames';
 import map from 'lodash/map';
 
-import s from './Example.css';
+import s from './Simple.css';
 /**
  * It's just components example.
  * He show how components must be designed.
  */
-class Example extends PureComponent {
+class Simple extends PureComponent {
   static propTypes = {
     /**
-     * Демонстрационный массив
+     * String array props
      */
     array: PropTypes.arrayOf(PropTypes.string),
     /**
-     * Фальщь или правда
+     * Boolean props
      */
     booliat: PropTypes.bool,
     /**
-     * Просто строка
+     * String props
      */
     string: PropTypes.string,
     /**
-     * Обязательный атрибут
+     * Required props
      */
     required: PropTypes.string.isRequired,
     /**
-     * Перечисляемое свойство
+     * Union props
      */
     list: PropTypes.oneOf(['big', 'medium', 'small']),
     /**
-     * Число. Просто Число
+     * Number props
      */
     integer: PropTypes.number,
     /**
-     * Узел
+     * Node/children props
      */
     node: PropTypes.node,
     /**
-     * Обекты определенного типа
+     * Object of string
      */
     stringObjects: PropTypes.objectOf(PropTypes.string),
     /**
-     * Шаблон для объекта
+     * Shape props
      */
     objectWithShape: PropTypes.shape({
       string: PropTypes.string,
       number: PropTypes.number,
     }),
     /**
-     * Массив объектов
+     * Array of shapes
      */
     arrayOfShapes: PropTypes.arrayOf(
       PropTypes.shape({
@@ -58,7 +58,7 @@ class Example extends PureComponent {
       })
     ),
     /**
-     * Массив объектов c мокой
+     * Props with mock
      */
     mockedShape: PropTypes.arrayOf(
       PropTypes.shape({
@@ -67,34 +67,34 @@ class Example extends PureComponent {
       })
     ),
     /**
-     * Срабатывает при клике на компонент
+     * Callback
      */
     onCallback: PropTypes.func,
   };
 
   static defaultProps = {
-    array: ['nothing'],
+    array: ['string'],
     booliat: false,
     list: 'medium',
     integer: 5,
     stringObjects: {
-      12411: 'zad',
-      111212: 'not zad',
+      1: 'one',
+      2: 'two',
     },
     objectWithShape: {
-      string: 'zad',
+      string: 'string',
       number: 1,
     },
     arrayOfShapes: [
-      { id: 2, name: 'Leila' },
-      { id: 4, name: 'Janna' },
+      { id: 2, name: 'Frodo' },
+      { id: 4, name: 'Sam' },
     ],
     // eslint-disable-next-line no-unused-vars
     onCallback: (string, anotherString) => {},
   }
 
   handleClick = () => {
-    this.props.onCallback('zad', 'пухлый');
+    this.props.onCallback('string', 'one more string');
   };
 
   renderStrings() {
@@ -106,8 +106,8 @@ class Example extends PureComponent {
     const { objectWithShape: { number, string } } = this.props;
     return (
       <div>
-        <div>number: {number}</div>
-        <div>string: {string}</div>
+        <span>number: {number}</span>,
+        <span>string: {string}</span>
       </div>
     );
   }
@@ -115,14 +115,14 @@ class Example extends PureComponent {
   renderArrayShape() {
     const { arrayOfShapes } = this.props;
     return arrayOfShapes.map(
-      ({ id, name }, key) => <li key={key}>{id}: {name}</li>
+      ({ id, name }, key) => <span key={key}>{id}: {name}</span>
     );
   }
 
   renderMockedShape() {
     const { mockedShape } = this.props;
     return mockedShape.map(
-      ({ id, name }, key) => <li key={key}>{id}: {name}</li>
+      ({ id, name }, key) => <span key={key}>{id}: {name}, </span>
     );
   }
 
@@ -137,30 +137,30 @@ class Example extends PureComponent {
         {string}
         {integer && `, ${integer}`}
         {array &&
-          <ul>
-            {array.map((value, key) => <li key={key}>{value}</li>)}
-          </ul>
+          <div>
+            {array.map((value, key) => <span key={key}>{value}, </span>)}
+          </div>
         }
-        {booliat ? 'правда' : 'фальш'}
+        {booliat ? 'True' : 'False'}
         {node && node}
         {this.renderStrings()}
         {this.renderShape()}
         {arrayOfShapes &&
-          <ul>
+          <div>
             {this.renderArrayShape()}
-          </ul>
+          </div>
         }
         {mockedShape &&
-          <ul>
+          <div>
             {this.renderMockedShape()}
-          </ul>
+          </div>
         }
       </div>
     );
   }
 }
 
-export default Example;
+export default Simple;
 /**
  * version: 0.0.1
  */
