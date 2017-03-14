@@ -1,4 +1,5 @@
 // @flow
+import type { Children } from 'react';
 import React, { PureComponent } from 'react';
 
 type Props = {
@@ -9,24 +10,33 @@ type Props = {
   /**
    * Типа
    */
-  boold: boolean,
+  boold?: boolean,
   /**
    * Типа камбербек
    */
-  onZad?: void,
+  onZad: Function,
+  /**
+   * Перечисление
+   */
+  enum?: 1 | 2 | 3,
+  children?: Children,
 };
 
 class FlowTest extends PureComponent {
   static defaultProps = {
     name: 'zad',
-    boold: true,
-    onZad: () => {},
+    enum: 1,
   };
 
   props: Props;
 
   render() {
-    return <p>Hello, {this.props.name}!</p>;
+    return (
+      <p>
+        Hello, {this.props.boold && this.props.name}!
+        {this.props.enum}{this.props.children}
+      </p>
+    );
   }
 }
 

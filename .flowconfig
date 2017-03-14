@@ -12,3 +12,4 @@ module.file_ext=.css
 module.file_ext=.js
 module.file_ext=.jsx
 module.file_ext=.json
+module.name_mapper='^components$' -> '<PROJECT_ROOT>/src/components/'

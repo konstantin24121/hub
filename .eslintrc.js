@@ -33,7 +33,7 @@ module.exports = {
     "arrow-parens": [2, "always"],
     "no-restricted-syntax": 0,
     "guard-for-in": 0,
-
+    "no-duplicate-imports": 0,
     // React
     "react/jsx-indent": [1, 2],
     "react/prefer-stateless-function": 1,
