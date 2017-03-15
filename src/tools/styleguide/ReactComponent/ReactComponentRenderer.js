@@ -67,7 +67,7 @@ class ReactComponentRenderer extends PureComponent {
             }
             {flow &&
               <a
-                href="https://flowtype.org/docs/react.html#_"
+                href="http://www.saltycrane.com/blog/2016/06/flow-type-cheat-sheet/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ verticalAlign: 'middle' }}

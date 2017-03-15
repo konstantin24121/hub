@@ -1,32 +1,94 @@
 // @flow
-// eslint-disabled
-import type { Children } from 'react';
+import type { Children, Element } from 'react';
 import React, { PureComponent } from 'react';
+
+type Shape = {
+  id: number,
+  name: string,
+}
 
 type Props = {
   /**
-   * Имя выводимое бля
+   * String array props
    */
-  name?: string,
+  array?: Array<string>,
   /**
-   * Типа
+   * Boolean props
    */
-  boold?: boolean,
+  bool?: boolean,
   /**
-   * Типа камбербек
+   * String props
    */
-  onZad: Function,
+  string?: string,
   /**
-   * Перечисление
+   * Required string props
    */
-  enum?: 1 | 2 | 3,
+  required: string,
+  /**
+   * Union props
+   */
+  list?: 'big' | 'medium' | 'small',
+  /**
+   * Number props
+   */
+  integer?: number,
+  /**
+   * Node/children props
+   */
+  node?: Element,
+  /**
+   * Map of string
+   */
+  stringObjects?: {[id: string]: string},
+  /**
+   * Shape props
+   */
+  objectWithShape?: {
+    string: string,
+    number: number,
+  },
+  /**
+   * Array of shapes
+   */
+  arrayOfShapes: Array<Shape>,
+  /**
+   * Props with mock
+   */
+  mockedShape: Array<Shape>,
+  /**
+   * Children
+   */
   children?: Children,
+  /**
+   * Callback
+   */
+  onCallback?: Function,
 };
 
+/**
+ * It's components with flow typing.
+ * He show how components with flow must be designed. And how it's work into styleguide.
+ */
 class FlowTest extends PureComponent {
   static defaultProps = {
-    name: 'zad',
-    enum: 1,
+    array: ['string'],
+    bool: false,
+    list: 'medium',
+    integer: 5,
+    stringObjects: {
+      one: 'one',
+      two: 'two',
+    },
+    objectWithShape: {
+      string: 'string',
+      number: 1,
+    },
+    arrayOfShapes: [
+      { id: 2, name: 'Frodo' },
+      { id: 4, name: 'Sam' },
+    ],
+    // eslint-disable-next-line no-unused-vars
+    onCallback: (string, anotherString) => {},
   };
 
   props: Props;
@@ -43,5 +105,5 @@ class FlowTest extends PureComponent {
 
 export default FlowTest;
 /**
- * version: 0.1.1
+ * version: 0.0.1
  */

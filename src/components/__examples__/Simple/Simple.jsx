@@ -16,7 +16,7 @@ class Simple extends PureComponent {
     /**
      * Boolean props
      */
-    booliat: PropTypes.bool,
+    bool: PropTypes.bool,
     /**
      * String props
      */
@@ -38,7 +38,7 @@ class Simple extends PureComponent {
      */
     node: PropTypes.node,
     /**
-     * Object of string
+     * Map of string
      */
     stringObjects: PropTypes.objectOf(PropTypes.string),
     /**
@@ -67,6 +67,10 @@ class Simple extends PureComponent {
       })
     ),
     /**
+     * Children
+     */
+    children: PropTypes.node,
+    /**
      * Callback
      */
     onCallback: PropTypes.func,
@@ -74,12 +78,12 @@ class Simple extends PureComponent {
 
   static defaultProps = {
     array: ['string'],
-    booliat: false,
+    bool: false,
     list: 'medium',
     integer: 5,
     stringObjects: {
-      1: 'one',
-      2: 'two',
+      one: 'one',
+      two: 'two',
     },
     objectWithShape: {
       string: 'string',
@@ -127,7 +131,7 @@ class Simple extends PureComponent {
   }
 
   render() {
-    const { array, string, required, booliat,
+    const { array, string, required, bool,
       integer, list, node, arrayOfShapes, mockedShape } = this.props;
     const rootClass = cn(s.root, s[`root_${list}`]);
     return (
@@ -141,7 +145,7 @@ class Simple extends PureComponent {
             {array.map((value, key) => <span key={key}>{value}, </span>)}
           </div>
         }
-        {booliat ? 'True' : 'False'}
+        {bool ? 'True' : 'False'}
         {node && node}
         {this.renderStrings()}
         {this.renderShape()}
