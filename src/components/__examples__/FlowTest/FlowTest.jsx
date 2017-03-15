@@ -1,6 +1,10 @@
 // @flow
 import type { Children, Element } from 'react';
 import React, { PureComponent } from 'react';
+import cn from 'classnames';
+import map from 'lodash/map';
+
+import s from './FlowTest.css';
 
 type Shape = {
   id: number,
@@ -62,7 +66,7 @@ type Props = {
   /**
    * Callback
    */
-  onCallback?: Function,
+  onCallback?: () => void,
 };
 
 /**
@@ -93,12 +97,70 @@ class FlowTest extends PureComponent {
 
   props: Props;
 
-  render() {
+  handleClick = () => {
+    this.props.onCallback('string', 'one more string');
+  };
+
+  renderStrings() {
+    const { stringObjects } = this.props;
+    return map(stringObjects, (val, key) => <div key={key}>{val}</div>);
+  }
+
+  renderShape() {
+    const { objectWithShape: { number, string } } = this.props;
     return (
-      <p>
-        Hello, {this.props.boold && this.props.name}!
-        {this.props.enum}{this.props.children}
-      </p>
+      <div>
+        <span>number: {number}</span>,
+        <span>string: {string}</span>
+      </div>
+    );
+  }
+
+  renderArrayShape() {
+    const { arrayOfShapes } = this.props;
+    return arrayOfShapes.map(
+      ({ id, name }, key) => <span key={key}>{id}: {name}</span>
+    );
+  }
+
+  renderMockedShape() {
+    const { mockedShape } = this.props;
+    return mockedShape.map(
+      ({ id, name }, key) => <span key={key}>{id}: {name}, </span>
+    );
+  }
+
+  render() {
+    const { array, string, required, bool,
+      integer, list, node, arrayOfShapes, mockedShape } = this.props;
+    const rootClass = cn(s.root, s[`root_${list}`]);
+    return (
+      <div className={rootClass} onClick={this.handleClick}>
+        {this.props.children}
+        {required}
+        <br />
+        {string}
+        {integer && `, ${integer}`}
+        {array &&
+          <div>
+            {array.map((value, key) => <span key={key}>{value}, </span>)}
+          </div>
+        }
+        {bool ? 'True' : 'False'}
+        {node && node}
+        {this.renderStrings()}
+        {this.renderShape()}
+        {arrayOfShapes &&
+          <div>
+            {this.renderArrayShape()}
+          </div>
+        }
+        {mockedShape &&
+          <div>
+            {this.renderMockedShape()}
+          </div>
+        }
+      </div>
     );
   }
 }
