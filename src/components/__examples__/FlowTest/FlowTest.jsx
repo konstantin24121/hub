@@ -1,6 +1,6 @@
 // @flow
 import type { Children, Element } from 'react';
-import React, { PureComponent, PropType } from 'react';
+import React, { PureComponent } from 'react';
 import cn from 'classnames';
 import map from 'lodash/map';
 
@@ -31,7 +31,7 @@ type Props = {
   /**
    * Union props
    */
-  list?: 'big' | 'medium' | 'small',
+  list: 'big' | 'medium' | 'small',
   /**
    * Number props
    */
@@ -47,7 +47,7 @@ type Props = {
   /**
    * Shape props
    */
-  objectWithShape?: {
+  objectWithShape: {
     string: string,
     number: number,
   },
@@ -63,8 +63,10 @@ type Props = {
    * Children
    */
   children?: Children,
-
-  onCallback?: Function,
+  /**
+   * Callback
+   */
+  onCallback: (string: string, anotherString: string) => void,
 };
 
 /**
@@ -72,13 +74,6 @@ type Props = {
  * He show how components with flow must be designed. And how it's work into styleguide.
  */
 class FlowTest extends PureComponent {
-  static propTypes = {
-    /**
-     * Callback
-     */
-    onCallback: PropType.func,
-  }
-
   static defaultProps = {
     array: ['string'],
     bool: false,
@@ -96,8 +91,12 @@ class FlowTest extends PureComponent {
       { id: 2, name: 'Frodo' },
       { id: 4, name: 'Sam' },
     ],
+    mockedShape: [
+      { id: 2, name: 'Frodo' },
+      { id: 4, name: 'Sam' },
+    ],
     // eslint-disable-next-line no-unused-vars
-    onCallback: (string, anotherString) => {},
+    onCallback: (string) => {},
   };
 
   props: Props;

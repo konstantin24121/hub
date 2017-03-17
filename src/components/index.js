@@ -7,7 +7,9 @@
  */
 
 import TextField from './TextField';
+import FlowTest from './__examples__/FlowTest';
 
 module.exports = {
   TextField,
+  FlowTest,
 };
