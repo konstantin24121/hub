@@ -44,9 +44,17 @@ module.exports = {
         "media"
       ]
     }],
+    // NOTE: Remove rule when maintainer fix it
+    // https://github.com/yannickcr/eslint-plugin-react/issues/811
+    "react/no-unused-prop-types": [0, {
+      skipShapeProps: true,
+    }],
 
     // Import
     // "import/extensions": [2, "never", { "svg": "always", "png": "always" }],
+
+    // jsx-a11y
+    "jsx-a11y/no-static-element-interactions": 0,
   },
   "settings": {
     "import/resolver": {

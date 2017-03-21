@@ -137,6 +137,7 @@ class Simple extends PureComponent {
     return (
       <div className={rootClass} onClick={this.handleClick}>
         {required}
+        {this.props.children}
         <br />
         {string}
         {integer && `, ${integer}`}

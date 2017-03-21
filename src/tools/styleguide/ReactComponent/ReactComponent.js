@@ -46,6 +46,8 @@ export default class ReactComponent extends Component {
 
     if (!changelog) return component.props.version;
     try {
+      // Тут нужно \ ибо нужна именно точка, а не любой символ
+      // eslint-disable-next-line no-useless-escape
       const regexp = /v(\d(\.\d+){1,2}((-(?=\w+)[\w\.]*)|$|\r|\n))/;
       const match = regexp.exec(changelog[0].content);
       return match[1];

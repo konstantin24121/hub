@@ -162,6 +162,7 @@ ReactComponentRenderer.propTypes = {
   changelog: PropTypes.node,
   sidebar: PropTypes.bool,
   pure: PropTypes.bool,
+  flow: PropTypes.bool,
 };
 
 export default ReactComponentRenderer;
