@@ -10,10 +10,13 @@ import TextField from 'material-ui/TextField';
 import Subheader from 'material-ui/Subheader';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
+import SyncIcon from 'material-ui/svg-icons/notification/sync';
 import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
 import Checkbox from 'material-ui/Checkbox';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import { Scrollbars } from 'react-custom-scrollbars';
+import Responsive from 'react-responsive-decorator';
 
 import cn from 'classnames';
 import map from 'lodash/map';
@@ -22,16 +25,39 @@ import { unquote, getType, showSpaces } from '../Props/util';
 import { parseDefault, getTypeForLabel } from './utils';
 import s from './PropsEditor.css';
 
+@Responsive
 class PropsEditorRenderer extends PureComponent {
   static propTypes = {
     props: PropTypes.object.isRequired,
     fields: PropTypes.object.isRequired,
+    submitPosition: PropTypes.number,
+    submitIsVisible: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     onCheck: PropTypes.func.isRequired,
     onToggle: PropTypes.func.isRequired,
     onTextChange: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
   };
+
+  static defaultProps = {
+    submitPosition: 0,
+    submitIsVisible: false,
+  };
+
+  componentWillMount() {
+    const { media } = this.props;
+    media({ minWidth: 767 }, () => {
+      this.setState({
+        isMobile: true,
+      });
+    });
+
+    media({ maxWidth: 768 }, () => {
+      this.setState({
+        isMobile: false,
+      });
+    });
+  }
 
   renderTextField({ name, value, disabled, label, description, hintStyle }) {
     const stringValue = value.toString();
@@ -106,6 +132,7 @@ class PropsEditorRenderer extends PureComponent {
             width: '200px',
             fontSize: 14,
             lineHeight: '24px',
+            marginBottom: '0.75rem',
             color: disabled ? 'rgba(0, 0, 0, 0.298039)' : 'rgba(0, 0, 0, 0.870588)',
           }}
         >
@@ -231,7 +258,7 @@ class PropsEditorRenderer extends PureComponent {
   };
 
   render() {
-    const { props, onSubmit } = this.props;
+    const { props, onSubmit, submitPosition, submitIsVisible } = this.props;
     const fields = map(props, (item, key) =>
       this.renderField({
         type: getType(item),
@@ -242,14 +269,46 @@ class PropsEditorRenderer extends PureComponent {
         name: key,
       })
     );
-    return (
-      <div className={s.root}>
+
+    const content = (
+      <span>
         <Subheader>Change component props how you like</Subheader>
         <div className={s.items}>
           {fields}
         </div>
         <div className={cn(s.item, s.item_last)}>
           <RaisedButton label="Submit new props" primary onClick={onSubmit} />
+        </div>
+      </span>
+    );
+
+    return (
+      <div className={s.root}>
+        <div className={s.fields}>
+          {this.state.isMobile &&
+            <Scrollbars
+              autoHide
+              autoHideTimeout={1000}
+              autoHideDuration={200}
+            >
+              {content}
+            </Scrollbars>
+          }
+          {!this.state.isMobile && content}
+        </div>
+        <div
+          className={cn(s.fluidPlate, {
+            [s.fluidPlate_visible]: submitIsVisible,
+          })}
+          style={{
+            top: submitPosition,
+          }}
+        >
+          <RaisedButton
+            icon={<SyncIcon />}
+            primary
+            onClick={onSubmit}
+          />
         </div>
       </div>
     );

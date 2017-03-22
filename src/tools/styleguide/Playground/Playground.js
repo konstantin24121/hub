@@ -5,9 +5,12 @@
   react/forbid-prop-types: off,
   react/jsx-filename-extension: off
 */
+import Immutable from 'immutable';
 import React, { Component, PropTypes } from 'react';
 import debounce from 'lodash/debounce';
 import PlaygroundRenderer from 'rsg-components/Playground/PlaygroundRenderer';
+import { getQueryVariable } from '../utils/settingsLink';
+import { generateNewCode, generateProps, parseProps } from '../PropsEditor/utils';
 
 export default class Playground extends Component {
   static propTypes = {
@@ -21,16 +24,30 @@ export default class Playground extends Component {
   static contextTypes = {
     config: PropTypes.object.isRequired,
     singleExample: PropTypes.bool,
+    targetComponentName: PropTypes.string,
   };
 
   constructor(props, context) {
     super(props, context);
     const { code } = props;
-
+    const propsFromLink = getQueryVariable('props');
+    let resultCode;
+    let propsSettings;
+    if (propsFromLink) {
+      propsSettings = JSON.parse(propsFromLink);
+      resultCode = generateNewCode(
+        code,
+        context.targetComponentName,
+        propsSettings);
+    } else {
+      resultCode = code;
+    }
     this.state = {
-      code,
+      code: resultCode,
+      urlProps: propsSettings || null,
     };
   }
+
 
   componentWillReceiveProps(nextProps) {
     const { code } = nextProps;
@@ -41,9 +58,7 @@ export default class Playground extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
-      nextState.code !== this.state.code ||
-      nextState.showCode !== this.state.showCode ||
-      nextState.showPropsEditor !== this.state.showPropsEditor
+      nextState.code !== this.state.code
     );
   }
 
@@ -60,8 +75,19 @@ export default class Playground extends Component {
       this.queuedChange.cancel();
     }
     // stored update action
+    //
+    const fields = new Immutable.Map(parseProps(
+      {
+        code,
+        props: this.props.props,
+        componentName: this.context.targetComponentName,
+      })
+     );
     const queuedChange = () => this.setState({
       code,
+      urlProps: fields.map(
+        (field) => generateProps(field.toJS())
+      ).filter((prop) => prop).toArray(),
     });
 
     const { previewDelay } = this.context.config;
@@ -77,20 +103,22 @@ export default class Playground extends Component {
   }
 
   render() {
-    const { code, showCode, showPropsEditor } = this.state;
+    const { code, urlProps } = this.state;
     const { evalInContext, index, name, props } = this.props;
     const { singleExample } = this.context;
+
     return (
       <PlaygroundRenderer
         code={code}
-        showCode={showCode}
-        showPropsEditor={showPropsEditor}
+        urlProps={urlProps}
         index={index}
         name={name}
         props={props}
         singleExample={singleExample}
         evalInContext={evalInContext}
-        onChange={(newCode) => { this.handleChange(newCode); }}
+        onChange={
+          (newCode, newProps, settings) => { this.handleChange(newCode, newProps, settings); }
+        }
       />
     );
   }

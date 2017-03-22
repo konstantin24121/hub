@@ -15,7 +15,7 @@
     color: rgb(255, 152, 0);
   }
 
-  &_isWarning {
+  &_isDanger {
     color: rgb(244, 67, 54);
   }
 
