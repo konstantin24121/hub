@@ -6941,9 +6941,9 @@ stylelint-config-standard@^15.0.0:
   version "15.0.1"
   resolved "https://registry.yarnpkg.com/stylelint-config-standard/-/stylelint-config-standard-15.0.1.tgz#f588e036bca6bb52391ea784198e773a9ca70efe"
 
-stylelint-performance-animation@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/stylelint-performance-animation/-/stylelint-performance-animation-1.1.2.tgz#66db31dade6d579a82a9fb45b7ed4eb8e9d1fe48"
+stylelint-performance-animation@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/stylelint-performance-animation/-/stylelint-performance-animation-1.2.0.tgz#72fb63009d6966273e37318293da627f3b35924e"
   dependencies:
     lodash "^4.17.4"
     postcss-value-parser "^3.3.0"
