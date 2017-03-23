@@ -22,8 +22,15 @@ class Simple extends PureComponent {
      */
     string: PropTypes.string,
     /**
-     * Required props
+     * OneOfType props
      */
+    stringOrNumber: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+     /**
+      * Required props
+      */
     required: PropTypes.string.isRequired,
     /**
      * Union props
@@ -45,6 +52,9 @@ class Simple extends PureComponent {
      * Shape props
      */
     objectWithShape: PropTypes.shape({
+      /**
+       * String
+       */
       string: PropTypes.string,
       number: PropTypes.number,
     }),
@@ -81,6 +91,7 @@ class Simple extends PureComponent {
     bool: false,
     list: 'medium',
     integer: 5,
+    stringOrNumber: 10,
     stringObjects: {
       one: 'one',
       two: 'two',
@@ -138,6 +149,7 @@ class Simple extends PureComponent {
       <div className={rootClass} onClick={this.handleClick}>
         {required}
         {this.props.children}
+        {this.props.stringOrNumber}
         <br />
         {string}
         {integer && `, ${integer}`}

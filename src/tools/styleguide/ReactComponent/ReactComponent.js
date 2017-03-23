@@ -77,7 +77,7 @@ export default class ReactComponent extends Component {
               name={name}
               pathLine={pathLine}
               description={description && <Markdown text={description} />}
-              props={props && <Props props={props} />}
+              props={props && <Props props={props} flow={flow} />}
               flow={flow}
               pure={pure}
               importString={importString}

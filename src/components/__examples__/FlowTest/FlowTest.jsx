@@ -7,6 +7,9 @@ import map from 'lodash/map';
 import s from './FlowTest.css';
 
 type Shape = {
+  /**
+   * Идентификатор
+   */
   id: number,
   name: string,
 }
@@ -24,6 +27,10 @@ type Props = {
    * String props
    */
   string?: string,
+  /**
+   * OneOfType props
+   */
+  stringOrNumber?: string | number,
   /**
    * Required string props
    */
@@ -48,6 +55,9 @@ type Props = {
    * Shape props
    */
   objectWithShape: {
+    /**
+     * String
+     */
     string: string,
     number: number,
   },
@@ -66,7 +76,13 @@ type Props = {
   /**
    * Callback
    */
-  onCallback: (string: string, anotherString: string) => void,
+  onCallback: (
+    /**
+     * String
+     */
+    string: string,
+    anotherString: string
+  ) => void,
 };
 
 /**
@@ -79,6 +95,7 @@ class FlowTest extends PureComponent {
     bool: false,
     list: 'medium',
     integer: 5,
+    stringOrNumber: 10,
     stringObjects: {
       one: 'one',
       two: 'two',
@@ -96,7 +113,7 @@ class FlowTest extends PureComponent {
       { id: 4, name: 'Sam' },
     ],
     // eslint-disable-next-line no-unused-vars
-    onCallback: (string) => {},
+    onCallback: (string, anotherString) => {},
   };
 
   props: Props;
@@ -144,6 +161,7 @@ class FlowTest extends PureComponent {
     return (
       <div className={rootClass} onClick={this.handleClick}>
         {this.props.children}
+        {this.props.stringOrNumber}
         {required}
         <br />
         {string}
