@@ -12,6 +12,7 @@ const env = process.env.NODE_ENV;
 
 const customComponents = [
   'ReactComponent',
+  'Code',
   'StyleGuide',
   'TableOfContents/TableOfContentsRenderer',
   'ComponentsList',
@@ -43,6 +44,10 @@ module.exports = {
     {
       name: 'UI Components',
       components: '../src/components/[A-Z]*/[A-Z]*.jsx',
+    },
+    {
+      name: 'Examples',
+      components: '../src/components/__examples__/[A-Z]*/[A-Z]*.jsx',
     },
   ],
   updateWebpackConfig: (webpackConfig) => {
@@ -81,6 +86,22 @@ module.exports = {
     // Add pure parametr
     (documentation, path) => {
       documentation.set('pure', path.value.superClass.name === 'PureComponent');
+    },
+    // Is flowtyped ?
+    (documentation, path) => {
+      const root = path.scope.getGlobalScope().node;
+      recast.visit(root, {
+        visitImportDeclaration: (path) => {
+          if (path.value.leadingComments) {
+            path.value.leadingComments.forEach(({ value }) => {
+              if (value.trim() === '@flow') {
+                documentation.set('flow', true);
+              }
+            })
+          }
+          return false;
+        }
+      });
     },
     // Add import string parament
     (documentation, path) => {

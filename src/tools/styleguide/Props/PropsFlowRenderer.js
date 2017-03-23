@@ -33,24 +33,28 @@ function renderType(type) {
     return 'unknown';
   }
 
-  const { name } = type;
+  const { name, raw, elements } = type;
+  const signatureType = type.type;
 
   switch (name) {
-    case 'arrayOf':
-      return `${type.value.name}[]`;
-    case 'instanceOf':
-      return type.value;
+    case 'Array':
+      return `${raw.match(/<(.*)>/)[1]}[]`;
+    case 'union': {
+      const literals = elements.filter((value) => value.name === 'literal');
+      if (literals.length === elements.length) {
+        return 'enum';
+      }
+      return name;
+    }
+    case 'signature':
+      return signatureType;
     default:
       return name;
   }
 }
 
-function renderEnum(prop) {
-  if (!Array.isArray(getType(prop).value)) {
-    return <span>{getType(prop).value}</span>;
-  }
-
-  const values = getType(prop).value.map(({ value }) => (
+function renderEnum(elements) {
+  const values = elements.map(({ value }) => (
     <Code key={value}>{showSpaces(unquote(value))}</Code>
   ));
   return (
@@ -58,12 +62,8 @@ function renderEnum(prop) {
   );
 }
 
-function renderUnion(prop) {
-  if (!Array.isArray(getType(prop).value)) {
-    return <span>{getType(prop).value}</span>;
-  }
-
-  const values = getType(prop).value.map((value) => (
+function renderUnion(elements) {
+  const values = elements.map((value) => (
     <Code key={value.name} className={s.type}>{renderType(value)}</Code>
   ));
   return (
@@ -71,23 +71,33 @@ function renderUnion(prop) {
   );
 }
 
-function renderShape(props) {
-  const rows = [];
-  for (const name in props) {
-    const prop = props[name];
-    const defaultValue = renderDefault(prop);
-    const description = prop.description;
-    rows.push(
-      <div key={name}>
-        <Code className={s.name}>{name}</Code>{': '}
-        <Code className={s.type}>{renderType(prop)}</Code>
-        {defaultValue && ' — '}{defaultValue}
-        {description && ' — '}
-        {description && <Markdown text={description} inline />}
+function renderShape(signature) {
+  return signature.properties.map(({ key, value }) => {
+    const realKey = key.name || key;
+    return (
+      <div key={realKey}>
+        <Code className={s.name}>{realKey}</Code>{': '}
+        <Code className={s.type}>{renderType(value)}</Code>
       </div>
     );
-  }
-  return rows;
+  });
+}
+
+function renderFunc(signature) {
+  const values = signature.arguments.map(({ name, type }) => (
+    <div key={name}>
+      <Code className={s.name}>{name}</Code>{': '}
+      <Code className={s.type}>{renderType(type)}</Code>
+    </div>
+  ));
+  return (
+    <span>
+      Arguments:<br />
+      {values}
+      Return:<br />
+      <Code className={s.name}>{signature.return.name}</Code>
+    </span>
+  );
 }
 
 function renderExtra(prop) {
@@ -96,18 +106,26 @@ function renderExtra(prop) {
   if (!type) {
     return null;
   }
+  console.log(prop);
+  const { elements, signature } = type;
+
   switch (type.name) {
-    case 'enum':
-      return renderEnum(prop);
-    case 'union':
-      return renderUnion(prop);
-    case 'shape':
-      return renderShape(prop.type.value);
-    case 'arrayOf':
-      if (type.value.name === 'shape') {
-        return renderShape(prop.type.value.value);
+    case 'union': {
+      const literals = elements.filter((value) => value.name === 'literal');
+      if (literals.length === elements.length) {
+        return renderEnum(elements);
       }
+      return renderUnion(elements);
+    }
+    case 'signature': {
+      if (type.type === 'function') return renderFunc(signature);
+      if (type.type === 'object') return renderShape(signature);
       return null;
+    }
+    case 'Array': {
+      if (elements[0].type === 'object') return renderShape(elements[0].signature);
+      return null;
+    }
     default:
       return null;
   }

@@ -4,11 +4,11 @@
   border-radius: 0;
 
   @media (min-height: 30px) {
-    color: green;
+    color: rgba(210, 210, 210);
   }
 
   &_big {
-    font-size: 2rem;
+    font-size: 1.2rem;
   }
 
   &_medium {

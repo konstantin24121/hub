@@ -1,17 +1,16 @@
+// @flow
+
 import React, { PureComponent } from 'react';
 
-import { Example } from 'components';
+import { TextField, FlowTest } from 'components';
 
 export default class Home extends PureComponent {
-
-  constructor(props) {
-    super(props);
-  }
-
+  handle = () => {};
   render() {
     return (
       <div>
-        <Example />
+        <FlowTest required="zad" onCallback={this.handle} />
+        <TextField />
         Home Container
       </div>
     );

@@ -9,7 +9,6 @@ import SignalThreeBar from 'material-ui/svg-icons/device/signal-cellular-connect
 import SignalFourBar from 'material-ui/svg-icons/device/signal-cellular-connected-no-internet-4-bar';
 import Snackbar from 'material-ui/Snackbar';
 import PhoneSetup from 'material-ui/svg-icons/communication/phonelink-setup';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Tv from 'material-ui/svg-icons/hardware/tv';
 import Laptop from 'material-ui/svg-icons/hardware/laptop';
 import Tablet from 'material-ui/svg-icons/hardware/tablet-android';
@@ -41,6 +40,9 @@ class Toolbar extends PureComponent {
         height: PropTypes.number,
       }
     ).isRequired,
+    // NOTE: Remove comment when maintainer fix it
+    // https://github.com/yannickcr/eslint-plugin-react/issues/811
+    // eslint-disable-next-line react/no-unused-prop-types
     urlProps: PropTypes.arrayOf(PropTypes.string),
     onPropsEditorClick: PropTypes.func.isRequired,
   };
