@@ -7,7 +7,8 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const publicFolder = path.join(__dirname, '../public');
+const context = process.cwd();
+const publicFolder = path.join(context, 'public');
 
 module.exports = {
 	entry: {
@@ -74,10 +75,10 @@ module.exports = {
     //Analization
     new BundleAnalyzerPlugin({
     	analyzerMode: 'static',
-    	reportFilename: '../reports/report.html',
+    	reportFilename: path.join(context, 'reports/report.html'),
     	generateStatsFile: true,
       openAnalyzer: false,
-    	statsFilename: '../reports/stats.json',
+    	statsFilename: path.join(context, 'reports/stats.json'),
     })
 	],
 }

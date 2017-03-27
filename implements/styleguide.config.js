@@ -9,6 +9,7 @@ const recast = require('recast');
 const port = process.env.STYLEGUIDE_PORT || (+process.env.PORT || 3000) + 1;
 const host = (process.env.HOST || 'localhost');
 const env = process.env.NODE_ENV;
+const context = process.cwd();
 
 const customComponents = [
   'ReactComponent',
@@ -29,11 +30,11 @@ module.exports = {
   serverPort: port,
   serverHost: host,
   highlightTheme: 'material',
-  template: path.resolve(__dirname, '../src/tools/styleguide/template/index.ejs'),
-  favicon: path.resolve(__dirname, '../src/tools/styleguide/template/icon.png'),
-  styleguideDir:  path.resolve(__dirname, '../styleguide'),
+  template: path.resolve(context, 'src/tools/styleguide/template/index.ejs'),
+  favicon: path.resolve(context, 'src/tools/styleguide/template/icon.png'),
+  styleguideDir:  path.resolve(context, 'styleguide'),
   contextDependencies: [
-    path.resolve(__dirname, '../src/components'),
+    path.resolve(context, 'src/components'),
   ],
   getExampleFilename: componentpath => path.join(path.dirname(componentpath), 'demo/demo.md'),
   getChangelogFilename: componentpath => path.join(path.dirname(componentpath), 'demo/changelog.md'),
@@ -51,7 +52,7 @@ module.exports = {
     },
   ],
   updateWebpackConfig: (webpackConfig) => {
-    const dir = path.resolve(__dirname, '../src');
+    const dir = path.resolve(context, 'src');
     webpackConfig.module.rules = webpackConfig.module.loaders;
     for (const rule of common.module.rules) {
       rule.include = dir;
@@ -74,11 +75,11 @@ module.exports = {
 
     for (const component of customComponents) {
       webpackConfig.resolve.alias[`rsg-components/${component}`] =
-        path.join(__dirname, `../src/tools/styleguide/${component}`);
+        path.join(context, `src/tools/styleguide/${component}`);
     }
 
     webpackConfig.resolve.alias['tools/styles'] =
-      path.join(__dirname, '../src/tools/styles');
+      path.join(context, 'src/tools/styles');
 
     return webpackConfig;
   },

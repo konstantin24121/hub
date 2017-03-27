@@ -5,15 +5,15 @@ const fs = require('fs');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 
-const assetsPath = path.resolve(__dirname, '../static/dist');
 const host = (process.env.HOST || 'localhost');
 const port = (+process.env.PORT) || 3000;
 
-const context = path.resolve(__dirname, '../');
-const src = path.resolve(__dirname, '../src/');
+const context = process.cwd();
+const src = path.resolve(context, 'src');
+const assetsPath = path.resolve(context, 'static/dist');
 
 const common = {
-	context: path.resolve(__dirname, '../'),
+	context: context,
 
 	output: {
 		path: assetsPath,

@@ -14,6 +14,7 @@ compiler.apply(new DashboardPlugin());
 
 const host = (process.env.HOST || 'localhost');
 const port = (+process.env.PORT) || 3000;
+const context = process.cwd();
 
 server.use(devMiddleware(compiler, {
   publicPath: webpackConfig.output.publicPath,
@@ -28,7 +29,7 @@ server.use(devMiddleware(compiler, {
 server.use(hotMiddleware(compiler));
 
 server.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../static/index.html'));
+  res.sendFile(path.join(context, 'static/index.html'));
 });
 
 server.listen(port, host, function (err) {

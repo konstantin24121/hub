@@ -4,7 +4,9 @@ const path = require('path');
 
 const host = (process.env.HOST || 'localhost');
 const port = (+process.env.PORT ) || 3000;
-const src = path.resolve(__dirname, '../src/');
+
+const context = process.cwd();
+const src = path.resolve(context, 'src');
 
 // Plugins
 
@@ -14,7 +16,7 @@ module.exports = {
 	  'main': [
 	    'react-hot-loader/patch',
 	  	'webpack-hot-middleware/client',
-		  path.join(__dirname, '../src/client.js')
+		  path.join(context, 'src/client.js')
 	  ]
 	},
 
