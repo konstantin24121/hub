@@ -86,7 +86,12 @@ module.exports = {
   handlers: require('react-docgen').defaultHandlers.concat(
     // Add pure parametr
     (documentation, path) => {
-      documentation.set('pure', path.value.superClass.name === 'PureComponent');
+      if (path.value.type === 'ClassDeclaration') {
+        documentation.set('pure', path.value.superClass.name === 'PureComponent');
+      }
+      if (path.value.type === 'FunctionDeclaration') {
+        documentation.set('stateless', true);
+      }
     },
     // Is flowtyped ?
     (documentation, path) => {

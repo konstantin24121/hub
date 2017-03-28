@@ -26,7 +26,7 @@ module.exports = {
 	module: {
 		rules: [
       {
-				test: /\.css$/,
+				test: /\.p?css$/,
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
           use: [

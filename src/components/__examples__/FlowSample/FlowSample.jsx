@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import cn from 'classnames';
 import map from 'lodash/map';
 
-import s from './FlowTest.css';
+import s from './FlowSample.pcss';
 
 type Shape = {
   /**
@@ -89,7 +89,7 @@ type Props = {
  * It's components with flow typing.
  * He show how components with flow must be designed. And how it's work into styleguide.
  */
-class FlowTest extends PureComponent {
+class FlowSample extends PureComponent {
   static defaultProps = {
     array: ['string'],
     bool: false,
@@ -190,7 +190,7 @@ class FlowTest extends PureComponent {
   }
 }
 
-export default FlowTest;
+export default FlowSample;
 /**
  * version: 0.0.1
  */

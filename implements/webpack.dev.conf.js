@@ -23,7 +23,7 @@ module.exports = {
 	module: {
 		rules: [
       {
-  			test: /\.css$/,
+  			test: /\.p?css$/,
   			include: [src],
         use: [
           {

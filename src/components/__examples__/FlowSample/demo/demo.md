@@ -1,17 +1,17 @@
 
-Simple component:
+FlowSample component:
 
     <span>
-      <Simple
+      <FlowSample
         required="Best component ever"
       />
     </span>
 
-Использовать только в экстренных случаях.
+Component with mock data.
 
     const mockData = require('./mocks');
     <span>
-      <Simple
+      <FlowSample
         string="Best component zad"
         list="big"
         booliat={true}

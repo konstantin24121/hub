@@ -1,17 +1,17 @@
 
-FlowTest component:
+Sample component:
 
     <span>
-      <FlowTest
+      <Sample
         required="Best component ever"
       />
     </span>
 
-Component with mock data.
+Использовать только в экстренных случаях.
 
     const mockData = require('./mocks');
     <span>
-      <FlowTest
+      <Sample
         string="Best component zad"
         list="big"
         booliat={true}

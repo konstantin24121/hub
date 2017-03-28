@@ -106,7 +106,6 @@ function renderExtra(prop) {
   if (!type) {
     return null;
   }
-  console.log(prop);
   const { elements, signature } = type;
 
   switch (type.name) {

@@ -6,10 +6,4 @@
   import { Component } from 'components'
  */
 
-import TextField from './TextField';
-import FlowTest from './__examples__/FlowTest';
-
-module.exports = {
-  TextField,
-  FlowTest,
-};
+export { default as TextField } from './TextField';

@@ -59,7 +59,7 @@ export default class ReactComponent extends Component {
   render() {
     const { sidebar, component } = this.props;
     const { name, pathLine, examples, changelog } = component;
-    const { description, props, pure, importString, flow } = component.props;
+    const { description, props, pure, importString, flow, stateless } = component.props;
     const { isMobile } = this.state;
     const { singleExample } = this.context;
 
@@ -79,6 +79,7 @@ export default class ReactComponent extends Component {
               description={description && <Markdown text={description} />}
               props={props && <Props props={props} flow={flow} />}
               flow={flow}
+              stateless={stateless}
               pure={pure}
               importString={importString}
               version={this.getLastVersion()}

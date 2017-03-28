@@ -2,12 +2,12 @@ import React, { PureComponent, PropTypes } from 'react';
 import cn from 'classnames';
 import map from 'lodash/map';
 
-import s from './Simple.css';
+import s from './Sample.pcss';
 /**
  * It's just components example.
  * He show how components must be designed.
  */
-class Simple extends PureComponent {
+class Sample extends PureComponent {
   static propTypes = {
     /**
      * String array props
@@ -177,7 +177,7 @@ class Simple extends PureComponent {
   }
 }
 
-export default Simple;
+export default Sample;
 /**
  * version: 0.0.1
  */
