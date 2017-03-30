@@ -1,12 +1,14 @@
 import React, { PureComponent, PropTypes } from 'react';
 
+import cn from 'classnames';
+import s from './RaisedButton.css';
 
 class RaisedButton extends PureComponent {
 	static propTypes = {
 		/**
 		* Текст кнопки
 		 */
-		text: PropTypes.string,
+		label: PropTypes.string,
 		/**
 		 * Обработчик нажатия кнопки
 		 */
@@ -14,7 +16,7 @@ class RaisedButton extends PureComponent {
 	};
 
 	static defaultProps = {
-		text: '',
+		label: '',
 		/* eslint-disable no-unused-vars */
 		onClick: (event) => {},
 		/* eslint-enable no-unused-vars */
@@ -23,6 +25,7 @@ class RaisedButton extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
+			isRipple: false
 		};
 	}
 
@@ -40,18 +43,51 @@ class RaisedButton extends PureComponent {
 		this.props.onClick(e);
 	}
 
+	handleMouseDown = (e) => {
+		this.setState({
+			isRipple: true
+		});
+	}
+
+	handleMouseUp = (e) => {
+		this.setState({
+			isRipple: false
+		});
+	}
+
+	handleRippleTransitionEnd = (e) => {
+		
+	}
+
 	/**
 	 * Renders
 	 */
 	render() {
-		const { text } = this.props;
+		const { label } = this.props;
+		const rootCn = cn(s.root);
+		const buttonCn = cn(s.button);
+		const rippleAreaCn = cn(s.ripple_area);
+		const rippleWaveCn = cn(s.ripple_wave);
+		const labelCn = cn(s.label);
 
 		return (
-			<button
-				onClick={this.handleClick}
+			<div
+				className={rootCn}
 			>
-				{text}
-			</button>
+				<button
+					className={buttonCn}
+					onClick={this.handleClick}
+				>
+					<div>
+						<div className={rippleAreaCn}>
+							<div className={rippleWaveCn} onTransitionEnd={this.handleRippleTransitionEnd}></div>
+						</div>
+						<div onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}>
+							<span className={labelCn}>{label}</span>
+						</div>
+					</div>
+				</button>
+			</div>
 		);
 	}
 }
