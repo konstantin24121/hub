@@ -1,9 +1,8 @@
 import React, { PureComponent, PropTypes } from 'react';
 // Helpers
 import cn from 'classnames';
-import capitalize from 'lodash/capitalize';
 
-import s from './TextField.css';
+import s from './TextField.pcss';
 
 /**
  * Поле для ввода текста, компонент может использоватся
@@ -122,45 +121,45 @@ class TextField extends PureComponent {
     const hasFloatingLabel = !!floatingLabel;
     const isLabelFloating = !isEmpty || isFocused;
 
-    const rootStyle = cn(s.root, s[`root_is${capitalize(status)}`], {
-      [s.root_isFocused]: isFocused,
-      [s.root_isDirty]: isDirty,
-      [s.root_isDisabled]: disabled,
-      [s.root_hasFloatingLabel]: hasFloatingLabel,
-      [s.root_hasHint]: !!hint,
+    const rootCn = cn(s.root, s[`root__is_${status}`], {
+      [s.root__is_focused]: isFocused,
+      [s.root__is_dirty]: isDirty,
+      [s.root__is_disabled]: disabled,
+      [s.root__has_floating_label]: hasFloatingLabel,
+      [s.root__has_hint]: !!hint,
     });
-    const labelStyle = cn(s.root__label, {
-      [s.root__label_isFloat]: isLabelFloating,
+    const labelCn = cn(s.label, {
+      [s.label__is_float]: isLabelFloating,
     });
-    const placeholderStyle = cn(s.root__placeholder, {
-      [s.root__placeholder_isVisible]: (isLabelFloating && isEmpty)
+    const placeholderCn = cn(s.placeholder, {
+      [s.placeholder__is_visible]: (isLabelFloating && isEmpty)
       || (!hasFloatingLabel && isEmpty),
     });
-    const inputStyle = cn(s.root__input);
-    const underlineStyle = cn(s.root__underline);
-    const underlineStaticStyle = cn(s.root__underline_static);
-    const underlineDynamicStyle = cn(s.root__underline_dynamic);
-    const hintStyle = cn(s.root__hint);
+    const inputCn = cn(s.input);
+    const underlineCn = cn(s.underline);
+    const underlineStaticCn = cn(s.underline_static);
+    const underlineDynamicCn = cn(s.underline_dynamic);
+    const hintCn = cn(s.hint);
 
     return (
-      <div className={rootStyle}>
-        {placeholder && <div className={placeholderStyle}>{placeholder}</div>}
-        {floatingLabel && <div className={labelStyle}>{floatingLabel}</div>}
+      <div className={rootCn}>
+        {placeholder && <div className={placeholderCn}>{placeholder}</div>}
+        {floatingLabel && <div className={labelCn}>{floatingLabel}</div>}
         <input
           type="text"
           name={name}
           value={value}
-          className={inputStyle}
+          className={inputCn}
           disabled={disabled}
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />
-        <div className={underlineStyle}>
-          <hr className={underlineStaticStyle} />
-          <hr className={underlineDynamicStyle} />
+        <div className={underlineCn}>
+          <hr className={underlineStaticCn} />
+          <hr className={underlineDynamicCn} />
         </div>
-        {hint && <div className={hintStyle}>{hint}</div>}
+        {hint && <div className={hintCn}>{hint}</div>}
       </div>
     );
   }

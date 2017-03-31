@@ -1,0 +1,149 @@
+.root {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  height: 48px;
+  line-height: 24px;
+  font-size: 1rem;
+
+  &__is_normal {
+    /* Normal state */
+    color: rgb(0, 188, 212);
+  }
+
+  &__is_warning {
+    color: rgb(255, 152, 0);
+  }
+
+  &__is_danger {
+    color: rgb(244, 67, 54);
+  }
+
+  &__is_focused {
+    /* Focus state */
+  }
+
+  &__is_dirty {
+    /* When user touch field */
+  }
+
+  &__is_disabled {
+    opacity: 0.8;
+    user-select: none;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  &__has_floating_label {
+    margin-top: 14px;
+  }
+
+  &__has_hint {
+    margin-bottom: 14px;
+  }
+}
+
+.placeholder {
+  position: absolute;
+  bottom: 12px;
+  opacity: 0;
+  color: rgba(0, 0, 0, 0.298039);
+  transition: opacity 350ms cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+
+  &__is_visible {
+    opacity: 1;
+  }
+}
+
+.label {
+  position: absolute;
+  bottom: 12px;
+  color: rgba(0, 0, 0, 0.298039);
+  transform-origin: left top 0;
+  transition-property: transform, color;
+  transition-duration: 450ms;
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+
+  &__is_float {
+    color: inherit;
+    transform: scale(0.75) translate(0, -28px);
+  }
+}
+
+.input {
+  /* Clean default styles */
+  border: none;
+  outline: none;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  position: relative;
+  z-index: 2;
+  cursor: inherit;
+}
+
+.underline_static,
+.underline_dynamic {
+  box-sizing: content-box;
+  border-width: 0;
+  border-color: rgb(224, 244, 244);
+  border-style: solid;
+  border-bottom-width: 1px;
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  height: 0;
+  bottom: 8px;
+
+  .root__is_danger & {
+    border-color: rgb(244, 67, 54);
+
+    /* Progressive */
+    border-color: currentColor;
+  }
+}
+
+.underline_dynamic {
+  border-bottom-width: 2px;
+  transform: scaleX(0);
+  transition: transform 350ms cubic-bezier(0.23, 1, 0.32, 1);
+
+  .root__is_normal & {
+    border-color: rgb(0, 188, 212);
+
+    /* Progressive */
+    border-color: currentColor;
+  }
+
+  .root__is_warning & {
+    border-color: rgb(255, 152, 0);
+
+    /* Progressive */
+    border-color: currentColor;
+  }
+
+  .root__is_danger & {
+    border-color: rgb(244, 67, 54);
+
+    /* Progressive */
+    border-color: currentColor;
+  }
+
+  .root__is_focused &,
+  .root:focus & {
+    transform: scaleX(1);
+  }
+}
+
+.hint {
+  position: relative;
+  font-size: 0.75em;
+  color: inherit;
+  margin-top: -9px;
+}
