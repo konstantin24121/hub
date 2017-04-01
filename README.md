@@ -14,10 +14,10 @@ npm i
 for installing packages.
 
 ## Cli commands
-You can find all expired commands in *script* section of package.json. All descriptions of command functionality you can find in our wiki.
+You can find all expired commands in *script* section of package.json. All descriptions of command functionality you can find in styleguide.
 One used
 * `yarn build` - build an application, generate statistic and page for analysis
 * `yarn start` - start dev server with HMR and DevTools
 * `yarn start:prod` - start prod server and generate dist files
-* `yarn lint` - lint js and scss code with eslint and stylelint
+* `yarn lint` - lint js and styles with eslint and stylelint
 * `yarn styleguide` - start styleguide server

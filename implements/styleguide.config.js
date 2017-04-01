@@ -41,14 +41,24 @@ module.exports = {
   sections: [
     {
       name: 'Introduction',
+      content: path.resolve(context, 'docs/introduction.md'),
+    },
+    {
+      name: 'Documentation',
+      sections: [
+        {
+          name: 'Installation and development',
+          content: path.resolve(context, 'docs/installation.md'),
+        },
+        {
+          name: 'Examples',
+          components: path.resolve(context, 'src/components/__examples__/[A-Z]*/[A-Z]*.jsx'),
+        },
+      ]
     },
     {
       name: 'UI Components',
-      components: '../src/components/[A-Z]*/[A-Z]*.jsx',
-    },
-    {
-      name: 'Examples',
-      components: '../src/components/__examples__/[A-Z]*/[A-Z]*.jsx',
+      components: path.resolve(context, 'src/components/[A-Z]*/[A-Z]*.jsx'),
     },
   ],
   updateWebpackConfig: (webpackConfig) => {
