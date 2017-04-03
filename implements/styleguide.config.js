@@ -11,6 +11,8 @@ const host = (process.env.HOST || 'localhost');
 const env = process.env.NODE_ENV;
 const context = process.cwd();
 
+const sections = require(path.resolve(context, 'docs/sections.js'));
+
 const customComponents = [
   'ReactComponent',
   'Code',
@@ -38,29 +40,7 @@ module.exports = {
   ],
   getExampleFilename: componentpath => path.join(path.dirname(componentpath), 'demo/demo.md'),
   getChangelogFilename: componentpath => path.join(path.dirname(componentpath), 'demo/changelog.md'),
-  sections: [
-    {
-      name: 'Introduction',
-      content: path.resolve(context, 'docs/introduction.md'),
-    },
-    {
-      name: 'Documentation',
-      sections: [
-        {
-          name: 'Installation and development',
-          content: path.resolve(context, 'docs/installation.md'),
-        },
-        {
-          name: 'Examples',
-          components: path.resolve(context, 'src/components/__examples__/[A-Z]*/[A-Z]*.jsx'),
-        },
-      ]
-    },
-    {
-      name: 'UI Components',
-      components: path.resolve(context, 'src/components/[A-Z]*/[A-Z]*.jsx'),
-    },
-  ],
+  sections,
   updateWebpackConfig: (webpackConfig) => {
     const dir = path.resolve(context, 'src');
     webpackConfig.module.rules = webpackConfig.module.loaders;
