@@ -91,6 +91,7 @@ type Props = {
  * @type {ReactPureComponent}
  * @name FlowSample
  * @namespace components/__examples__
+ * @version 0.0.1
  */
 class FlowSample extends PureComponent {
   static defaultProps = {
@@ -194,6 +195,3 @@ class FlowSample extends PureComponent {
 }
 
 export default FlowSample;
-/**
- * version: 0.0.1
- */

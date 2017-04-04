@@ -15,6 +15,7 @@ import s from './SampleCreateClass.pcss';
  * @type {ReactComponent}
  * @name SampleCreateClass
  * @namespace components/__examples__
+ * @version 0.0.1
  */
 const SampleCreateClass = React.createClass({
   displayName: 'SampleCreateClass',

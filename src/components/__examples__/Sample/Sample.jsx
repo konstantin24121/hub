@@ -9,6 +9,7 @@ import s from './Sample.pcss';
  * @type {ReactPureComponent}
  * @name Sample
  * @namespace components/__examples__
+ * @version 0.0.1
  */
 class Sample extends PureComponent {
   static propTypes = {
@@ -181,6 +182,3 @@ class Sample extends PureComponent {
 }
 
 export default Sample;
-/**
- * version: 0.0.1
- */

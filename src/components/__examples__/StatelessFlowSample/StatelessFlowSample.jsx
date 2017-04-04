@@ -60,6 +60,7 @@ type Props = {
  * @type {ReactStatelessComponent}
  * @name StatelessFlowSample
  * @namespace components/__examples__
+ * @version 0.0.1
  */
 function StatelessFlowSample({
   array = ['string'],
@@ -95,6 +96,3 @@ function StatelessFlowSample({
 }
 
 export default StatelessFlowSample;
-/**
- * version: 0.0.1
- */

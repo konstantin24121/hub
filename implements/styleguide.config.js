@@ -26,6 +26,24 @@ const customComponents = [
   'Examples',
 ];
 
+function getClassLeadingComments(path) {
+  let leadingComments;
+  if (path.value.leadingComments) {
+    leadingComments = path.value.leadingComments[0].value;
+  } else {
+    const root = path.scope.getGlobalScope().node;
+    recast.visit(root, {
+      visitVariableDeclaration: (path) => {
+        if (path.value.leadingComments) {
+          leadingComments = path.value.leadingComments[0].value;
+        }
+        return false;
+      }
+    });
+  }
+  return leadingComments;
+}
+
 module.exports = {
   title: 'StyleGuide',
   serverPort: port,
@@ -114,31 +132,29 @@ module.exports = {
     },
     // Add import string parament
     (documentation, path) => {
-      let name = 'no-name';
-      let namespace = 'no-namespace';
+      let name;
+
       if (path.value.id) {
         name = path.value.id.name;
       } else {
         name = documentation.get('displayName');
       }
-      if (path.value.leadingComments) {
-        const { tags } = (doctrine.parse(path.value.leadingComments[0].value, { unwrap: true }));
-        const nameTag = tags.find(item => item.title === 'name');
-        const namespaceTag = tags.find(item => item.title === 'namespace');
-        name = nameTag && nameTag.name;
-        namespace = namespaceTag && namespaceTag.name;
-      }
-      // TODO: Namespace for createClass
-      documentation.set('importString', `import {${name}} from '${namespace}';`);
+
+      const leadingComments = getClassLeadingComments(path);
+      const { tags } = (doctrine.parse(leadingComments, { unwrap: true }));
+      const nameTag = tags.find(item => item.title === 'name');
+      const namespaceTag = tags.find(item => item.title === 'namespace');
+      name = nameTag && nameTag.name;
+      const namespace = namespaceTag && namespaceTag.name;
+      namespace && documentation.set('importString', `import {${name}} from '${namespace}';`);
     },
     // Parse component to find version
     (documentation, path) => {
-      if (path.value.leadingComments) {
-        const { tags } = (doctrine.parse(path.value.leadingComments[0].value, { unwrap: true }));
-        const versionTag = tags.find(item => item.title === 'version');
-        const version = versionTag && versionTag.description;
-        documentation.set('version', version);
-      }
+      const leadingComments = getClassLeadingComments(path);
+      const { tags } = (doctrine.parse(leadingComments, { unwrap: true }));
+      const versionTag = tags.find(item => item.title === 'version');
+      const version = versionTag && versionTag.description;
+      documentation.set('version', version);
     },
     // To better support higher order components
     require('react-docgen-displayname-handler').default

@@ -50,7 +50,7 @@ export default class ReactComponent extends Component {
       // eslint-disable-next-line no-useless-escape
       const regexp = /v(\d(\.\d+){1,2}((-(?=\w+)[\w\.]*)|))/;
       const match = regexp.exec(changelog[0].content);
-      return match[1];
+      return match ? match[1] : component.props.version;
     } catch (e) {
       return component.props.version;
     }
