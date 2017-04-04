@@ -5,6 +5,7 @@ const common = require('./webpack.config.js');
 const docgen = require('react-docgen');
 const fs = require('fs');
 const recast = require('recast');
+const doctrine = require("doctrine");
 
 const port = process.env.STYLEGUIDE_PORT || (+process.env.PORT || 3000) + 1;
 const host = (process.env.HOST || 'localhost');
@@ -87,7 +88,9 @@ module.exports = {
     // Add pure parametr
     (documentation, path) => {
       if (path.value.type === 'ClassDeclaration') {
-        documentation.set('pure', path.value.superClass.name === 'PureComponent');
+        if (path.value.superClass) {
+          documentation.set('pure', path.value.superClass.name === 'PureComponent');
+        }
       }
       if (path.value.type === 'FunctionDeclaration') {
         documentation.set('stateless', true);
@@ -111,21 +114,31 @@ module.exports = {
     },
     // Add import string parament
     (documentation, path) => {
-      documentation.set('importString', `import {${path.value.id.name}} from 'components';`);
+      let name = 'no-name';
+      let namespace = 'no-namespace';
+      if (path.value.id) {
+        name = path.value.id.name;
+      } else {
+        name = documentation.get('displayName');
+      }
+      if (path.value.leadingComments) {
+        const { tags } = (doctrine.parse(path.value.leadingComments[0].value, { unwrap: true }));
+        const nameTag = tags.find(item => item.title === 'name');
+        const namespaceTag = tags.find(item => item.title === 'namespace');
+        name = nameTag && nameTag.name;
+        namespace = namespaceTag && namespaceTag.name;
+      }
+      // TODO: Namespace for createClass
+      documentation.set('importString', `import {${name}} from '${namespace}';`);
     },
     // Parse component to find version
     (documentation, path) => {
-      const root = path.scope.getGlobalScope().node;
-      recast.visit(root, {
-        visitExportDefaultDeclaration: (path) => {
-          const regex = /version: (\d(\.\d+){1,2}((-(?=\w+)[\w\.]*)|$|\r|\n))/;
-          try {
-            const version = regex.exec(path.value.trailingComments[0].value);
-            documentation.set('version', version[1]);
-          } catch (e) {};
-          return false;
-        }
-      })
+      if (path.value.leadingComments) {
+        const { tags } = (doctrine.parse(path.value.leadingComments[0].value, { unwrap: true }));
+        const versionTag = tags.find(item => item.title === 'version');
+        const version = versionTag && versionTag.description;
+        documentation.set('version', version);
+      }
     },
     // To better support higher order components
     require('react-docgen-displayname-handler').default

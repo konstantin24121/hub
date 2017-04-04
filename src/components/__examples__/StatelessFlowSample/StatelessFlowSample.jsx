@@ -57,6 +57,9 @@ type Props = {
 /**
  * It's just stateless components example with flow.
  * He show how stateless components with flow must be designed.
+ * @type {ReactStatelessComponent}
+ * @name StatelessFlowSample
+ * @namespace components/__examples__
  */
 function StatelessFlowSample({
   array = ['string'],

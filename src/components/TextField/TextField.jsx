@@ -7,6 +7,10 @@ import s from './TextField.pcss';
 /**
  * Поле для ввода текста, компонент может использоватся
  * как обычный input, так и примитивный textarea
+ * @type {ReactPureComponent}
+ * @name TextField
+ * @namespace components
+ * @version 0.1.0
  */
 class TextField extends PureComponent {
   static propTypes = {
@@ -166,6 +170,3 @@ class TextField extends PureComponent {
 }
 
 export default TextField;
-/**
- * version: 0.1.0
- */

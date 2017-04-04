@@ -75,8 +75,8 @@ const common = {
 	],
 }
 
-const developeConfig = require('./webpack.dev.conf.js');
-const productionConfig = require('./webpack.prod.conf.js');
+const developeConfig = require('./webpack.conf.dev.js');
+const productionConfig = require('./webpack.conf.prod.js');
 
 if ( process.env.NODE_ENV === 'development' ) {
 	module.exports = merge.smart(common, developeConfig);

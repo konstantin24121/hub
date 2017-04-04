@@ -6,6 +6,9 @@ import s from './StatelessSample.pcss';
 /**
  * It's just stateless components example.
  * He show how stateless components must be designed.
+ * @type {ReactStatelessComponent}
+ * @name StatelessSample
+ * @namespace components/__examples__
  */
 function StatelessSample(props) {
   const { array, string, required, bool,

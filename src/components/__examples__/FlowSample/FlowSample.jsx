@@ -88,6 +88,9 @@ type Props = {
 /**
  * It's components with flow typing.
  * He show how components with flow must be designed. And how it's work into styleguide.
+ * @type {ReactPureComponent}
+ * @name FlowSample
+ * @namespace components/__examples__
  */
 class FlowSample extends PureComponent {
   static defaultProps = {
