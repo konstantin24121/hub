@@ -130,7 +130,7 @@ class StyleGuideRenderer extends Component {
               </div>
 
               <footer className={s.footer}>
-                <Markdown text={`Generated with [React Styleguidist](${homepageUrl})`} />
+                <Markdown text={`Forked by [React Styleguidist](${homepageUrl})`} />
               </footer>
             </Drawer>
           }
