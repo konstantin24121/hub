@@ -90,6 +90,12 @@ module.exports = {
         if ( plugin.constructor.name === 'BundleAnalyzerPlugin') continue;
         webpackConfig.plugins.push(plugin);
       }
+    } else if (env === 'development') {
+      for (const plugin of common.plugins) {
+        if ( plugin.constructor.name === 'ExtractTextPlugin') {
+          webpackConfig.plugins.push(plugin);
+        }
+      }
     }
 
     for (const component of customComponents) {
