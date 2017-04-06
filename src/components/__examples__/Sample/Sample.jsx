@@ -1,8 +1,11 @@
 import React, { PureComponent, PropTypes } from 'react';
-import cn from 'classnames';
+import classNameBind from 'classnames/bind';
+import up from 'tools/utils/upperFirst';
 import map from 'lodash/map';
 
 import s from './Sample.pcss';
+
+const cn = classNameBind.bind(s);
 /**
  * It's just components example.
  * He show how components must be designed.
@@ -148,7 +151,10 @@ class Sample extends PureComponent {
   render() {
     const { array, string, required, bool,
       integer, list, node, arrayOfShapes, mockedShape } = this.props;
-    const rootClass = cn(s.root, s[`root_${list}`]);
+    const rootClass = cn({
+      root: true,
+      [`root_${up(list)}`]: true,
+    });
     return (
       <div className={rootClass} onClick={this.handleClick}>
         {required}

@@ -1,8 +1,8 @@
 // @flow
 import type { Children, Element } from 'react';
 import React from 'react';
-import cn from 'classnames';
-
+import classNameBind from 'classnames/bind';
+import up from 'tools/utils/upperFirst';
 import s from './StatelessFlowSample.pcss';
 
 type Props = {
@@ -54,6 +54,7 @@ type Props = {
   ) => void,
 };
 
+const cn = classNameBind.bind(s);
 /**
  * It's just stateless components example with flow.
  * He show how stateless components with flow must be designed.
@@ -74,7 +75,11 @@ function StatelessFlowSample({
   node,
   onCallback = () => {},
 }: Props): Element<any> {
-  const rootClass = cn(s.root, s[`root_${list}`]);
+  const rootClass = cn({
+    root: true,
+    [`root_${up(list)}`]: true,
+  });
+
   return (
     <div className={rootClass} onClick={onCallback}>
       {required}

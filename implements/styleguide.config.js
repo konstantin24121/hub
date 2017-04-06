@@ -72,6 +72,7 @@ module.exports = {
   ],
   updateWebpackConfig: (webpackConfig) => {
     const dir = path.resolve(context, 'src');
+    webpackConfig.resolve.alias = Object.assign(webpackConfig.resolve.alias, common.resolve.alias);
     webpackConfig.module.rules = webpackConfig.module.loaders;
     for (const rule of common.module.rules) {
       rule.include = dir;

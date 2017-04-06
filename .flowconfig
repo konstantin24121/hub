@@ -19,3 +19,4 @@ module.file_ext=.json
 module.file_ext=.css
 module.file_ext=.pcss
 module.name_mapper='^components$' -> '<PROJECT_ROOT>/src/components/'
+module.name_mapper='^tools$' -> '<PROJECT_ROOT>/src/tools/'

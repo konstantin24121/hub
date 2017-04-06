@@ -1,9 +1,10 @@
 import React, { PureComponent, PropTypes } from 'react';
 // Helpers
-import cn from 'classnames';
+import classNameBind from 'classnames/bind';
 import up from 'tools/utils/upperFirst';
 import s from './TextField.pcss';
 
+const cn = classNameBind.bind(s);
 /**
  * Поле для ввода текста, компонент может использоватся
  * как обычный input, так и примитивный textarea
@@ -125,25 +126,29 @@ class TextField extends PureComponent {
     const hasFloatingLabel = !!floatingLabel;
     const isLabelFloating = !isEmpty || isFocused;
 
-    const rootCn = cn(s.root, s[`root_is${up(status)}`], {
-      [s.root_isFocused]: isFocused,
-      [s.root_isDirty]: isDirty,
-      [s.root_isDisabled]: disabled,
-      [s.root_hasFloatingLabel]: hasFloatingLabel,
-      [s.root_hasHint]: !!hint,
+    const rootCn = cn({
+      root: true,
+      [`root_is${up(status)}`]: true,
+      root_isFocused: isFocused,
+      root_isDirty: isDirty,
+      root_isDisabled: disabled,
+      root_hasFloatingLabel: hasFloatingLabel,
+      root_hasHint: !!hint,
     });
-    const labelCn = cn(s.label, {
-      [s.label_isFloat]: isLabelFloating,
+    const labelCn = cn({
+      label: true,
+      label_isFloat: isLabelFloating,
     });
-    const placeholderCn = cn(s.placeholder, {
-      [s.placeholder_isVisible]: (isLabelFloating && isEmpty)
+    const placeholderCn = cn({
+      placeholder: true,
+      placeholder_isVisible: (isLabelFloating && isEmpty)
       || (!hasFloatingLabel && isEmpty),
     });
-    const inputCn = cn(s.input);
-    const underlineCn = cn(s.underline);
-    const underlineStaticCn = cn(s.underlineStatic);
-    const underlineDynamicCn = cn(s.underlineDynamic);
-    const hintCn = cn(s.hint);
+    const inputCn = cn({ input: true });
+    const underlineCn = cn({ underline: true });
+    const underlineStaticCn = cn({ underlineStatic: true });
+    const underlineDynamicCn = cn({ underlineDynamic: true });
+    const hintCn = cn({ hint: true });
 
     return (
       <div className={rootCn}>
