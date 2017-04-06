@@ -1,7 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 // Helpers
 import cn from 'classnames';
-
+import up from 'tools/utils/upperFirst';
 import s from './TextField.pcss';
 
 /**
@@ -125,24 +125,24 @@ class TextField extends PureComponent {
     const hasFloatingLabel = !!floatingLabel;
     const isLabelFloating = !isEmpty || isFocused;
 
-    const rootCn = cn(s.root, s[`root__is_${status}`], {
-      [s.root__is_focused]: isFocused,
-      [s.root__is_dirty]: isDirty,
-      [s.root__is_disabled]: disabled,
-      [s.root__has_floating_label]: hasFloatingLabel,
-      [s.root__has_hint]: !!hint,
+    const rootCn = cn(s.root, s[`root_is${up(status)}`], {
+      [s.root_isFocused]: isFocused,
+      [s.root_isDirty]: isDirty,
+      [s.root_isDisabled]: disabled,
+      [s.root_hasFloatingLabel]: hasFloatingLabel,
+      [s.root_hasHint]: !!hint,
     });
     const labelCn = cn(s.label, {
-      [s.label__is_float]: isLabelFloating,
+      [s.label_isFloat]: isLabelFloating,
     });
     const placeholderCn = cn(s.placeholder, {
-      [s.placeholder__is_visible]: (isLabelFloating && isEmpty)
+      [s.placeholder_isVisible]: (isLabelFloating && isEmpty)
       || (!hasFloatingLabel && isEmpty),
     });
     const inputCn = cn(s.input);
     const underlineCn = cn(s.underline);
-    const underlineStaticCn = cn(s.underline_static);
-    const underlineDynamicCn = cn(s.underline_dynamic);
+    const underlineStaticCn = cn(s.underlineStatic);
+    const underlineDynamicCn = cn(s.underlineDynamic);
     const hintCn = cn(s.hint);
 
     return (
