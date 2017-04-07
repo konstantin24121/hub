@@ -4,10 +4,11 @@ module.exports = {
     "ecmaVersion": 2017,
     "sourceType": "module"
   },
-  "extends": "airbnb",
+  "extends": ["airbnb", "plugin:jest/recommended"],
   "env": {
     "browser": true,
     "node": true,
+    "jest": true,
   },
   "globals": {
     // Enviroment variables
@@ -17,6 +18,11 @@ module.exports = {
 
     // Global library
     "log": true,
+
+    //Enzyme
+    "shallow": true,
+    "render": true,
+    "mount": true,
   },
   "rules": {
     "no-tabs": 0,
@@ -64,6 +70,6 @@ module.exports = {
     },
   },
   "plugins": [
-    "react", "import", "jsx-a11y", "json"
+    "react", "import", "jsx-a11y", "json", "jest"
   ]
 }

@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextField Render a TextField with correct name 1`] = `
+<div
+  className="root root_isNormal"
+>
+  <input
+    className="input"
+    disabled={false}
+    name="field"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    type="text"
+    value=""
+  />
+  <div
+    className="underline"
+  >
+    <hr
+      className="underlineStatic"
+    />
+    <hr
+      className="underlineDynamic"
+    />
+  </div>
+</div>
+`;
+ты

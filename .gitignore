@@ -20,6 +20,9 @@ jspm_packages
 #Genered files by webpack
 static/dist/*
 
+#Jest Coverage
+coverage/*
+
 #Other
 .env
 public/*

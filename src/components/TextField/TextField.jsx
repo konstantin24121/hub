@@ -152,6 +152,7 @@ class TextField extends PureComponent {
 
     return (
       <div className={rootCn}>
+        яzad
         {placeholder && <div className={placeholderCn}>{placeholder}</div>}
         {floatingLabel && <div className={labelCn}>{floatingLabel}</div>}
         <input
