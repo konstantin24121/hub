@@ -1,9 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TextField Render a TextField with correct name 1`] = `
+exports[`TextField Focus at TextField with float label mast have effect 1`] = `
 <div
-  className="root root_isNormal"
+  className="root root_isNormal root_hasFloatingLabel"
 >
+  <div
+    className="label"
+  >
+    label
+  </div>
   <input
     className="input"
     disabled={false}
@@ -26,4 +31,72 @@ exports[`TextField Render a TextField with correct name 1`] = `
   </div>
 </div>
 `;
-ты
+
+exports[`TextField Focus at TextField with float label mast have effect 2`] = `
+<div
+  className="root root_isNormal root_isFocused root_isDirty root_hasFloatingLabel"
+>
+  <div
+    className="label label_isFloat"
+  >
+    label
+  </div>
+  <input
+    className="input"
+    disabled={false}
+    name="field"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    type="text"
+    value=""
+  />
+  <div
+    className="underline"
+  >
+    <hr
+      className="underlineStatic"
+    />
+    <hr
+      className="underlineDynamic"
+    />
+  </div>
+</div>
+`;
+
+exports[`TextField Render a TextField with correct props 1`] = `
+<div
+  className="root root_isNormal root_hasHint"
+>
+  <div
+    className="placeholder placeholder_isVisible"
+  >
+    Placehodor
+  </div>
+  <input
+    className="input"
+    disabled={false}
+    name="field"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    type="text"
+    value=""
+  />
+  <div
+    className="underline"
+  >
+    <hr
+      className="underlineStatic"
+    />
+    <hr
+      className="underlineDynamic"
+    />
+  </div>
+  <div
+    className="hint"
+  >
+    Hint Ladger
+  </div>
+</div>
+`;
