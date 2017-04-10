@@ -1,63 +1,83 @@
-import React, { PureComponent, PropTypes } from 'react';
+// @flow
+import type { InputEvent } from 'tools/types/InputEvent.js.flow';
+import React, { PureComponent } from 'react';
 // Helpers
 import classNameBind from 'classnames/bind';
 import up from 'tools/utils/upperFirst';
+
 import s from './TextField.pcss';
 
 const cn = classNameBind.bind(s);
+
+type Props = {
+  /**
+   * Имя поля
+   */
+  name: string,
+  /**
+   * Значение поля
+   */
+  value: string,
+  /**
+   * Placeholder для поля
+   */
+  placeholder: string,
+  /**
+   * Плавающий label
+   */
+  floatingLabel: string,
+  /**
+   * Подсказка для поля ввода
+   * самое распространненное использование в качестве
+   * показа ошибок валидации
+   */
+  hint?: string,
+  /**
+   * Статус поля
+   */
+  status: 'normal' | 'warning' | 'danger',
+  /**
+   * Деактивировать поле
+   */
+  disabled: boolean,
+  /**
+   * Срабатывает при изменении value в поле ввода
+   */
+  onChange: (
+    args: {
+      value: string,
+    },
+    e: Event,
+  ) => void,
+  /**
+   * Срабатывает при получении фокуса полем
+   */
+  onFocus: (
+    e: Event,
+  ) => void,
+  /**
+   * Срабатывает при потере фокуса полем
+   */
+  onBlur: (
+    e: Event,
+  ) => void,
+};
+
+type State = {
+  value: string,
+  isFocused: boolean,
+  isDirty: boolean,
+};
+
 /**
  * Поле для ввода текста, компонент может использоватся
  * как обычный input, так и примитивный textarea
  * @type {ReactPureComponent}
  * @name TextField
  * @namespace components
- * @version 0.1.0
+ * @version 0.1.1
  */
 class TextField extends PureComponent {
-  static propTypes = {
-    /**
-     * Имя поля
-     */
-    name: PropTypes.string.isRequired,
-    /**
-     * Значение поля
-     */
-    value: PropTypes.string,
-    /**
-     * Placeholder для поля
-     */
-    placeholder: PropTypes.string,
-    /**
-     * Плавающий label
-     */
-    floatingLabel: PropTypes.string,
-    /**
-     * Подсказка для поля ввода
-     * самое распространненное использование в качестве
-     * показа ошибок валидации
-     */
-    hint: PropTypes.string,
-    /**
-     * Статус поля
-     */
-    status: PropTypes.oneOf(['normal', 'warning', 'danger']),
-    /**
-     * Деактивировать поле
-     */
-    disabled: PropTypes.bool,
-    /**
-     * Срабатывает при изменении value в поле ввода
-     */
-    onChange: PropTypes.func,
-    /**
-     * Срабатывает при получении фокуса полем
-     */
-    onFocus: PropTypes.func,
-    /**
-     * Срабатывает при потере фокуса полем
-     */
-    onBlur: PropTypes.func,
-  };
 
   static defaultProps = {
     value: '',
@@ -72,7 +92,7 @@ class TextField extends PureComponent {
     /* eslint-enable no-unused-vars */
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       value: props.value,
@@ -85,16 +105,20 @@ class TextField extends PureComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  state: State;
+
+  componentWillReceiveProps(nextProps: Props) {
     this.setState({
       value: nextProps.value,
     });
   }
 
+  props: Props;
+
   /**
    * Handles
    */
-  handleFocus = (e) => {
+  handleFocus = (e: Event) => {
     this.setState({
       isFocused: true,
       isDirty: true,
@@ -102,14 +126,14 @@ class TextField extends PureComponent {
     this.props.onFocus(e);
   };
 
-  handleBlur = (e) => {
+  handleBlur = (e: Event) => {
     this.setState({
       isFocused: false,
     });
     this.props.onBlur(e);
   };
 
-  handleChange = (e) => {
+  handleChange = (e: InputEvent) => {
     const { value } = e.target;
     this.setState({ value });
     this.props.onChange({ value }, e);

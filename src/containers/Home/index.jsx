@@ -1,5 +1,4 @@
 // @flow
-
 import React, { PureComponent } from 'react';
 
 import { TextField } from 'components';
@@ -9,7 +8,7 @@ export default class Home extends PureComponent {
   render() {
     return (
       <div>
-        <TextField />
+        <TextField name="zad" />
         Home Container
       </div>
     );

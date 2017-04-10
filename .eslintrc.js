@@ -1,28 +1,29 @@
+const  webpackConfig = require('./implements/webpack.config.js');
 module.exports = {
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 2017,
-    "sourceType": "module"
+  parser: "babel-eslint",
+  parserOptions: {
+    ecmaVersion: 2017,
+    sourceType: "module"
   },
-  "extends": ["airbnb", "plugin:jest/recommended"],
-  "env": {
-    "browser": true,
-    "node": true,
-    "jest": true,
+  extends: ["airbnb", "plugin:jest/recommended", "plugin:flowtype/recommended"],
+  env: {
+    browser: true,
+    node: true,
+    jest: true,
   },
-  "globals": {
+  globals: {
     // Enviroment variables
-    "__DEVELOPMENT__": true,
-    "__LOGLEVEL__": true,
-    "__DEVTOOLS__": true,
+    __DEVELOPMENT__: true,
+    __LOGLEVEL__: true,
+    __DEVTOOLS__: true,
 
     // Global library
-    "log": true,
+    log: true,
 
     //Enzyme
-    "shallow": true,
-    "render": true,
-    "mount": true,
+    shallow: true,
+    render: true,
+    mount: true,
   },
   "rules": {
     "no-tabs": 0,
@@ -62,14 +63,14 @@ module.exports = {
     // jsx-a11y
     "jsx-a11y/no-static-element-interactions": 0,
   },
-  "settings": {
+  settings: {
     "import/resolver": {
-      "webpack": {
-        "config": "implements/webpack.config.js",
+      webpack: {
+        config: "implements/webpack.config.js",
       },
     },
   },
-  "plugins": [
-    "react", "import", "jsx-a11y", "json", "jest"
+  plugins: [
+    "react", "import", "jsx-a11y", "json", "jest", "babel", "flowtype"
   ]
 }
