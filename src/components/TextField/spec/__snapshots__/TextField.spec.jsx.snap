@@ -64,7 +64,7 @@ exports[`TextField Focus at TextField with float label mast have effect 2`] = `
 </div>
 `;
 
-exports[`TextField Render a TextField with correct props 1`] = `
+exports[`TextField Render a TextField with correct props and default callbacks are fired 1`] = `
 <div
   className="root root_isNormal root_hasHint"
 >
@@ -82,6 +82,117 @@ exports[`TextField Render a TextField with correct props 1`] = `
     onFocus={[Function]}
     type="text"
     value=""
+  />
+  <div
+    className="underline"
+  >
+    <hr
+      className="underlineStatic"
+    />
+    <hr
+      className="underlineDynamic"
+    />
+  </div>
+  <div
+    className="hint"
+  >
+    Hint Ladger
+  </div>
+</div>
+`;
+
+exports[`TextField Render a TextField with correct props and default callbacks are fired 2`] = `
+<div
+  className="root root_isNormal root_isFocused root_isDirty root_hasHint"
+>
+  <div
+    className="placeholder placeholder_isVisible"
+  >
+    Placehodor
+  </div>
+  <input
+    className="input"
+    disabled={false}
+    name="field"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    type="text"
+    value=""
+  />
+  <div
+    className="underline"
+  >
+    <hr
+      className="underlineStatic"
+    />
+    <hr
+      className="underlineDynamic"
+    />
+  </div>
+  <div
+    className="hint"
+  >
+    Hint Ladger
+  </div>
+</div>
+`;
+
+exports[`TextField Render a TextField with correct props and default callbacks are fired 3`] = `
+<div
+  className="root root_isNormal root_isDirty root_hasHint"
+>
+  <div
+    className="placeholder placeholder_isVisible"
+  >
+    Placehodor
+  </div>
+  <input
+    className="input"
+    disabled={false}
+    name="field"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    type="text"
+    value=""
+  />
+  <div
+    className="underline"
+  >
+    <hr
+      className="underlineStatic"
+    />
+    <hr
+      className="underlineDynamic"
+    />
+  </div>
+  <div
+    className="hint"
+  >
+    Hint Ladger
+  </div>
+</div>
+`;
+
+exports[`TextField Render a TextField with correct props and default callbacks are fired 4`] = `
+<div
+  className="root root_isNormal root_isDirty root_hasHint"
+>
+  <div
+    className="placeholder"
+  >
+    Placehodor
+  </div>
+  <input
+    className="input"
+    disabled={false}
+    name="field"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    type="text"
+    value="nezad"
   />
   <div
     className="underline"

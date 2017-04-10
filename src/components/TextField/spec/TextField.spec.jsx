@@ -1,8 +1,16 @@
 import React from 'react';
 import TextField from '../index';
 
+
+const newValue = 'nezad';
+const Event = {
+  target: {
+    value: newValue,
+  },
+};
+
 describe('TextField', () => {
-  it('Render a TextField with correct props', () => {
+  it('Render a TextField with correct props and default callbacks are fired', () => {
     const rc = shallow(
       <TextField
         name="field"
@@ -10,6 +18,18 @@ describe('TextField', () => {
         hint="Hint Ladger"
       />
     );
+    expect(rc).toMatchSnapshot();
+
+    rc.find('input').simulate('focus');
+    rc.update();
+    expect(rc).toMatchSnapshot();
+
+    rc.find('input').simulate('blur');
+    rc.update();
+    expect(rc).toMatchSnapshot();
+
+    rc.find('input').simulate('change', Event);
+    rc.update();
     expect(rc).toMatchSnapshot();
   });
 
@@ -25,7 +45,7 @@ describe('TextField', () => {
   });
 
   it('Blur callback at TextField when input generate blur event', () => {
-  const onBlur = jest.fn();
+    const onBlur = jest.fn();
     const rc = shallow(
       <TextField name="field" onBlur={onBlur} />
     );
@@ -43,17 +63,11 @@ describe('TextField', () => {
   });
 
   it('TextField mast give value when he changed', () => {
-    const newValue = 'nezad';
-    const Event = {
-      target: {
-        value: newValue
-      }
-    };
     const onChange = jest.fn(({ value }) => value);
     const rc = shallow(
       <TextField name="field" value="zad" onChange={onChange} />
     );
     rc.find('input').simulate('change', Event);
-    expect(onChange).toBeCalledWith({value: newValue}, Event);
+    expect(onChange).toBeCalledWith({ value: newValue }, Event);
   });
 });
