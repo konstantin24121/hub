@@ -92,7 +92,7 @@ class TextField extends PureComponent {
     /* eslint-enable no-unused-vars */
   };
 
-  constructor(props: Props) {
+  constructor(props: Props): void {
     super(props);
     this.state = {
       value: props.value,
@@ -107,7 +107,7 @@ class TextField extends PureComponent {
 
   state: State;
 
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps: Props): void {
     this.setState({
       value: nextProps.value,
     });
@@ -118,7 +118,7 @@ class TextField extends PureComponent {
   /**
    * Handles
    */
-  handleFocus = (e: Event) => {
+  handleFocus = (e: Event): void => {
     this.setState({
       isFocused: true,
       isDirty: true,
@@ -126,14 +126,14 @@ class TextField extends PureComponent {
     this.props.onFocus(e);
   };
 
-  handleBlur = (e: Event) => {
+  handleBlur = (e: Event): void => {
     this.setState({
       isFocused: false,
     });
     this.props.onBlur(e);
   };
 
-  handleChange = (e: InputEvent) => {
+  handleChange = (e: InputEvent): void => {
     const { value } = e.target;
     this.setState({ value });
     this.props.onChange({ value }, e);
@@ -142,7 +142,7 @@ class TextField extends PureComponent {
   /**
    * Renders
    */
-  render() {
+  render(): React$Element<*> {
     const { name, placeholder, floatingLabel, status, hint, disabled } = this.props;
     const { value, isFocused, isDirty } = this.state;
 
