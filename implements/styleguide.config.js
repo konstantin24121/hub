@@ -5,6 +5,7 @@ const common = require('./webpack.config.js');
 const docgen = require('react-docgen');
 const fs = require('fs');
 const recast = require('recast');
+const doctrine = require("doctrine");
 
 const port = process.env.STYLEGUIDE_PORT || (+process.env.PORT || 3000) + 1;
 const host = (process.env.HOST || 'localhost');
@@ -27,6 +28,24 @@ const customComponents = [
   'Examples',
 ];
 
+function getClassLeadingComments(path) {
+  let leadingComments;
+  if (path.value.leadingComments) {
+    leadingComments = path.value.leadingComments[0].value;
+  } else {
+    const root = path.scope.getGlobalScope().node;
+    recast.visit(root, {
+      visitVariableDeclaration: (path) => {
+        if (path.value.leadingComments) {
+          leadingComments = path.value.leadingComments[0].value;
+        }
+        return false;
+      }
+    });
+  }
+  return leadingComments;
+}
+
 module.exports = {
   title: 'StyleGuide',
   serverPort: port,
@@ -43,6 +62,7 @@ module.exports = {
   sections,
   updateWebpackConfig: (webpackConfig) => {
     const dir = path.resolve(context, 'src');
+    webpackConfig.resolve.alias = Object.assign(webpackConfig.resolve.alias, common.resolve.alias);
     webpackConfig.module.rules = webpackConfig.module.loaders;
     for (const rule of common.module.rules) {
       rule.include = dir;
@@ -61,6 +81,12 @@ module.exports = {
         if ( plugin.constructor.name === 'BundleAnalyzerPlugin') continue;
         webpackConfig.plugins.push(plugin);
       }
+    } else if (env === 'development') {
+      for (const plugin of common.plugins) {
+        if ( plugin.constructor.name === 'ExtractTextPlugin') {
+          webpackConfig.plugins.push(plugin);
+        }
+      }
     }
 
     for (const component of customComponents) {
@@ -77,7 +103,9 @@ module.exports = {
     // Add pure parametr
     (documentation, path) => {
       if (path.value.type === 'ClassDeclaration') {
-        documentation.set('pure', path.value.superClass.name === 'PureComponent');
+        if (path.value.superClass) {
+          documentation.set('pure', path.value.superClass.name === 'PureComponent');
+        }
       }
       if (path.value.type === 'FunctionDeclaration') {
         documentation.set('stateless', true);
@@ -101,21 +129,29 @@ module.exports = {
     },
     // Add import string parament
     (documentation, path) => {
-      documentation.set('importString', `import {${path.value.id.name}} from 'components';`);
+      let name;
+
+      if (path.value.id) {
+        name = path.value.id.name;
+      } else {
+        name = documentation.get('displayName');
+      }
+
+      const leadingComments = getClassLeadingComments(path);
+      const { tags } = (doctrine.parse(leadingComments, { unwrap: true }));
+      const nameTag = tags.find(item => item.title === 'name');
+      const namespaceTag = tags.find(item => item.title === 'namespace');
+      name = nameTag && nameTag.name;
+      const namespace = namespaceTag && namespaceTag.name;
+      namespace && documentation.set('importString', `import {${name}} from '${namespace}';`);
     },
     // Parse component to find version
     (documentation, path) => {
-      const root = path.scope.getGlobalScope().node;
-      recast.visit(root, {
-        visitExportDefaultDeclaration: (path) => {
-          const regex = /version: (\d(\.\d+){1,2}((-(?=\w+)[\w\.]*)|$|\r|\n))/;
-          try {
-            const version = regex.exec(path.value.trailingComments[0].value);
-            documentation.set('version', version[1]);
-          } catch (e) {};
-          return false;
-        }
-      })
+      const leadingComments = getClassLeadingComments(path);
+      const { tags } = (doctrine.parse(leadingComments, { unwrap: true }));
+      const versionTag = tags.find(item => item.title === 'version');
+      const version = versionTag && versionTag.description;
+      documentation.set('version', version);
     },
     // To better support higher order components
     require('react-docgen-displayname-handler').default

@@ -6,39 +6,39 @@
   line-height: 24px;
   font-size: 1rem;
 
-  &__is_normal {
+  &_isNormal {
     /* Normal state */
     color: rgb(0, 188, 212);
   }
 
-  &__is_warning {
+  &_isWarning {
     color: rgb(255, 152, 0);
   }
 
-  &__is_danger {
+  &_isDanger {
     color: rgb(244, 67, 54);
   }
 
-  &__is_focused {
+  &_isFocused {
     /* Focus state */
   }
 
-  &__is_dirty {
+  &_isDirty {
     /* When user touch field */
   }
 
-  &__is_disabled {
+  &_isDisabled {
     opacity: 0.8;
     user-select: none;
     pointer-events: none;
     cursor: not-allowed;
   }
 
-  &__has_floating_label {
+  &_hasFloatingLabel {
     margin-top: 14px;
   }
 
-  &__has_hint {
+  &_hasHint {
     margin-bottom: 14px;
   }
 }
@@ -70,7 +70,7 @@
   pointer-events: none;
   z-index: 1;
 
-  &__is_float {
+  &_isFloat {
     color: inherit;
     transform: scale(0.75) translate(0, -28px);
   }
@@ -88,8 +88,8 @@
   cursor: inherit;
 }
 
-.underline_static,
-.underline_dynamic {
+.underlineStatic,
+.underlineDynamic {
   box-sizing: content-box;
   border-width: 0;
   border-color: rgb(224, 244, 244);
@@ -101,7 +101,7 @@
   height: 0;
   bottom: 8px;
 
-  .root__is_danger & {
+  .root_isDanger & {
     border-color: rgb(244, 67, 54);
 
     /* Progressive */
@@ -109,33 +109,33 @@
   }
 }
 
-.underline_dynamic {
+.underlineDynamic {
   border-bottom-width: 2px;
   transform: scaleX(0);
   transition: transform 350ms cubic-bezier(0.23, 1, 0.32, 1);
 
-  .root__is_normal & {
+  .root_isNormal & {
     border-color: rgb(0, 188, 212);
 
     /* Progressive */
     border-color: currentColor;
   }
 
-  .root__is_warning & {
+  .root_isWarning & {
     border-color: rgb(255, 152, 0);
 
     /* Progressive */
     border-color: currentColor;
   }
 
-  .root__is_danger & {
+  .root_isDanger & {
     border-color: rgb(244, 67, 54);
 
     /* Progressive */
     border-color: currentColor;
   }
 
-  .root__is_focused &,
+  .root_isFocused &,
   .root:focus & {
     transform: scaleX(1);
   }

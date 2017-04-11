@@ -1,21 +1,27 @@
-import React, { PureComponent, PropTypes } from 'react';
+/* eslint
+   react/prefer-es6-class: off,
+   func-names: off,
+   object-shorthand: off
+*/
+import React, { PropTypes } from 'react';
 import classNameBind from 'classnames/bind';
 import up from 'tools/utils/upperFirst';
 import map from 'lodash/map';
 
-import s from './Sample.pcss';
+import s from './SampleCreateClass.pcss';
 
 const cn = classNameBind.bind(s);
 /**
- * It's just components example.
- * He show how components must be designed.
- * @type {ReactPureComponent}
- * @name Sample
+ * It's just components example without ES6.
+ * He show how components without ES6 must be designed.
+ * @type {ReactComponent}
+ * @name SampleCreateClass
  * @namespace components/__examples__
  * @version 0.0.1
  */
-class Sample extends PureComponent {
-  static propTypes = {
+const SampleCreateClass = React.createClass({
+  displayName: 'SampleCreateClass',
+  propTypes: {
     /**
      * String array props
      */
@@ -91,9 +97,8 @@ class Sample extends PureComponent {
      * Callback
      */
     onCallback: PropTypes.func,
-  };
-
-  static defaultProps = {
+  },
+  getDefaultProps: () => ({
     array: ['string'],
     bool: false,
     list: 'medium',
@@ -113,18 +118,18 @@ class Sample extends PureComponent {
     ],
     // eslint-disable-next-line no-unused-vars
     onCallback: (string, anotherString) => {},
-  }
+  }),
 
-  handleClick = () => {
+  handleClick: function () {
     this.props.onCallback('string', 'one more string');
-  };
+  },
 
-  renderStrings() {
+  renderStrings: function () {
     const { stringObjects } = this.props;
     return map(stringObjects, (val, key) => <div key={key}>{val}</div>);
-  }
+  },
 
-  renderShape() {
+  renderShape: function () {
     const { objectWithShape: { number, string } } = this.props;
     return (
       <div>
@@ -132,23 +137,23 @@ class Sample extends PureComponent {
         <span>string: {string}</span>
       </div>
     );
-  }
+  },
 
-  renderArrayShape() {
+  renderArrayShape: function () {
     const { arrayOfShapes } = this.props;
     return arrayOfShapes.map(
       ({ id, name }, key) => <span key={key}>{id}: {name}</span>
     );
-  }
+  },
 
-  renderMockedShape() {
+  renderMockedShape: function () {
     const { mockedShape } = this.props;
     return mockedShape.map(
       ({ id, name }, key) => <span key={key}>{id}: {name}, </span>
     );
-  }
+  },
 
-  render() {
+  render: function () {
     const { array, string, required, bool,
       integer, list, node, arrayOfShapes, mockedShape } = this.props;
     const rootClass = cn({
@@ -184,7 +189,7 @@ class Sample extends PureComponent {
         }
       </div>
     );
-  }
-}
+  },
+});
 
-export default Sample;
+export default SampleCreateClass;

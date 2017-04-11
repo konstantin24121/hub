@@ -1,7 +1,8 @@
 // @flow
 import type { Children, Element } from 'react';
 import React, { PureComponent } from 'react';
-import cn from 'classnames';
+import classNameBind from 'classnames/bind';
+import up from 'tools/utils/upperFirst';
 import map from 'lodash/map';
 
 import s from './FlowSample.pcss';
@@ -85,9 +86,15 @@ type Props = {
   ) => void,
 };
 
+const cn = classNameBind.bind(s);
+
 /**
  * It's components with flow typing.
  * He show how components with flow must be designed. And how it's work into styleguide.
+ * @type {ReactPureComponent}
+ * @name FlowSample
+ * @namespace components/__examples__
+ * @version 0.0.1
  */
 class FlowSample extends PureComponent {
   static defaultProps = {
@@ -157,7 +164,10 @@ class FlowSample extends PureComponent {
   render() {
     const { array, string, required, bool,
       integer, list, node, arrayOfShapes, mockedShape } = this.props;
-    const rootClass = cn(s.root, s[`root_${list}`]);
+    const rootClass = cn({
+      root: true,
+      [`root_is${up(list)}`]: true,
+    });
     return (
       <div className={rootClass} onClick={this.handleClick}>
         {this.props.children}
@@ -191,6 +201,3 @@ class FlowSample extends PureComponent {
 }
 
 export default FlowSample;
-/**
- * version: 0.0.1
- */

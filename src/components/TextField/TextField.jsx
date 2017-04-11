@@ -1,58 +1,83 @@
-import React, { PureComponent, PropTypes } from 'react';
+// @flow
+import type { InputEvent } from 'tools/types/InputEvent.js.flow';
+import React, { PureComponent } from 'react';
 // Helpers
-import cn from 'classnames';
+import classNameBind from 'classnames/bind';
+import up from 'tools/utils/upperFirst';
 
 import s from './TextField.pcss';
+
+const cn = classNameBind.bind(s);
+
+type Props = {
+  /**
+   * Имя поля
+   */
+  name: string,
+  /**
+   * Значение поля
+   */
+  value: string,
+  /**
+   * Placeholder для поля
+   */
+  placeholder: string,
+  /**
+   * Плавающий label
+   */
+  floatingLabel: string,
+  /**
+   * Подсказка для поля ввода
+   * самое распространненное использование в качестве
+   * показа ошибок валидации
+   */
+  hint?: string,
+  /**
+   * Статус поля
+   */
+  status: 'normal' | 'warning' | 'danger',
+  /**
+   * Деактивировать поле
+   */
+  disabled: boolean,
+  /**
+   * Срабатывает при изменении value в поле ввода
+   */
+  onChange: (
+    args: {
+      value: string,
+    },
+    e: Event,
+  ) => void,
+  /**
+   * Срабатывает при получении фокуса полем
+   */
+  onFocus: (
+    e: Event,
+  ) => void,
+  /**
+   * Срабатывает при потере фокуса полем
+   */
+  onBlur: (
+    e: Event,
+  ) => void,
+};
+
+type State = {
+  value: string,
+  isFocused: boolean,
+  isDirty: boolean,
+};
 
 /**
  * Поле для ввода текста, компонент может использоватся
  * как обычный input, так и примитивный textarea
+ * @type {ReactPureComponent}
+ * @name TextField
+ * @namespace components
+ * @version 0.1.1
  */
 class TextField extends PureComponent {
-  static propTypes = {
-    /**
-     * Имя поля
-     */
-    name: PropTypes.string.isRequired,
-    /**
-     * Значение поля
-     */
-    value: PropTypes.string,
-    /**
-     * Placeholder для поля
-     */
-    placeholder: PropTypes.string,
-    /**
-     * Плавающий label
-     */
-    floatingLabel: PropTypes.string,
-    /**
-     * Подсказка для поля ввода
-     * самое распространненное использование в качестве
-     * показа ошибок валидации
-     */
-    hint: PropTypes.string,
-    /**
-     * Статус поля
-     */
-    status: PropTypes.oneOf(['normal', 'warning', 'danger']),
-    /**
-     * Деактивировать поле
-     */
-    disabled: PropTypes.bool,
-    /**
-     * Срабатывает при изменении value в поле ввода
-     */
-    onChange: PropTypes.func,
-    /**
-     * Срабатывает при получении фокуса полем
-     */
-    onFocus: PropTypes.func,
-    /**
-     * Срабатывает при потере фокуса полем
-     */
-    onBlur: PropTypes.func,
-  };
 
   static defaultProps = {
     value: '',
@@ -67,7 +92,7 @@ class TextField extends PureComponent {
     /* eslint-enable no-unused-vars */
   };
 
-  constructor(props) {
+  constructor(props: Props): void {
     super(props);
     this.state = {
       value: props.value,
@@ -80,16 +105,20 @@ class TextField extends PureComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  state: State;
+
+  componentWillReceiveProps(nextProps: Props): void {
     this.setState({
       value: nextProps.value,
     });
   }
 
+  props: Props;
+
   /**
    * Handles
    */
-  handleFocus = (e) => {
+  handleFocus = (e: Event): void => {
     this.setState({
       isFocused: true,
       isDirty: true,
@@ -97,14 +126,14 @@ class TextField extends PureComponent {
     this.props.onFocus(e);
   };
 
-  handleBlur = (e) => {
+  handleBlur = (e: Event): void => {
     this.setState({
       isFocused: false,
     });
     this.props.onBlur(e);
   };
 
-  handleChange = (e) => {
+  handleChange = (e: InputEvent): void => {
     const { value } = e.target;
     this.setState({ value });
     this.props.onChange({ value }, e);
@@ -113,7 +142,7 @@ class TextField extends PureComponent {
   /**
    * Renders
    */
-  render() {
+  render(): React$Element<*> {
     const { name, placeholder, floatingLabel, status, hint, disabled } = this.props;
     const { value, isFocused, isDirty } = this.state;
 
@@ -121,25 +150,29 @@ class TextField extends PureComponent {
     const hasFloatingLabel = !!floatingLabel;
     const isLabelFloating = !isEmpty || isFocused;
 
-    const rootCn = cn(s.root, s[`root__is_${status}`], {
-      [s.root__is_focused]: isFocused,
-      [s.root__is_dirty]: isDirty,
-      [s.root__is_disabled]: disabled,
-      [s.root__has_floating_label]: hasFloatingLabel,
-      [s.root__has_hint]: !!hint,
+    const rootCn = cn({
+      root: true,
+      [`root_is${up(status)}`]: true,
+      root_isFocused: isFocused,
+      root_isDirty: isDirty,
+      root_isDisabled: disabled,
+      root_hasFloatingLabel: hasFloatingLabel,
+      root_hasHint: !!hint,
     });
-    const labelCn = cn(s.label, {
-      [s.label__is_float]: isLabelFloating,
+    const labelCn = cn({
+      label: true,
+      label_isFloat: isLabelFloating,
     });
-    const placeholderCn = cn(s.placeholder, {
-      [s.placeholder__is_visible]: (isLabelFloating && isEmpty)
+    const placeholderCn = cn({
+      placeholder: true,
+      placeholder_isVisible: (isLabelFloating && isEmpty)
       || (!hasFloatingLabel && isEmpty),
     });
-    const inputCn = cn(s.input);
-    const underlineCn = cn(s.underline);
-    const underlineStaticCn = cn(s.underline_static);
-    const underlineDynamicCn = cn(s.underline_dynamic);
-    const hintCn = cn(s.hint);
+    const inputCn = cn({ input: true });
+    const underlineCn = cn({ underline: true });
+    const underlineStaticCn = cn({ underlineStatic: true });
+    const underlineDynamicCn = cn({ underlineDynamic: true });
+    const hintCn = cn({ hint: true });
 
     return (
       <div className={rootCn}>
@@ -166,6 +199,3 @@ class TextField extends PureComponent {
 }
 
 export default TextField;
-/**
- * version: 0.1.0
- */

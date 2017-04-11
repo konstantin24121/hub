@@ -6,6 +6,10 @@ import s from './StatelessSample.pcss';
 /**
  * It's just stateless components example.
  * He show how stateless components must be designed.
+ * @type {ReactStatelessComponent}
+ * @name StatelessSample
+ * @namespace components/__examples__
+ * @version 0.0.1
  */
 function StatelessSample(props) {
   const { array, string, required, bool,
@@ -87,6 +91,3 @@ StatelessSample.defaultProps = {
 };
 
 export default StatelessSample;
-/**
- * version: 0.0.1
- */
