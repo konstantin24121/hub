@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - 4
+  - 6
+  - 7
+cache: yarn
+install: true
+script:
+  # Run tests
+  - yarn run test:coverage
+  # Build 
+  - yarn run build
+after_success:
+  # Upload coverage report to Codecov
+  - bash <(curl -s https://codecov.io/bash)

@@ -22,7 +22,7 @@
     "test": "jest src -c ./implements/jest.config.json --verbose ",
     "test:updateSnapshots": "jest src --updateSnapshot -c ./implements/jest.config.json",
     "test:watch": "jest src -c ./implements/jest.config.json --watch --verbose ",
-    "test:coverage": "jest src --updateSnapshot -c ./implements/jest.config.json --coverage --verbose"
+    "test:coverage": "jest src -c ./implements/jest.config.json --coverage --verbose"
   },
   "betterScripts": {
     "start-dev": {
