@@ -6,7 +6,14 @@ node_js:
 cache: yarn
 script:
   # Run tests
-  - yarn run test:coverage
+  - |
+    yarn run lint
+    echo "TRAVIS_NODE_VERSION=$TRAVIS_NODE_VERSION"
+    if [[ "$TRAVIS_NODE_VERSION" =~ ^(4|5)$ ]]; then
+      NODE_ENV=test node --harmony-proxies $(npm bin)/jest src -c ./implements/jest.config.json --coverage --verbose --runInBand
+    else
+      yarn run test:coverage -- --runInBand
+    fi
   # Build 
   - yarn run build
 after_success:
