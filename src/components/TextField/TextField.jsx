@@ -47,19 +47,19 @@ type Props = {
     args: {
       value: string,
     },
-    e: Event,
+    e: SyntheticInputEvent,
   ) => void,
   /**
    * Срабатывает при получении фокуса полем
    */
   onFocus: (
-    e: Event,
+    e: SyntheticInputEvent,
   ) => void,
   /**
    * Срабатывает при потере фокуса полем
    */
   onBlur: (
-    e: Event,
+    e: SyntheticInputEvent,
   ) => void,
 };
 
@@ -78,6 +78,8 @@ type State = {
  * @version 0.1.1
  */
 class TextField extends PureComponent {
+  state: State;
+  props: Props;
 
   static defaultProps = {
     value: '',
@@ -105,20 +107,16 @@ class TextField extends PureComponent {
     };
   }
 
-  state: State;
-
   componentWillReceiveProps(nextProps: Props): void {
     this.setState({
       value: nextProps.value,
     });
   }
 
-  props: Props;
-
   /**
    * Handles
    */
-  handleFocus = (e: Event): void => {
+  handleFocus = (e: SyntheticInputEvent): void => {
     this.setState({
       isFocused: true,
       isDirty: true,
@@ -126,14 +124,14 @@ class TextField extends PureComponent {
     this.props.onFocus(e);
   };
 
-  handleBlur = (e: Event): void => {
+  handleBlur = (e: SyntheticInputEvent): void => {
     this.setState({
       isFocused: false,
     });
     this.props.onBlur(e);
   };
 
-  handleChange = (e: InputEvent): void => {
+  handleChange = (e: SyntheticInputEvent): void => {
     const { value } = e.target;
     this.setState({ value });
     this.props.onChange({ value }, e);
@@ -142,7 +140,7 @@ class TextField extends PureComponent {
   /**
    * Renders
    */
-  render(): React$Element<*> {
+  render(): ?React$Element<any> {
     const { name, placeholder, floatingLabel, status, hint, disabled } = this.props;
     const { value, isFocused, isDirty } = this.state;
 
