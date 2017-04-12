@@ -51,6 +51,23 @@ module.exports = {
         "media"
       ]
     }],
+    "react/sort-comp": [1, {
+      order: [
+        'type-annotations',
+        'static-methods',
+        'lifecycle',
+        'everything-else',
+        '/^handle.+$/',
+        'rendering',
+      ],
+      groups: {
+        rendering: [
+          '/^render.+$/',
+          'render',
+        ],
+      },
+    }],
+
     // NOTE: Remove rule when maintainer fix it
     // https://github.com/yannickcr/eslint-plugin-react/issues/811
     "react/no-unused-prop-types": [0, {
@@ -59,7 +76,8 @@ module.exports = {
 
     // Import
     // "import/extensions": [2, "never", { "svg": "always", "png": "always" }],
-
+    "import/prefer-default-export": 1,
+    
     // jsx-a11y
     "jsx-a11y/no-static-element-interactions": 0,
   },

@@ -97,6 +97,8 @@ const cn = classNameBind.bind(s);
  * @version 0.0.1
  */
 class FlowSample extends PureComponent {
+  props: Props;
+
   static defaultProps = {
     array: ['string'],
     bool: false,
@@ -122,8 +124,6 @@ class FlowSample extends PureComponent {
     // eslint-disable-next-line no-unused-vars
     onCallback: (string, anotherString) => {},
   };
-
-  props: Props;
 
   handleClick = () => {
     const { onCallback } = this.props;
