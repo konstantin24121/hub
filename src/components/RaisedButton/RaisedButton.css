@@ -6,19 +6,13 @@
 	border-radius: 2px;
 	margin: 10px;
 	border: 1px solid #000;
-
-	&.isRipple {
-		
-	}
 }
 
 .label {
 
 }
 
-
-
-.ripple_area {
+.rippleArea {
 	height: 100%;
 	width: 100%;
 	position: absolute;
@@ -26,24 +20,6 @@
 	left: 0px;
 	overflow: hidden;
 	pointer-events: none;
-}
-
-.ripple_wave {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 0;
-	width: 0;
-	border-radius: 50%;
-	background-color: rgba(0, 0, 0, 0.0870588);
-	opacity: 0;
-	transform: scale(0);
-	transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-}
-
-.isRipple .ripple_wave {
-	transform: scale(1);
-	opacity: 1;
 }
 
 .button {

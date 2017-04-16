@@ -1,7 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 
 import cn from 'classnames';
-import s from './RaisedButton.css';
+import s from './CustomRipple.css';
 
 class CustomRipple extends PureComponent {
   static propTypes = {
@@ -21,27 +21,11 @@ class CustomRipple extends PureComponent {
     onTransitionEnd: (e) => {}
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isEnter: false
-    }
-
-  }
-
   handleTransitionEnd = (e) =>  {
-    console.log('handleTransitionEnd', arguments);
-    this.props.onTransitionEnd(this.props.index);
+    this.props.onTransitionEnd(this.props.stamp, e);
   }
 
   render() {
-
-    const {isEnter} = this.state;
-    const rippleAreaCn = cn(s.ripple_area, {
-      [s.isRipple] : isEnter
-    });
-    console.log('rippleAreaCn');
-    console.log(rippleAreaCn);
     const rippleWaveCn = cn(s.ripple_wave);
     const {t, l, d} = this.props;
     const rippleStyle = {
@@ -52,13 +36,11 @@ class CustomRipple extends PureComponent {
     };
 
     return (
-      <div className={rippleAreaCn}>
-        <div
-          className={rippleWaveCn}
-          style={rippleStyle}
-          onTransitionEnd={this.handleTransitionEnd}
-        >
-        </div>
+      <div
+        className={rippleWaveCn}
+        style={rippleStyle}
+        onTransitionEnd={this.handleTransitionEnd}
+      >
       </div>
     );
   }
