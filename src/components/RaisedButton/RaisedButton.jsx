@@ -1,9 +1,14 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
-import CustomRipple from './CustomRipple';
 
 import cn from 'classnames';
+
 import s from './RaisedButton.css';
+/* Анимации над элементом мы будем хранить в самом элементе ибо это логично. Он сам знает как себя вести. А вот как и когда ему себя вести
+решает CSSTransitionGroup потому его анимаионные классы и импортятся в родителе 
+Название переменной спорно, ибо в ней вссе классы от CustomRipple, но тк используюются только те что связанны с анимацией я посчитал такое название умесным
+*/
+import animations from './CustomRipple.css';
 
 class RaisedButton extends PureComponent {
   static propTypes = {
@@ -30,7 +35,15 @@ class RaisedButton extends PureComponent {
       isRipple: false,
       isClicked: true,
       isAnimate: false,
-      items: [],
+      /*
+        NOTE: items не само удачно название, очень абстрактно
+        такое допустимо когда речь идет о каком то контенте который 
+        передается в пропсах, и может менятся, либо когда в названии компонента явно указывается что это коллекция чего-то.
+        Например в случае ButtonGroup мы ясно даем понять что это группа кнопок, значит item использовать для передачи обьект параметров кнопок норм. Тут же item - это всегда коллеция рипплов, не совсем абстрактная штука, так и называй ripples. 
+        ripplesArray тоже норм, но мне такое именование не нравится по причине что и так ясно что массив\коллекция. rippleCol тоже норм, но тут уже появляется правило именования, а чем их меньше тем лучше.
+      */
+      items: [], // items не само удачно название, очень абстрактно
+      // NOTE: тоже самое что и замечение на 68строке
       d: 0,
       l: 0,
       t: 0,
@@ -55,6 +68,10 @@ class RaisedButton extends PureComponent {
     const mouseEvent = e.nativeEvent;
     const elementWidth = mouseEvent.target.clientWidth;
     const elementHeight = mouseEvent.target.clientHeight;
+
+    // NOTE: Ты переуседствовал с именами переменных,
+    // Понять что хранится в переменной с ходу сложно, не боись
+    // юзать человекопонятные названия
     let _t = mouseEvent.offsetY;
     let _l = mouseEvent.offsetX;
     const box = {
@@ -82,6 +99,8 @@ class RaisedButton extends PureComponent {
 
     let corner = {};
 
+    // BUG: тут что то не так считается, круги у левой стороны мелкие
+
     if (_l >= box.c.x) {
       if (_t >= box.c.y) {
         corner = box.tl;
@@ -101,6 +120,8 @@ class RaisedButton extends PureComponent {
     const _d = _r * 2;
     _l -= _r;
     _t -= _r;
+    // NOTE: Ты не переопределяешь массив ниже, let бессмысленно, 
+    // тут явно const
     let newItems = this.state.items.slice();
 
     newItems.push({
@@ -109,6 +130,7 @@ class RaisedButton extends PureComponent {
       d: _d,
       stamp: Date.now(),
     });
+
     this.setState({
       isRipple: true,
       isClicked: false,
@@ -144,11 +166,19 @@ class RaisedButton extends PureComponent {
     }
   }
 
-  handleRemove = (i) => {
-    console.log('handleRemove', arguments);
-    let newItems = this.state.items.slice();
-    newItems.splice(i, 1);
-    this.setState({ items: newItems });
+  handleRemove = (stamp) => {
+    /*
+      тут была твоя ошибка что ты удалял по индексу
+      Но так делать не нужно, ибо после удаления элемента, ве индексы собьются. При работе с динамическим массивом используй только 
+      то что изменится никак не может, к примеру тот же stamp который
+      ты добавлял в обьект. 
+      Ниже мы просто возвращаем в state items без того который надо удалить
+    */
+    this.setState((prevState) => {
+      return {
+        items: prevState.items.filter(o => o.stamp !== stamp)
+      };
+    });
   }
 
   /**
@@ -160,6 +190,8 @@ class RaisedButton extends PureComponent {
     const buttonCn = cn(s.button);
     const labelCn = cn(s.label);
 
+    // NOTE: Для удобочитаемости лучше вынести это в отдельную
+    // фунцию rendersRipples
     const items = this.state.items.map((item, i) => (
       <CustomRipple
         key={item.stamp}
@@ -172,8 +204,6 @@ class RaisedButton extends PureComponent {
       />
     ));
 
-    console.log(items);
-
     return (
       <div
         className={rootCn}
@@ -184,24 +214,24 @@ class RaisedButton extends PureComponent {
           onMouseUp={this.handleMouseUp}
         >
           <div>
-            {
-              items.length > 0
-              ?
-                <CSSTransitionGroup
-                  transitionAppear={true}
-                  transitionName={{
-                    enter: 'test',
-                    enterActive: s.isRipple,
-                    appear: 'test',
-                    appearActive: s.isRipple,
-                  }}
-                  transitionLeave={false}
-                >
-                  {items}
-                </CSSTransitionGroup>
-              :
-                null
-            }
+            {/* эта обертка зачем то была в customRipple, скорее всего потому что ты решил вынести нечно обосоленное в отдельный компонент и обертку тудаже, но на деле получилось что обертка создаласть для каждого элемента. Еще раз - не надо сразу старатся сделать универсальное что-то. Универсальность будешь заниматся когда появится два компонента, с таким риплом и вот тогда станет ясно что у них общее и что надо вынести в поведение. Ведь добавление рипло - тоже общее. Нахуя его дубоировать? Вот будешь этим потом заниматся, а пока вынес CustomRipple не и бог с ним, для уобства сгодитя, вот только надо его назвать с мелкой буквы, иначе его стайлгад как компонент уже считает, коим он полноценно не является, его нелья использовать в отрыве. Скорее вего он у нас уйдет в HOC но это уже другая история */}
+            <div className={s.rippleArea}>
+              {/*
+                Тут ты допустил ошибку, не монтирую CSSTransitionGroup
+                если нету риплов,
+                https://github.com/reactjs/react-transition-group#animation-group-must-be-mounted-to-work
+              */}
+              <CSSTransitionGroup
+                transitionEnterTimeout={1100}
+                transitionLeave={false}
+                transitionName={{
+                  enter: animations.enter,
+                  enterActive: animations.enter_isActive,
+                }}
+              >
+                {items}
+              </CSSTransitionGroup>
+            </div>
 
             <div>
               <span className={labelCn}>{label}</span>
