@@ -24,4 +24,4 @@ exclude_paths:
 - styleguide/**/*
 - src/**/*.spec.jsx
 - src/**/*.spec.js
-- src/components/__exampless__/**/*
+- src/**/__exampless__/**/*

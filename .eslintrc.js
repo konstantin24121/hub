@@ -3,7 +3,10 @@ module.exports = {
   parser: "babel-eslint",
   parserOptions: {
     ecmaVersion: 2017,
-    sourceType: "module"
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true
+    }
   },
   extends: ["airbnb", "plugin:jest/recommended", "plugin:flowtype/recommended"],
   env: {
@@ -26,7 +29,6 @@ module.exports = {
     mount: true,
   },
   "rules": {
-    "no-tabs": 0,
     "linebreak-style": 0,
     "no-console": 0,
     "indent": [1, 2, {

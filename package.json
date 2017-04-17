@@ -11,26 +11,20 @@
   "license": "MIT",
   "scripts": {
     "postinstall": "npm run flow-typed",
-
     "start": "better-npm-run start-dev",
     "start:prod": "npm run build && better-npm-run start-prod",
-    
     "prebuild": "npm run lint",
     "build": "better-npm-run build",
-    
     "lint": "npm run eslint & npm run stylelint",
     "stylelint": "stylelint src/**/*.css",
     "eslint": "eslint --ext .jsx --ext .js src ; exit 0",
     "flow": "flow --color always",
-    
     "styleguide": "better-npm-run styleguide",
     "styleguide:build": "better-npm-run styleguide:build",
-    
     "test": "jest src -c ./implements/jest.config.json --verbose ",
     "test:updateSnapshots": "npm run test -- --updateSnapshot",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
-    
     "flow-typed": "flow-typed install"
   },
   "betterScripts": {

@@ -1,5 +1,4 @@
 // @flow
-import type { InputEvent } from 'tools/types/InputEvent.js.flow';
 import React, { PureComponent } from 'react';
 // Helpers
 import classNameBind from 'classnames/bind';
