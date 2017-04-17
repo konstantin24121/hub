@@ -1,0 +1,28 @@
+languages:
+  JavaScript: true
+engines:
+  eslint:
+    enabled: true
+  duplication:
+    enabled: true
+    checks:
+      Similar code:
+        enabled: false
+    config:
+      languages:
+        - javascript
+ratings:
+  paths:
+  - src/**/*.jsx
+  - src/**/*.js
+  - src/**/*.pcss
+exclude_paths:
+- coverage/**/*
+- docs/**/*
+- public/**/*
+- flow-typed/**/*
+- implements/**/*
+- styleguide/**/*
+- *.spec.jsx
+- *.spec.js
+- src/components/__exampless__/**/*
