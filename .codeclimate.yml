@@ -3,6 +3,8 @@ languages:
 engines:
   eslint:
     enabled: true
+  stylelint:
+    enabled: true
   duplication:
     enabled: true
     checks:
