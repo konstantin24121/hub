@@ -1,4 +1,4 @@
-const  webpackConfig = require('./implements/webpack.config.js');
+// const  webpackConfig = require('./implements/webpack.config.js');
 module.exports = {
   parser: "babel-eslint",
   parserOptions: {
@@ -77,7 +77,7 @@ module.exports = {
     // Import
     // "import/extensions": [2, "never", { "svg": "always", "png": "always" }],
     "import/prefer-default-export": 1,
-    
+
     // jsx-a11y
     "jsx-a11y/no-static-element-interactions": 0,
   },
