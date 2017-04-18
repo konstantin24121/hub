@@ -20,6 +20,12 @@ jspm_packages
 #Genered files by webpack
 static/dist/*
 
+#Jest Coverage
+coverage/*
+
+#FlowTyped folder instaled by flow-typed
+flow-typed/npm/*
+
 #Other
 .env
 public/*

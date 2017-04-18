@@ -3,15 +3,30 @@
   "presets": [
     "react",
     "es2015",
-    "stage-0"
+    "stage-0",
+    "flow",
   ],
   "plugins": [
     "transform-decorators-legacy",
+    "transform-flow-strip-types",
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "components": "./src/components",
+        "config": "./src/config",
+        "containers": "./src/containers",
+        "actions": "./src/actions",
+        "reducers": "./src/reducers",
+        "tools": "./src/tools",
+      },
+      "extensions": [".js", ".jsx", ".json", ".json5", ".flow", ".js.flow"],
+    }]
   ],
   "env": {
     "development": {
       "plugins": [
-        "react-hot-loader/babel"
+        "react-hot-loader/babel",
+        "flow-react-proptypes",
       ]
     },
   }

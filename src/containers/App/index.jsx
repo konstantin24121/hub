@@ -6,7 +6,9 @@ import { style } from './style.css';
 const App = ({ children }) => (
   <div>
     <MuiThemeProvider>
-      {children}
+      <div className={style}>
+        {children}
+      </div>
     </MuiThemeProvider>
   </div>
 );

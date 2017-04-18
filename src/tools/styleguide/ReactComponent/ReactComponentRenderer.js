@@ -35,7 +35,7 @@ class ReactComponentRenderer extends PureComponent {
   render() {
     const { name, pathLine, description,
       props, examples, sidebar, pure,
-      changelog, importString, version } = this.props;
+      changelog, importString, version, flow, stateless } = this.props;
     return (
       <div className={s.root} id={`${name}-container`}>
         <div className={s.anchor} id={name} />
@@ -62,6 +62,56 @@ class ReactComponentRenderer extends PureComponent {
                   >
                     flash_on
                   </FontIcon>
+                </IconButton>
+              </a>
+            }
+            {stateless &&
+              <a
+                href="https://toddmotto.com/stateless-react-components/#enter-stateless-components"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ verticalAlign: 'middle' }}
+              >
+                <IconButton
+                  tooltip="This component is stateless"
+                  tooltipPosition="top-right"
+                  style={{ padding: 0, width: 'auto', height: 'auto' }}
+                  iconStyle={{ fontSize: '0.9rem' }}
+                >
+                  <FontIcon
+                    className="material-icons"
+                    color={lime500}
+                  >
+                   filter_center_focus
+                  </FontIcon>
+                </IconButton>
+              </a>
+            }
+            {flow &&
+              <a
+                href="http://www.saltycrane.com/blog/2016/06/flow-type-cheat-sheet/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  verticalAlign: 'middle',
+                  margin: '0 0.3em',
+                }}
+              >
+                <IconButton
+                  tooltip="This component is Flow typed"
+                  tooltipPosition="top-right"
+                  style={{
+                    padding: 0,
+                    width: 'auto',
+                    height: 'auto',
+                    top: stateless ? -2 : -3,
+                  }}
+                  iconStyle={{ fontSize: '0.75rem' }}
+                >
+                  <FontIcon
+                    className="fa fa-foursquare"
+                    color={lime500}
+                  />
                 </IconButton>
               </a>
             }
@@ -142,6 +192,8 @@ ReactComponentRenderer.propTypes = {
   changelog: PropTypes.node,
   sidebar: PropTypes.bool,
   pure: PropTypes.bool,
+  flow: PropTypes.bool,
+  stateless: PropTypes.bool,
 };
 
 export default ReactComponentRenderer;

@@ -7,8 +7,9 @@ const server = express();
 
 const host = (process.env.HOST || 'localhost');
 const port = (+process.env.PORT) || 3000;
+const context = process.cwd();
 
-server.use(express.static(path.join(__dirname, '..', 'public')));
+server.use(express.static(path.join(context, 'public')));
 
 http.createServer(server).listen(port, host, function (err) {
   if (err) {

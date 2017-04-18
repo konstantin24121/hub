@@ -5,15 +5,25 @@ const fs = require('fs');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 
-const assetsPath = path.resolve(__dirname, '../static/dist');
 const host = (process.env.HOST || 'localhost');
 const port = (+process.env.PORT) || 3000;
 
-const context = path.resolve(__dirname, '../');
-const src = path.resolve(__dirname, '../src/');
+const context = process.cwd();
+const src = path.resolve(context, 'src');
+const assetsPath = path.resolve(context, 'static/dist');
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+const isProduction = process.env.NODE_ENV === 'production';
+
+// Plugins
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const extractStyles = new ExtractTextPlugin({
+  filename: 'bundle.css?v=[hash]',
+  disable: isDevelopment,
+});
 
 const common = {
-	context: path.resolve(__dirname, '../'),
+	context: context,
 
 	output: {
 		path: assetsPath,
@@ -26,7 +36,7 @@ const common = {
 			context,
 			'node_modules',
 		],
-		extensions: ['.js', '.jsx', '.json', '.json5'],
+		extensions: ['.js', '.jsx', '.json', '.json5', '.flow', '.js.flow'],
 		alias: {
       components: path.resolve(src, 'components'),
       config: path.resolve(src, 'config'),
@@ -40,13 +50,34 @@ const common = {
 	module: {
     rules: [
       {
-				test: /\.jsx?$/,
+				test: /\.jsx?(.flow)?$/,
 				include: [src],
 				loader: 'babel-loader',
         options: {
           compact: false,
         },
 			},
+      {
+        test: /\.p?css$/,
+        use: extractStyles.extract({
+          fallback: "style-loader",
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 2,
+                sourceMap: isDevelopment,
+                localIdentName: isDevelopment ? '[path]--[local]' : null,
+                context: '/',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+            }
+          ]
+        })
+      },
 			{
 				test: /\.json5?$/,
 				include: [src],
@@ -65,22 +96,33 @@ const common = {
           mimetype: 'image/jpg',
         },
       },
+
     ],
 	},
 
 	plugins: [
+    extractStyles,
 		new webpack.ProvidePlugin({
 			log: 'loglevel',
 		}),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      },
+      __ENV__: JSON.stringify(process.env.NODE_ENV),
+      __DEVELOPMENT__: isDevelopment,
+      __DEVTOOLS__: isDevelopment ? process.env.DEVTOOL : false,
+      __LOGLEVEL__: JSON.stringify(process.env.LOGLEVEL),
+    }),
 	],
 }
 
-const developeConfig = require('./webpack.dev.conf.js');
-const productionConfig = require('./webpack.prod.conf.js');
+const developeConfig = require('./webpack.conf.dev.js');
+const productionConfig = require('./webpack.conf.prod.js');
 
-if ( process.env.NODE_ENV === 'development' ) {
+if ( isDevelopment ) {
 	module.exports = merge.smart(common, developeConfig);
-}else if ( process.env.NODE_ENV === 'production' ) {
+}else if ( isProduction ) {
 	module.exports = merge.smart(common, productionConfig);
 }else{
 	module.exports = common;

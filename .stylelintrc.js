@@ -4,7 +4,6 @@ module.exports = {
     "stylelint-config-css-modules",
   ],
   "plugins": [
-    "stylelint-selector-bem-pattern",
     "stylelint-performance-animation",
   ],
   "rules": {

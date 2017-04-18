@@ -16,7 +16,7 @@ import s from './Props.css';
 function renderDefault(prop) {
   if (prop.defaultValue) {
     return (
-      <Code className={prop.required ? s.required : null}>
+      <Code plain>
         {showSpaces(unquote(prop.defaultValue.value))}
       </Code>
     );
@@ -54,7 +54,7 @@ function renderEnum(prop) {
     <Code key={value}>{showSpaces(unquote(value))}</Code>
   ));
   return (
-    <span>One of: <Group separator=", " inline>{values}</Group></span>
+    <span><span className={s.name}>One of:</span> <Group separator=", " inline>{values}</Group></span>
   );
 }
 
@@ -67,7 +67,7 @@ function renderUnion(prop) {
     <Code key={value.name} className={s.type}>{renderType(value)}</Code>
   ));
   return (
-    <span>One of type: <Group separator=", " inline>{values}</Group></span>
+    <span><span className={s.name}>One of type:</span> <Group separator=", " inline>{values}</Group></span>
   );
 }
 
@@ -96,7 +96,6 @@ function renderExtra(prop) {
   if (!type) {
     return null;
   }
-
   switch (type.name) {
     case 'enum':
       return renderEnum(prop);
@@ -120,6 +119,7 @@ function renderDescription(prop) {
   return (
     <Group>
       {description && <Markdown text={description} inline />}
+      <br />
       {extra}
     </Group>
   );
