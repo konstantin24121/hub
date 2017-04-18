@@ -1,6 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
 
+import CustomRipple from './CustomRipple.jsx';
 import cn from 'classnames';
 
 import s from './RaisedButton.css';
@@ -227,6 +228,8 @@ class RaisedButton extends PureComponent {
                 transitionName={{
                   enter: animations.enter,
                   enterActive: animations.enter_isActive,
+                  leave: animations.leave,
+                  leaveActive: animations.leave_isActive,
                 }}
               >
                 {items}
