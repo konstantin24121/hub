@@ -49,7 +49,7 @@
       }
     },
     "styleguide": {
-      "command": "styleguidist server --config implements/styleguide.config.js",
+      "command": "styleguidist server --config implements/styleguide.config.js; exit 0",
       "env": {
         "NODE_ENV": "development"
       }
@@ -131,7 +131,6 @@
     "json5-loader": "^0.6.0",
     "loglevel": "^1.4.1",
     "node-sass": "^3.10.1",
-    "pm2": "^2.4.5",
     "postcss": "^5.2.5",
     "postcss-conditionals": "^2.0.2",
     "postcss-cssnext": "^2.8.0",
