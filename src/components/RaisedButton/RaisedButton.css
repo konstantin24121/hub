@@ -1,11 +1,24 @@
 .root {
-	color: rgba(0, 0, 0, 1);
-	display: inline-block;
-	min-width: 90px;
-	background-color: rgb(255, 255, 255);
-	border-radius: 2px;
-	margin: 10px;
-	border: 1px solid #000;
+  color: rgba(0, 0, 0, 1);
+  display: inline-block;
+  min-width: 90px;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 2px;
+  margin: 10px;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+
+  &:focus {
+    box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+  }
+}
+
+.cover {
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  .root:hover & {
+    background-color: rgba(0, 0, 0, 0.0784314);
+  }
 }
 
 .label {
@@ -13,33 +26,33 @@
 }
 
 .rippleArea {
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	overflow: hidden;
-	pointer-events: none;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .button {
-	border: 10px;
-	box-sizing: border-box;
-	display: inline-block;
-	cursor: pointer;
-	text-decoration: none;
-	margin: 0px;
-	padding: 0px;
-	outline: none;
-	font-size: inherit;
-	font-weight: inherit;
-	position: relative;
-	z-index: 1;
-	height: 36px;
-	line-height: 36px;
-	width: 100%;
-	border-radius: 2px;
-	transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-	background-color: rgb(255, 255, 255);
-	text-align: center;
+  border: 10px;
+  box-sizing: border-box;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0px;
+  padding: 0px;
+  outline: none;
+  font-size: inherit;
+  font-weight: inherit;
+  position: relative;
+  z-index: 1;
+  height: 36px;
+  line-height: 36px;
+  width: 100%;
+  border-radius: 2px;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
 }

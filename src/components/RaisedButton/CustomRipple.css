@@ -1,31 +1,29 @@
-
-
 .ripple_wave {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 0;
-	width: 0;
-	border-radius: 50%;
-	background-color: rgba(0, 0, 0, 0.870588);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.870588);
 }
 
 .enter {
-	transform: scale(0);
-	opacity: 0.1;
-	&_isActive {
-		opacity: 0.1;
-		transform: scale(1);
-		transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-	}
+  transform: scale(0);
+  opacity: 0.1;
+
+  &_isActive {
+    opacity: 0;
+    transform: scale(1);
+    transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  }
 }
 
 .leave {
+  opacity: 0.05;
+  transition: opacity 0s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 
-	&_isActive {
-		opacity: 0;
-		transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-	}
+  &_isActive {
+    opacity: 0;
+  }
 }
-
-

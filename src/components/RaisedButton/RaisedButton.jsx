@@ -6,7 +6,7 @@ import cn from 'classnames';
 
 import s from './RaisedButton.css';
 /* Анимации над элементом мы будем хранить в самом элементе ибо это логично. Он сам знает как себя вести. А вот как и когда ему себя вести
-решает CSSTransitionGroup потому его анимаионные классы и импортятся в родителе 
+решает CSSTransitionGroup потому его анимаионные классы и импортятся в родителе
 Название переменной спорно, ибо в ней вссе классы от CustomRipple, но тк используюются только те что связанны с анимацией я посчитал такое название умесным
 */
 import animations from './CustomRipple.css';
@@ -38,9 +38,9 @@ class RaisedButton extends PureComponent {
       isAnimate: false,
       /*
         NOTE: items не само удачно название, очень абстрактно
-        такое допустимо когда речь идет о каком то контенте который 
+        такое допустимо когда речь идет о каком то контенте который
         передается в пропсах, и может менятся, либо когда в названии компонента явно указывается что это коллекция чего-то.
-        Например в случае ButtonGroup мы ясно даем понять что это группа кнопок, значит item использовать для передачи обьект параметров кнопок норм. Тут же item - это всегда коллеция рипплов, не совсем абстрактная штука, так и называй ripples. 
+        Например в случае ButtonGroup мы ясно даем понять что это группа кнопок, значит item использовать для передачи обьект параметров кнопок норм. Тут же item - это всегда коллеция рипплов, не совсем абстрактная штука, так и называй ripples.
         ripplesArray тоже норм, но мне такое именование не нравится по причине что и так ясно что массив\коллекция. rippleCol тоже норм, но тут уже появляется правило именования, а чем их меньше тем лучше.
       */
       items: [], // items не само удачно название, очень абстрактно
@@ -121,7 +121,7 @@ class RaisedButton extends PureComponent {
     const _d = _r * 2;
     _l -= _r;
     _t -= _r;
-    // NOTE: Ты не переопределяешь массив ниже, let бессмысленно, 
+    // NOTE: Ты не переопределяешь массив ниже, let бессмысленно,
     // тут явно const
     let newItems = this.state.items.slice();
 
@@ -170,9 +170,9 @@ class RaisedButton extends PureComponent {
   handleRemove = (stamp) => {
     /*
       тут была твоя ошибка что ты удалял по индексу
-      Но так делать не нужно, ибо после удаления элемента, ве индексы собьются. При работе с динамическим массивом используй только 
+      Но так делать не нужно, ибо после удаления элемента, ве индексы собьются. При работе с динамическим массивом используй только
       то что изменится никак не может, к примеру тот же stamp который
-      ты добавлял в обьект. 
+      ты добавлял в обьект.
       Ниже мы просто возвращаем в state items без того который надо удалить
     */
     this.setState((prevState) => {
@@ -190,6 +190,7 @@ class RaisedButton extends PureComponent {
     const rootCn = cn(s.root);
     const buttonCn = cn(s.button);
     const labelCn = cn(s.label);
+    const coverCn = cn(s.cover);
 
     // NOTE: Для удобочитаемости лучше вынести это в отдельную
     // фунцию rendersRipples
@@ -223,20 +224,18 @@ class RaisedButton extends PureComponent {
                 https://github.com/reactjs/react-transition-group#animation-group-must-be-mounted-to-work
               */}
               <CSSTransitionGroup
-                transitionEnterTimeout={1100}
+                transitionEnterTimeout={2000}
                 transitionLeave={false}
                 transitionName={{
                   enter: animations.enter,
                   enterActive: animations.enter_isActive,
-                  leave: animations.leave,
-                  leaveActive: animations.leave_isActive,
                 }}
               >
                 {items}
               </CSSTransitionGroup>
             </div>
 
-            <div>
+            <div className={coverCn}>
               <span className={labelCn}>{label}</span>
             </div>
           </div>
