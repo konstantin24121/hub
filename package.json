@@ -16,7 +16,7 @@
     "prebuild": "npm run lint",
     "build": "better-npm-run build",
     "lint": "npm run eslint & npm run stylelint",
-    "stylelint": "stylelint src/**/*.css",
+    "stylelint": "stylelint src/**/*.css ; exit 0",
     "eslint": "eslint --ext .jsx --ext .js src ; exit 0",
     "flow": "flow --color always",
     "styleguide": "better-npm-run styleguide",
@@ -49,7 +49,7 @@
       }
     },
     "styleguide": {
-      "command": "styleguidist server --config implements/styleguide.config.js",
+      "command": "styleguidist server --config implements/styleguide.config.js; exit 0",
       "env": {
         "NODE_ENV": "development"
       }
