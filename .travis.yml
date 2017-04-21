@@ -4,6 +4,9 @@ node_js:
   - 6
   - 7
 cache: yarn
+matrix:
+  allow_failures:
+    - node_js: 4
 script:
   # Run tests in all commits
   - |
@@ -16,23 +19,15 @@ script:
 
   # Build in all commits
   - yarn run createApp
-  - yarn run styleguide:build
 
   # Linting if PR
   - |
     echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
     echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
-    if [[ $TRAVIS_PULL_REQUEST ]]; then
-      yarn run eslint
-    fi
-  - |
-    if [[ $TRAVIS_PULL_REQUEST ]]; then
-      yarn run stylelint
-    fi
-  - |
-    if [[ $TRAVIS_PULL_REQUEST ]]; then
-      yarn run flow
-    fi
+
+  - if [ "$TRAVIS_PULL_REQUEST" = "true" ]; then yarn run eslint; fi
+  - if [ "$TRAVIS_PULL_REQUEST" = "true" ]; then yarn run stylelint; fi
+  - if [ "$TRAVIS_PULL_REQUEST" = "true" ]; then yarn run flow; fi
 
 after_success:
   # Upload coverage report to Codecov
