@@ -5,7 +5,7 @@ node_js:
   - 7
 cache: yarn
 script:
-  # Run tests
+  # Run tests in all commits
   - |
     echo "TRAVIS_NODE_VERSION=$TRAVIS_NODE_VERSION"
     if [[ "$TRAVIS_NODE_VERSION" =~ ^(4|5)$ ]]; then
@@ -13,8 +13,27 @@ script:
     else
       yarn run test:coverage -- --runInBand
     fi
-  # Build 
-  - yarn run build
+
+  # Build in all commits
+  - yarn run createApp
+  - yarn run styleguide:build
+
+  # Linting if PR
+  - |
+    echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
+    echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
+    if [[ "$TRAVIS_PULL_REQUEST" ]]; then
+      yarn run eslint
+    fi
+  - |
+    if [[ "$TRAVIS_PULL_REQUEST" ]]; then
+      yarn run stylelint
+    fi
+  - |
+    if [[ "$TRAVIS_PULL_REQUEST" ]]; then
+      yarn run flow
+    fi
+
 after_success:
   # Upload coverage report to Codecov
   - bash <(curl -s https://codecov.io/bash)

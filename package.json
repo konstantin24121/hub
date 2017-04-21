@@ -13,11 +13,11 @@
     "postinstall": "npm run flow-typed",
     "start": "better-npm-run start-dev",
     "start:prod": "npm run build && better-npm-run start-prod",
-    "prebuild": "npm run lint",
+    "postbuild": "npm run lint",
     "build": "better-npm-run build",
     "lint": "npm run eslint & npm run stylelint",
-    "stylelint": "stylelint src/**/*.css ; exit 0",
-    "eslint": "eslint --ext .jsx --ext .js src ; exit 0",
+    "stylelint": "stylelint src/**/*.css",
+    "eslint": "eslint --ext .jsx --ext .js src",
     "flow": "flow --color always",
     "styleguide": "better-npm-run styleguide",
     "styleguide:build": "better-npm-run styleguide:build",
@@ -25,7 +25,8 @@
     "test:updateSnapshots": "npm run test -- --updateSnapshot",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
-    "flow-typed": "flow-typed install"
+    "flow-typed": "flow-typed install",
+    "createApp": "better-npm-run build"
   },
   "betterScripts": {
     "start-dev": {
@@ -49,7 +50,7 @@
       }
     },
     "styleguide": {
-      "command": "styleguidist server --config implements/styleguide.config.js; exit 0",
+      "command": "styleguidist server --config implements/styleguide.config.js",
       "env": {
         "NODE_ENV": "development"
       }
