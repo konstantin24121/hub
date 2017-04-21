@@ -22,15 +22,15 @@ script:
   - |
     echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
     echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
-    if [[ "$TRAVIS_PULL_REQUEST" ]]; then
+    if [[ $TRAVIS_PULL_REQUEST ]]; then
       yarn run eslint
     fi
   - |
-    if [[ "$TRAVIS_PULL_REQUEST" ]]; then
+    if [[ $TRAVIS_PULL_REQUEST ]]; then
       yarn run stylelint
     fi
   - |
-    if [[ "$TRAVIS_PULL_REQUEST" ]]; then
+    if [[ $TRAVIS_PULL_REQUEST ]]; then
       yarn run flow
     fi
 
