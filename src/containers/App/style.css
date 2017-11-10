@@ -1,5 +1,5 @@
-@import 'tools/styles/base.css';
+@import 'styles/base.css';
 
-:local(.style) {
+.root {
   display: block;
 }

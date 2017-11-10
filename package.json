@@ -19,8 +19,6 @@
     "stylelint": "stylelint src/**/*.css",
     "eslint": "eslint --ext .jsx --ext .js src",
     "flow": "flow --color always",
-    "styleguide": "better-npm-run styleguide",
-    "styleguide:build": "better-npm-run styleguide:build",
     "test": "jest src -c ./implements/jest.config.json --verbose ",
     "test:updateSnapshots": "npm run test -- --updateSnapshot",
     "test:watch": "npm run test -- --watch",
@@ -30,7 +28,7 @@
   },
   "betterScripts": {
     "start-dev": {
-      "command": "webpack-dashboard -- node ./implements/server.dev.njs",
+      "command": "webpack-dashboard -- node ./implements/server.dev.js",
       "env": {
         "NODE_ENV": "development",
         "PORT": 3000
@@ -43,45 +41,26 @@
       }
     },
     "start-prod": {
-      "command": "node ./implements/server.prod.njs",
+      "command": "node ./implements/server.prod.js",
       "env": {
         "NODE_ENV": "production",
         "PORT": 3000
       }
-    },
-    "styleguide": {
-      "command": "styleguidist server --config implements/styleguide.config.js",
-      "env": {
-        "NODE_ENV": "development"
-      }
-    },
-    "styleguide:build": {
-      "command": "styleguidist build --config implements/styleguide.config.js",
-      "env": {
-        "NODE_ENV": "production"
-      }
     }
   },
   "dependencies": {
-    "acorn-jsx": "^3.0.1",
-    "babel-plugin-module-resolver": "^2.7.0",
+    "babel-plugin-transform-imports": "^1.4.1",
     "babel-polyfill": "^6.16.0",
     "classnames": "^2.2.5",
-    "doctrine": "^2.0.0",
     "enzyme": "^2.8.0",
     "enzyme-to-json": "^1.5.0",
     "express": "^4.14.0",
-    "immutable": "^3.8.1",
     "lodash": "^4.17.3",
-    "material-ui": "^0.16.5",
+    "prop-types": "^15.6.0",
     "react": "^15.3.2",
-    "react-addons-test-utils": "^15.4.2",
-    "react-copy-to-clipboard": "^4.2.3",
-    "react-custom-scrollbars": "^4.0.2",
     "react-dom": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-redux": "^4.4.5",
-    "react-resizable-box": "^1.8.1",
     "react-responsive-decorator": "^0.0.1",
     "react-router": "^3.0.0",
     "react-tap-event-plugin": "^2.0.1",
@@ -101,9 +80,12 @@
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-flow-react-proptypes": "^0.21.0",
+    "babel-plugin-lodash": "^3.2.11",
+    "babel-plugin-module-resolver": "^2.7.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
-    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-babili": "^0.1.4",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
@@ -115,12 +97,12 @@
     "eslint-import-resolver-webpack": "^0.8.1",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-flowtype": "^2.30.4",
-    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-import": "1.16.0",
     "eslint-plugin-jest": "^19.0.1",
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.10.3",
-    "extract-text-webpack-plugin": "2.0.0-beta",
+    "extract-text-webpack-plugin": "^2.0.0",
     "favicons-webpack-plugin": "^0.0.7",
     "file-loader": "^0.9.0",
     "flow-bin": "^0.41.0",
@@ -131,26 +113,12 @@
     "jest-cli": "^19.0.2",
     "json5-loader": "^0.6.0",
     "loglevel": "^1.4.1",
-    "node-sass": "^3.10.1",
     "postcss": "^5.2.5",
-    "postcss-conditionals": "^2.0.2",
     "postcss-cssnext": "^2.8.0",
-    "postcss-custom-media": "^5.0.1",
-    "postcss-easings": "^0.3.0",
     "postcss-loader": "^1.0.0",
-    "postcss-media-minmax": "^2.1.2",
-    "postcss-mixins": "^5.4.0",
-    "postcss-nested": "^1.0.0",
-    "postcss-nested-ancestors": "^1.0.0",
-    "postcss-simple-vars": "^3.0.0",
-    "react-styleguidist": "https://github.com/konstantin24121/react-styleguidist#4.4.6",
-    "recast": "^0.11.18",
-    "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "stylelint": "^7.6.0",
-    "stylelint-config-css-modules": "^0.1.0",
     "stylelint-config-standard": "^15.0.0",
-    "stylelint-selector-bem-pattern": "^1.0.0",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1",
     "webpack-bundle-analyzer": "^1.5.3",
@@ -160,7 +128,7 @@
     "webpack-merge": "^0.15.0"
   },
   "engines": {
-    "node": "5.6.0"
+    "node": "8"
   },
   "keywords": [
     "react",

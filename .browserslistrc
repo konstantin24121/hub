@@ -1,0 +1,13 @@
+# Browsers that we support
+Last 2 versions
+
+# The browsers We're not supporting
+not OperaMini all >= 0
+not BlackBerry >= 0
+not OperaMobile >= 0
+not Samsung >= 0
+not ExplorerMobile >= 0
+not UCAndroid >= 0
+not QQAndroid >= 0
+not Baidu >= 0
+not IE

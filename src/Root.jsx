@@ -3,7 +3,8 @@
   react/forbid-prop-types: "off"
  */
 
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Router } from 'react-router';
 import { Provider } from 'react-redux';
 
@@ -14,6 +15,7 @@ const renderDevTools = () => {
     if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) return null;
 
     const { DevTools } = require('containers');
+
     return <DevTools />;
   }
   return null;

@@ -11,18 +11,24 @@ const publicFolder = path.join(context, 'public');
 
 module.exports = {
 	entry: {
-		'app': [
+		app: [
 			'./src/client.js'
 		]
 	},
 
-	output: {
-		path: publicFolder,
-    filename: 'bundle.js?v=[hash]',
-		publicPath: '/',
-	},
+  output: {
+    path: publicFolder,
+    filename: '[name].js?v=[chunkhash]',
+    chunkFilename: '[name].js?v=[chunkhash]',
+    publicPath: '/',
+  },
 
 	plugins:[
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity,
+    }),
+
 		new HtmlWebpackPlugin({
       template: './static/index.tpl.html',
       filename: 'index.html',

@@ -5,7 +5,7 @@ const path = require('path');
 const context = process.cwd();
 
 module.exports = {
-	devtool: 'eval',
+	devtool: 'eval-source-map',
 	entry: {
 	  'main': [
 	    'react-hot-loader/patch',

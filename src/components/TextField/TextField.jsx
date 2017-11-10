@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 // Helpers
 import classNameBind from 'classnames/bind';
-import up from 'tools/utils/upperFirst';
+import { upperFirst } from 'utils';
 
 import s from './TextField.pcss';
 
@@ -149,7 +149,7 @@ class TextField extends PureComponent {
 
     const rootCn = cn({
       root: true,
-      [`root_is${up(status)}`]: true,
+      [`root_is${upperFirst(status)}`]: true,
       root_isFocused: isFocused,
       root_isDirty: isDirty,
       root_isDisabled: disabled,

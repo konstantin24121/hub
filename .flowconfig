@@ -4,7 +4,6 @@
 [ignore]
 .*/implements/.*
 .*/public/.*
-.*/styleguide/.*
 
 # Ignore some libs
 .*/node_modules/stylelint/.*

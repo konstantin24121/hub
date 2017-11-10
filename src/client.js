@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import createStore from 'config/store';
+import createStore from 'duckredux/store';
 
 import { AppContainer } from 'react-hot-loader';
 import { browserHistory } from 'react-router';
@@ -33,6 +33,7 @@ if (module.hot) {
     // If you use Webpack 2 in ES modules mode, you can
     // use <App /> here rather than require() a <NextApp />.
     const NextApp = require('./Root').default;
+
     ReactDOM.render(
       <AppContainer>
         <NextApp store={store} history={browserHistory} />

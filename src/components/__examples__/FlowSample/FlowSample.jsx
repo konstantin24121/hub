@@ -2,8 +2,8 @@
 import type { Children, Element } from 'react';
 import React, { PureComponent } from 'react';
 import classNameBind from 'classnames/bind';
-import up from 'tools/utils/upperFirst';
-import map from 'lodash/map';
+import up from 'utils/upperFirst';
+import { map } from 'lodash';
 
 import s from './FlowSample.pcss';
 

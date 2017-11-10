@@ -1,15 +1,12 @@
 import React, { PropTypes } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import { style } from './style.css';
+import s from './style.css';
 
 const App = ({ children }) => (
   <div>
-    <MuiThemeProvider>
-      <div className={style}>
-        {children}
-      </div>
-    </MuiThemeProvider>
+    <div className={s.root}>
+      {children}
+    </div>
   </div>
 );
 

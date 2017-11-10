@@ -2,7 +2,7 @@
 import type { Children, Element } from 'react';
 import React from 'react';
 import classNameBind from 'classnames/bind';
-import up from 'tools/utils/upperFirst';
+import { upperFirst } from 'utils';
 import s from './StatelessFlowSample.pcss';
 
 type Props = {
@@ -77,7 +77,7 @@ function StatelessFlowSample({
 }: Props): Element<any> {
   const rootClass = cn({
     root: true,
-    [`root_${up(list)}`]: true,
+    [`root_${upperFirst(list)}`]: true,
   });
 
   return (

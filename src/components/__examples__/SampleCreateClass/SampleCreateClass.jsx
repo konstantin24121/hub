@@ -5,8 +5,8 @@
 */
 import React, { PropTypes } from 'react';
 import classNameBind from 'classnames/bind';
-import up from 'tools/utils/upperFirst';
-import map from 'lodash/map';
+import { upperFirst } from 'utils';
+import { map } from 'lodash';
 
 import s from './SampleCreateClass.pcss';
 
@@ -158,7 +158,7 @@ const SampleCreateClass = React.createClass({
       integer, list, node, arrayOfShapes, mockedShape } = this.props;
     const rootClass = cn({
       root: true,
-      [`root_${up(list)}`]: true,
+      [`root_${upperFirst(list)}`]: true,
     });
     return (
       <div className={rootClass} onClick={this.handleClick}>

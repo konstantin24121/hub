@@ -3,4 +3,3 @@ node_modules/*
 puclic/*
 static/*
 /*.js
-# src/tools/styleguide/*

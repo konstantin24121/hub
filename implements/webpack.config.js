@@ -42,8 +42,10 @@ const common = {
       config: path.resolve(src, 'config'),
       containers: path.resolve(src, 'containers'),
       actions: path.resolve(src, 'actions'),
-      reducers: path.resolve(src, 'reducers'),
-      tools: path.resolve(src, 'tools'),
+      duckredux: path.resolve(src, 'duckredux'),
+      styles: path.resolve(src, 'styles'),
+      types: path.resolve(src, 'types'),
+      utils: path.resolve(src, 'utils'),
 		},
 	},
 
@@ -107,7 +109,7 @@ const common = {
 		}),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       },
       __ENV__: JSON.stringify(process.env.NODE_ENV),
       __DEVELOPMENT__: isDevelopment,

@@ -1,12 +1,15 @@
 {
   "sourceMaps": true,
   "presets": [
+    ["env", {
+      "useBuiltIns": "entry"
+    }],
     "react",
-    "es2015",
     "stage-0",
     "flow",
   ],
   "plugins": [
+    "lodash",
     "transform-decorators-legacy",
     "transform-flow-strip-types",
     ["module-resolver", {
@@ -16,11 +19,24 @@
         "config": "./src/config",
         "containers": "./src/containers",
         "actions": "./src/actions",
-        "reducers": "./src/reducers",
-        "tools": "./src/tools",
+        "duckredux": "./src/duckredux",
+        "styles": "./src/styles",
+        "utils": "./src/utils",
+        "types": "./src/types",
       },
       "extensions": [".js", ".jsx", ".json", ".json5", ".flow", ".js.flow"],
-    }]
+    }],
+    ["transform-imports", {
+        "containers": {
+          "transform": "containers/${member}",
+        },
+        "components": {
+          "transform": "components/${member}",
+        },
+        "utils": {
+          "transform": "utils/${member}",
+        },
+    }],
   ],
   "env": {
     "development": {
@@ -28,6 +44,9 @@
         "react-hot-loader/babel",
         "flow-react-proptypes",
       ]
+    },
+    "production": {
+      "presets": ["babili"],
     },
   }
 }

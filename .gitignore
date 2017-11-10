@@ -30,6 +30,5 @@ flow-typed/npm/*
 .env
 public/*
 reports/*
-styleguide/*
 *.sublime-project
 *.sublime-workspace
